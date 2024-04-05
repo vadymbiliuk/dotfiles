@@ -1,0 +1,6 @@
+*
+!nvim
+!nvim/**
+!kitty
+!kitty/**
+!.gitignore
