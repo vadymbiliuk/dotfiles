@@ -5,6 +5,12 @@ local function dapconfig()
     local dap = require('dap')
     local dapui = require('dapui')
 
+    local dap_python = require('dap-python')
+    dap_python.setup('/usr/bin/python')
+    dap_python.test_runner = 'pytest'
+    dap_python.default_port = 38000
+
+
     -- DAP signs
     fn.sign_define('DapBreakpoint', { text = '󰏃', texthl = '', linehl = '', numhl = '' })
     fn.sign_define('DapBreakpointCondition', { text = '', texthl = '', linehl = '', numhl = '' })
@@ -37,7 +43,7 @@ local function dapconfig()
         name = 'lldb',
     }
 
-    local c_cpp_rust_base_config = {
+    local base_config = {
         {
             name = 'Launch',
             type = 'lldb',
@@ -61,14 +67,14 @@ local function dapconfig()
     dap.defaults.fallback.force_external_terminal = true
     dap.defaults.fallback.external_terminal = {
         -- Use Windows Terminal for Windows, and GNOME Terminal for Linux.
-        command = require('utilities.os').is_windows() and 'wt' or 'gnome-terminal',
+        command = 'kitty',
         args = { '--' },
     }
 
     -- Language configurations
-    dap.configurations.cpp = c_cpp_rust_base_config
-    dap.configurations.c = c_cpp_rust_base_config
-    dap.configurations.rust = c_cpp_rust_base_config
+    dap.configurations.cpp = base_config
+    dap.configurations.c = base_config
+    dap.configurations.rust = base_config
 
     -- Program specific configs
     table.insert(
@@ -147,22 +153,32 @@ end
 return {
     {
         'mfussenegger/nvim-dap',
-        dependencies = { 'williamboman/mason.nvim' },
+        dependencies = { 'williamboman/mason.nvim', 'mfussenegger/nvim-dap-python' },
         keys = {
-            { '<F5>', function() require('dap').continue() end },
-            { '<F6>', function() require('dap').step_back() end },
-            { '<S-F10>', function() require('dap').step_over() end },
-            { '<S-F11>', function() require('dap').step_into() end },
-            { '<S-F12>', function() require('dap').step_out() end },
-            { '<Leader>b', function() require('dap').toggle_breakpoint() end },
-            { '<Leader>B', function() require('dap').set_breakpoint(fn.input('Breakpoint condition: ')) end },
+            { '<F5>',       function() require('dap').continue() end },
+            { '<F6>',       function() require('dap').step_back() end },
+            { '<S-F10>',    function() require('dap').step_over() end },
+            { '<S-F11>',    function() require('dap').step_into() end },
+            { '<S-F12>',    function() require('dap').step_out() end },
+            { '<Leader>b',  function() require('dap').toggle_breakpoint() end },
+            { '<Leader>B',  function() require('dap').set_breakpoint(fn.input('Breakpoint condition: ')) end },
             { '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, fn.input('Log point message: ')) end },
             { '<Leader>cb', function() require('dap').clear_breakpoints() end },
             { '<Leader>dr', function() require('dap').repl.open() end },
             { '<Leader>dl', function() require('dap').run_last() end },
+            { '<Lader>dn',  function() require('dap-python').test_method() end },
+            { '<Lader>df',  function() require('dap-python').test_class() end }
         },
         config = dapconfig,
     },
-    { 'rcarriga/nvim-dap-ui', lazy = true, dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' } },
-    { 'theHamsta/nvim-dap-virtual-text', lazy = true, dependencies = { 'mfussenegger/nvim-dap' } },
+    {
+        'rcarriga/nvim-dap-ui',
+        lazy = true,
+        dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' }
+    },
+    {
+        'theHamsta/nvim-dap-virtual-text',
+        lazy = true,
+        dependencies = { 'mfussenegger/nvim-dap' }
+    },
 }

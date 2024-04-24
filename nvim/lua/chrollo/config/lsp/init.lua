@@ -5,7 +5,8 @@ local mason_lspconfig = require('mason-lspconfig')
 local lsp_servers = {
   "bashls",
   "dockerls",
-  "pyright",
+  "pylsp",
+  "ruff_lsp",
   "vimls",
   "yamlls",
   "vuels",
@@ -20,9 +21,10 @@ local lsp_servers = {
   "html",
   "cssls",
   "jsonls",
-  "eslint",
   "grammarly",
   "lua_ls",
+  "eslint",
+  "nil_ls"
 }
 
 local lsp_servers_custom = {
@@ -116,15 +118,13 @@ local on_attach = function(client, bufnr)
   -- Keybindings
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local opts = { noremap = true, silent = true }
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsv.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gw', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
   buf_set_keymap('n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   buf_set_keymap('n', '<leader>ad', '<cmd>lua vim.lsp.diagnostic.show()<CR>', opts)
   buf_set_keymap('n', '<leader>aD', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
-  -- buf_set_keymap('n', 'K', "<cmd>lua require 'pretty_hover'.hover()<CR>", opts)
   buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>ar', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
@@ -210,8 +210,8 @@ end
 
 require("typescript-tools").setup({
   on_attach = on_attach,
-  -- handlers = handlers,
-  -- capabilities = capabilities,
+  handlers = handlers,
+  capabilities = capabilities,
   settings = {
     tsserver_file_preferences = {
       includeInlayParameterNameHints = "all",

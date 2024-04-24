@@ -13,11 +13,12 @@ return {
         rust = { "rustfmt" },
         c = { "clang-format" },
         cpp = { "clang-format" },
-        python = { "isort", "black" },
-        javascript = { { "prettierd", "prettier" } },
+        python = { "ruff format" },
+        javascript = { { "prettierd", "prettier" }, { "eslint" } },
         markdown = { { "prettierd", "prettier" } },
         typescript = { { "prettierd", "prettier" } },
         typescriptreact = { { "prettierd", "prettier" } },
+        javascriptreact = { { "prettierd", "prettier" } },
         css = { { "prettierd", "prettier" } },
         json = { { "prettierd", "prettier" } },
         yaml = { { "prettierd", "prettier" } },
@@ -25,6 +26,7 @@ return {
         rescript = { "rescript" },
         ocaml = { "ocamlformat" },
         prisma = { "prisma format" },
+        nix = { "nixfmt" }
       },
     }
 

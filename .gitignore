@@ -3,4 +3,8 @@
 !nvim/**
 !kitty
 !kitty/**
+!home-manager
+!home-manager/**
+!nix
+!nix/**
 !.gitignore
