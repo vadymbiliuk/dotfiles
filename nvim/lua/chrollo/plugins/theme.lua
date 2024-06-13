@@ -1,12 +1,45 @@
 return {
   {
-    "nyoom-engineering/oxocarbon.nvim",
-    priority = 1000,
+    'projekt0n/github-nvim-theme',
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      vim.opt.background = "dark" -- set this to dark or light
-      vim.cmd.colorscheme "oxocarbon"
-    end
+      require('github-theme').setup({
+        -- ...
+      })
+
+      vim.cmd('colorscheme github_dark_dimmed')
+    end,
   },
+  -- {
+  --   'cvigilv/patana.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- require('patana').setup({})
+  --
+  --     vim.cmd('colorscheme patana')
+  --   end
+  -- },
+  -- {
+  --   'jesseleite/nvim-noirbuddy',
+  --   dependencies = {
+  --     { 'tjdevries/colorbuddy.nvim' }
+  --   },
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     -- All of your `setup(opts)` will go here
+  --   },
+  -- },
+  -- {
+  --   "nyoom-engineering/oxocarbon.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.opt.background = "dark" -- set this to dark or light
+  --     vim.cmd.colorscheme "oxocarbon"
+  --   end
+  -- },
   -- {
   --   'lunacookies/vim-colors-xcode',
   --   priority = 1000,

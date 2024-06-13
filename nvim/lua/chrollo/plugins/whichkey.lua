@@ -23,6 +23,7 @@ return {
 
     wk.register({
       ['<leader>'] = {
+        ['o'] = { "<cmd>Oil<cr>", "Open Oil" },
         ['c'] = {
           name = 'Copilot chat',
           ['o'] = { "<cmd>CopilotChatOpen<cr>", "Open chat" },
@@ -53,9 +54,9 @@ return {
         },
         ['w'] = { "<cmd>write<cr>", "Write File" },
       },
-      ['<space>'] = {
-        ['e'] = { "<cmd>NvimTreeToggle<cr>", "Toggle File Explorer" },
-      },
+      -- ['<space>'] = {
+      --   ['e'] = { "<cmd>NvimTreeToggle<cr>", "Toggle File Explorer" },
+      -- },
     })
   end
 }

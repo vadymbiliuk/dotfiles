@@ -61,7 +61,7 @@ return {
         },
         move = {
           enable = true,
-          set_jumps = true,           -- whether to set jumps in the jumplist
+          set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
             [']a'] = '@parameter.inner',
             [']m'] = '@function.outer',

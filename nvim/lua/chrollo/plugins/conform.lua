@@ -26,7 +26,9 @@ return {
         rescript = { "rescript" },
         ocaml = { "ocamlformat" },
         prisma = { "prisma format" },
-        nix = { "nixfmt" }
+        nix = { "nixfmt" },
+        haskell = { "fourmolu" },
+        cabal = { 'cabal-fmt --inplace' }
       },
     }
 

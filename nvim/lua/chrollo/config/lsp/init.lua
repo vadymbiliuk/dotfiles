@@ -24,7 +24,8 @@ local lsp_servers = {
   "grammarly",
   "lua_ls",
   "eslint",
-  "nil_ls"
+  "nil_ls",
+  "hls",
 }
 
 local lsp_servers_custom = {
@@ -34,7 +35,7 @@ local lsp_servers_custom = {
   grammarly = {
     -- Grammarly language server requires node js 16.4 ¯\_(ツ)_/¯
     -- https://github.com/neovim/nvim-lspconfig/issues/2007
-    cmd = { "n", "run", "16.4", "/Users/vadymbiliuk/.nix-profile/bin/grammarly-languageserver", "--stdio" },
+    cmd = { "fnm", "use", "16.4", "/Users/vadymbiliuk/.nix-profile/bin/grammarly-languageserver", "--stdio" },
     filetypes = { "markdown", "text", "hgcommit", "gitcommit" },
   },
   lua_ls = {
