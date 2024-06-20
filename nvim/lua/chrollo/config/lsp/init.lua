@@ -1,6 +1,9 @@
+local BORDER_STYLE = require('chrollo.config.settings').border
 local lspconfig = require('lspconfig')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
+
+require('lspconfig.ui.windows').default_options.border = BORDER_STYLE
 
 local lsp_servers = {
   "bashls",
@@ -124,7 +127,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   buf_set_keymap('n', '<leader>ad', '<cmd>lua vim.lsp.diagnostic.show()<CR>', opts)
   buf_set_keymap('n', '<leader>aD', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<leader>ca', '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
   buf_set_keymap('v', '<leader>ca', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', opts)
   buf_set_keymap('i', '<C-s>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
@@ -150,21 +153,10 @@ capabilities.textDocument.foldingRange = {
 -- optimizes cpu usage source https://github.com/neovim/neovim/issues/23291
 capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
-local border = {
-  { "🭽", "FloatBorder" },
-  { "▔", "FloatBorder" },
-  { "🭾", "FloatBorder" },
-  { "▕", "FloatBorder" },
-  { "🭿", "FloatBorder" },
-  { "▁", "FloatBorder" },
-  { "🭼", "FloatBorder" },
-  { "▏", "FloatBorder" },
-}
-
 -- LSP settings (for overriding per client)
 local handlers = {
-  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border }),
-  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border }),
+  ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = BORDER_STYLE }),
+  ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = BORDER_STYLE }),
 }
 
 local defaults = {
@@ -228,10 +220,10 @@ require("typescript-tools").setup({
 
 
 local signs = {
-  Error = '󰇴',
-  Warn = '󱚝',
-  Info = '󰇳',
-  Hint = '󱜙'
+  Error = '󰇴 ',
+  Warn = '󱚝 ',
+  Info = '󰇳 ',
+  Hint = '󱜙 '
 }
 
 for type, icon in pairs(signs) do
@@ -244,7 +236,33 @@ vim.diagnostic.config({
   virtual_text = false,
   signs = true,
   underline = true,
+  float = { border = BORDER_STYLE },
 })
+
+local ns = vim.api.nvim_create_namespace('my_namespace')
+local orig_signs_handler = vim.diagnostic.handlers.signs
+vim.diagnostic.handlers.signs = {
+  show = function(_, bufnr, _, opts)
+    -- Get all diagnostics from the whole buffer rather than just the
+    -- diagnostics passed to the handler
+    local diagnostics = vim.diagnostic.get(bufnr)
+    -- Find the "worst" diagnostic per line
+    local max_severity_per_line = {}
+    for _, d in pairs(diagnostics) do
+      local m = max_severity_per_line[d.lnum]
+      if not m or d.severity < m.severity then
+        max_severity_per_line[d.lnum] = d
+      end
+    end
+    -- Pass the filtered diagnostics (with our custom namespace) to
+    -- the original handler
+    local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
+    orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
+  end,
+  hide = function(_, bufnr)
+    orig_signs_handler.hide(ns, bufnr)
+  end,
+}
 
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),

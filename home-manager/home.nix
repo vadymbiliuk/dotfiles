@@ -26,44 +26,7 @@
   programs.home-manager.enable = true;
   programs.fish = {
     enable = true;
-    plugins = [
-      {
-        name = "fish-prompt-mono";
-        src = pkgs.fetchFromGitHub {
-          owner = "fishpkg";
-          repo = "fish-prompt-mono";
-          rev = "8ac13592d47b746a4549bcecf21549f97ad66edb";
-          sha256 = "0w618la3ggri1z2mlkkxczrr22xih6c795jgmf2634v2c1349cjq";
-        };
-      }
-      {
-        name = "fzf";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "fzf";
-          rev = "ac01d96fc6344ebeb48c03f2c9c0be5bf3b20f1c";
-          sha256 = "1h97zh3ghcvvn2x9rj51frhhi85nf7wa072g9mm2pc6sg71ijw4k";
-        };
-      }
-      {
-        name = "plugin-bang-bang";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-bang-bang";
-          rev = "4ac4ddee91d593f7a5ffb50de60ebd85566f5a15";
-          sha256 = "0w618la3ggri1z2mlkkxczrr22xih6c795jgmf2634v2c1349cjq";
-        };
-      }
-      {
-        name = "fish-ssh-agent";
-        src = pkgs.fetchFromGitHub {
-          owner = "danhper";
-          repo = "fish-ssh-agent";
-          rev = "df0de37a6cd039e27433a20195d36d156d363e40";
-          sha256 = "0w618la3ggri1z2mlkkxczrr22xih6c795jgmf2634v2c1349cjq";
-        };
-      }
-    ];
+    plugins = [ ];
     shellInit = ''
       # Set EDITOR to nvim
       set -x EDITOR nvim

@@ -36,27 +36,11 @@ return {
           ['g'] = { "<cmd>Neogit<cr>", "Neogit" },
           ['d'] = { "<cmd>DiffviewOpen<cr>", "Diffview" },
           ['D'] = { "<cmd>DiffviewOpen master<cr>", "Diffview" },
-          ['l'] = { "<cmd>Neogit log<cr>", "Neogit log" },
+          ['L'] = { "<cmd>Neogit log<cr>", "Neogit log" },
           ['p'] = { "<cmd>Neogit push<cr>", "Neogit push" },
-        },
-        ['f'] = {
-          name = 'Telescope',
-          ['f'] = { "<cmd>Telescope find_files<cr>", "Find File" },
-          ['r'] = { "<cmd>Telescope oldfiles<cr>", "Open Recent File", noremap = false },
-          ['g'] = { "<cmd>Telescope live_grep<cr>", "Live Grep" },
-          ['b'] = { "<cmd>Telescope git_branches<cr>", "Checkout Branch" },
-          ['c'] = { "<cmd>Telescope git_commits<cr>", "Checkout Commit" },
-          ['s'] = { "<cmd>Telescope git_status<cr>", "Git Status" },
-          ['h'] = { "<cmd>Telescope help_tags<cr>", "Help Tags" },
-          ['p'] = { "<cmd>Telescope projects<cr>", "Projects" },
-          ['m'] = { "<cmd>Telescope media_files<cr>", "Media Files" },
-          ['t'] = { "<cmd>Telescope treesitter<cr>", "Treesitter" },
         },
         ['w'] = { "<cmd>write<cr>", "Write File" },
       },
-      -- ['<space>'] = {
-      --   ['e'] = { "<cmd>NvimTreeToggle<cr>", "Toggle File Explorer" },
-      -- },
     })
   end
 }

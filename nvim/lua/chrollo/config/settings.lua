@@ -1,108 +1,167 @@
-vim.g.mapleader = ","
-vim.g.localleader = ','
-vim.g.kitty_fast_forwarded_modifiers = "super"
-
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
-vim.wo.number = true
-vim.wo.relativenumber = true
-
-vim.o.mouse = "a"
-
-vim.opt.foldmethod = 'indent'
-vim.o.foldcolumn = '0'
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-
-vim.opt.fillchars = { eob = " " }
-
-vim.opt.tabpagemax = 50
-vim.o.scrolloff = 8
-vim.o.showbreak = "↳ "
-vim.o.showtabline = 0
-vim.o.sidescroll = 1
-vim.o.sidescrolloff = 15
-vim.cmd('syntax enable')
-vim.opt.display = 'lastline'
-vim.opt.encoding = 'utf-8'
-vim.opt.wrap = true
-vim.opt.nrformats:remove("octal") -- Interpret octal as decimal when incrementing numbers.
-vim.opt.shell =
-"/opt/homebrew/bin/fish"          -- The shell used to execute commands. Replace "/bin/bash" with your preferred shell.
-
-vim.o.virtualedit = "onemore"
-vim.o.whichwrap = "b,h,l"
-vim.o.wildmode = "longest,full"
-vim.o.wildoptions = "pum"
-vim.wo.foldenable = false
-vim.wo.foldlevel = 2
-vim.wo.foldmethod = "indent"
-vim.wo.linebreak = true
-
-vim.o.clipboard = "unnamedplus"
-vim.o.showmode = false
-
-vim.o.breakindent = true
-
-vim.o.backup = false
-vim.o.undofile = true
-vim.o.swapfile = false
-
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
-vim.wo.signcolumn = "yes"
-
-vim.o.timeout = true
-vim.o.timeoutlen = 250
-
-vim.o.textwidth = 80
-
-vim.o.updatetime = 300
-
-vim.o.cursorline = true
-
-vim.o.completeopt = "menuone,noselect"
-
-vim.o.termguicolors = true
-
-vim.opt.list = true
-vim.opt.listchars = vim.opt.listchars + " "
-
-vim.opt.title = true
-vim.opt.titlestring = '%t%( (%{fnamemodify(getcwd(), ":~:.")})%)'
-
-vim.opt.fillchars = {
-  eob = ' ', -- suppress ~ at EndOfBuffer
-  diff = '╱', -- alternatives = ⣿ ░ ─
-  msgsep = ' ', -- alternatives: ‾ ─
-  fold = ' ',
-  foldopen = '▽', -- '▼'
-  foldclose = '▷', -- '▶'
-  foldsep = ' ',
+local BORDER_STYLE = 'rounded'
+local telescope_border_chars = {
+  none = { '', '', '', '', '', '', '', '' },
+  single = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+  double = { '═', '║', '═', '║', '╔', '╗', '╝', '╚' },
+  rounded = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+  solid = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+  shadow = { '', '', '', '', '', '', '', '' },
+}
+local connected_telescope_border_chars = {
+  none = { '', '', '', '', '', '', '', '' },
+  single = { '─', '│', '─', '│', '┌', '┐', '┤', '├' },
+  double = { '═', '║', '═', '║', '╔', '╗', '╣', '╠' },
+  rounded = { '─', '│', '─', '│', '╭', '╮', '┤', '├' },
+  solid = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+  shadow = { '', '', '', '', '', '', '', '' },
 }
 
-vim.opt.listchars = {
-  eol = nil,
-  tab = '  ', -- Alternatives: '▷▷',
-  extends = '…', -- Alternatives: … » ›
-  precedes = '░', -- Alternatives: … « ‹
-  trail = '•', -- BULLET (U+2022, UTF-8: E2 80 A2)
+local M = {
+  border = BORDER_STYLE,
+  telescope_border_chars = telescope_border_chars[BORDER_STYLE],
+  telescope_centered_picker = {
+    results_title = false,
+    layout_strategy = 'center',
+    layout_config = {
+      anchor = 'S',
+      preview_cutoff = 1,
+      prompt_position = 'bottom',
+      width = 0.95,
+      results_height = 5,
+    },
+    border = true,
+    borderchars = {
+      prompt = telescope_border_chars[BORDER_STYLE],
+      results = connected_telescope_border_chars[BORDER_STYLE],
+      preview = telescope_border_chars[BORDER_STYLE],
+    },
+  },
+  lazy_loaded_colorschemes = {
+    'github_dark_dimmed',
+  },
 }
 
-vim.opt.guicursor = {
-  'n-v-c-sm:block-Cursor',
-  'i-ci-ve:ver25-iCursor',
-  'r-cr-o:hor20-Cursor',
-  'a:blinkon0',
-}
-vim.opt.cursorlineopt = { 'both' }
+M.apply = function()
+  local settings = {
+    g = {
+      -- This is sadly super slow sometimes. Look into making it faster?
+      query_lint_on = {},
+      bullets_checkbox_markers = ' x',
+      bullets_outline_levels = { 'ROM', 'ABC', 'rom', 'abc', 'std-' },
+      mapleader = ',',
+      mkdp_echo_preview_url = 1,
+      mkdp_preview_options = {
+        maid = {
+          theme = 'dark',
+        },
+      },
+      mkdp_theme = 'dark',
+      rustfmt_autosave = 1,
+      haskell_tools = {
+        tools = {
+          codeLens = {
+            -- we already set up this autocmd ourselves
+            autoRefresh = false,
+          },
+        },
+      },
+      neovide_cursor_animate_in_insert_mode = false,
+    },
+    o = {
+      showbreak = "↳ ",
+      updatetime = 300,
+      clipboard = 'unnamedplus',
+      backup = false,
+      colorcolumn = '80',
+      compatible = false,
+      cpoptions = 'aABceFs', -- make `cw` compatible with other `w` operations
+      cursorline = true,
+      cursorlineopt = 'number',
+      diffopt = 'internal,filler,closeoff,linematch:60',
+      encoding = 'utf-8',
+      expandtab = true,
+      fillchars = [[eob: ,fold: ,foldopen:▽,foldsep: ,foldclose:▷]],
+      foldcolumn = '1',
+      foldenable = true,
+      foldlevel = 99,
+      foldlevelstart = 99,
+      foldmethod = 'expr',
+      guifont = 'Iosevka Custom Extended,Symbols Nerd Font Mono:h15',
+      ignorecase = true,
+      linespace = -1,
+      list = true,
+      mouse = '',
+      number = true,
+      pumheight = 10,
+      relativenumber = true,
+      scrolloff = 8,
+      shiftwidth = 4,
+      sidescrolloff = 5,
+      signcolumn = 'number',
+      smartcase = true,
+      softtabstop = 4,
+      splitright = true,
+      swapfile = false,
+      tabstop = 8,
+      termguicolors = true,
+      textwidth = 80,
+      undodir = vim.env.HOME .. '/.vim/undodir',
+      undofile = true,
+      virtualedit = 'block,insert',
+      wrap = false,
+    },
+    wo = {
+      foldexpr = 'v:lua.vim.treesitter.foldexpr()',
+      foldtext = '',
+      linebreak = true
+    },
+    opt = {
+      completeopt = { 'menu', 'menuone', 'preview', 'noselect', 'noinsert' },
+      listchars = { tab = '<->', nbsp = '␣' },
+      shell = '/opt/homebrew/bin/fish',
+      display = 'lastline'
+    },
+    env = {
+      GIT_WORK_TREE = in_dotfiles and vim.env.HOME or vim.env.GIT_WORK_TREE,
+      GIT_DIR = in_dotfiles and vim.env.HOME .. '/.dotfiles' or vim.env.GIT_DIR,
+      -- for constant paging in Telescope delta commands
+      GIT_PAGER = 'delta --paging=always',
+    },
+  }
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "typescript", "typescriptreact", "javascript", "css", "html", "json", "yaml", "markdown" },
-  callback = function()
-    vim.opt.iskeyword:append { "-", "#", "$" }
-  end,
-})
+  -- apply the above settings
+  for scope, ops in pairs(settings) do
+    local op_group = vim[scope]
+    for op_key, op_value in pairs(ops) do
+      op_group[op_key] = op_value
+    end
+  end
+
+  -- properly recognize more filetypes
+  vim.filetype.add {
+    filename = {
+      -- recognize e.g. Github private keys as PEM files
+      id_ed25519 = 'pem',
+      -- properly recognize Git configuration for dotfiles
+      ['~/.dotfiles/config'] = 'gitconfig',
+    },
+  }
+
+  -- override `get_option` to allow for proper JSX/TSX commenting
+  local get_option = vim.filetype.get_option
+  local in_jsx = require('chrollo.config.utils').in_jsx_tags
+  vim.filetype.get_option = function(filetype, option)
+    if option ~= 'commentstring' then
+      return get_option(filetype, option)
+    end
+    if filetype == 'javascriptreact' or filetype == 'typescriptreact' then
+      local line = vim.api.nvim_get_current_line()
+      if in_jsx(false) or line:match('^%s-{/%*.-%*/}%s-$') then
+        return '{/*%s*/}'
+      end
+    end
+    return get_option(filetype, option)
+  end
+end
+
+return M
