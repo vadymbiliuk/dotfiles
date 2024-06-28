@@ -8,6 +8,16 @@ return {
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
   },
   {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup({
+        max_lines = 4,
+        multiline_threshold = 1,
+        mode = 'topline',
+      })
+    end,
+  },
+  {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     event = { "BufReadPost", "BufWritePost", "BufNewFile", 'VeryLazy' },

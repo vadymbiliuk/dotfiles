@@ -6,6 +6,7 @@ local mason_lspconfig = require('mason-lspconfig')
 require('lspconfig.ui.windows').default_options.border = BORDER_STYLE
 
 local lsp_servers = {
+  "vtsls",
   "bashls",
   "dockerls",
   "pylsp",
@@ -201,22 +202,22 @@ for _, server in pairs(lsp_servers) do
 end
 
 
-require("typescript-tools").setup({
-  on_attach = on_attach,
-  handlers = handlers,
-  capabilities = capabilities,
-  settings = {
-    tsserver_file_preferences = {
-      includeInlayParameterNameHints = "all",
-      includeCompletionsForModuleExports = true,
-      quotePreference = "auto",
-    },
-    tsserver_format_options = {
-      allowIncompleteCompletions = false,
-      allowRenameOfImportPath = false,
-    }
-  },
-})
+-- require("typescript-tools").setup({
+--   on_attach = on_attach,
+--   handlers = handlers,
+--   capabilities = capabilities,
+--   settings = {
+--     tsserver_file_preferences = {
+--       includeInlayParameterNameHints = "all",
+--       includeCompletionsForModuleExports = true,
+--       quotePreference = "auto",
+--     },
+--     tsserver_format_options = {
+--       allowIncompleteCompletions = false,
+--       allowRenameOfImportPath = false,
+--     }
+--   },
+-- })
 
 
 local signs = {

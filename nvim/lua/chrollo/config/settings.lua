@@ -1,3 +1,7 @@
+local in_dotfiles = vim.fn.system(
+  'git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME ls-tree --name-only HEAD'
+) ~= ''
+
 local BORDER_STYLE = 'rounded'
 local telescope_border_chars = {
   none = { '', '', '', '', '', '', '', '' },
@@ -17,6 +21,7 @@ local connected_telescope_border_chars = {
 }
 
 local M = {
+  in_dotfiles = in_dotfiles,
   border = BORDER_STYLE,
   telescope_border_chars = telescope_border_chars[BORDER_STYLE],
   telescope_centered_picker = {
@@ -68,6 +73,9 @@ M.apply = function()
       neovide_cursor_animate_in_insert_mode = false,
     },
     o = {
+      cursorline = true,
+      breakindent = true,
+      whichwrap = "b,h,l",
       showbreak = "↳ ",
       updatetime = 300,
       clipboard = 'unnamedplus',
@@ -75,8 +83,6 @@ M.apply = function()
       colorcolumn = '80',
       compatible = false,
       cpoptions = 'aABceFs', -- make `cw` compatible with other `w` operations
-      cursorline = true,
-      cursorlineopt = 'number',
       diffopt = 'internal,filler,closeoff,linematch:60',
       encoding = 'utf-8',
       expandtab = true,
@@ -86,7 +92,6 @@ M.apply = function()
       foldlevel = 99,
       foldlevelstart = 99,
       foldmethod = 'expr',
-      guifont = 'Iosevka Custom Extended,Symbols Nerd Font Mono:h15',
       ignorecase = true,
       linespace = -1,
       list = true,
@@ -116,6 +121,7 @@ M.apply = function()
       linebreak = true
     },
     opt = {
+      wrap = true,
       completeopt = { 'menu', 'menuone', 'preview', 'noselect', 'noinsert' },
       listchars = { tab = '<->', nbsp = '␣' },
       shell = '/opt/homebrew/bin/fish',

@@ -1,9 +1,14 @@
 return {
-    --     "lukas-reineke/indent-blankline.nvim",
-    --     main = "ibl",
-    --     opts = {
-    --         exclude = {
-    --             filetypes = { "org" },
-    --         },
+    -- 'lukas-reineke/indent-blankline.nvim',
+    -- event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    -- main = 'ibl',
+    -- opts = {
+    --     indent = {
+    --         char = '┊',
+    --         smart_indent_cap = true,
     --     },
+    --     scope = {
+    --         enabled = false,
+    --     },
+    -- }
 }
