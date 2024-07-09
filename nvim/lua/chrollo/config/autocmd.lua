@@ -96,3 +96,17 @@ create_autocmd('TermOpen', {
     vim.opt_local.foldcolumn = '0'
   end,
 })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "package.yaml",
+  callback = function()
+    Hpack()
+  end
+})
+
+function Hpack()
+  local result = vim.fn.system('hpack ' .. vim.fn.expand('%'))
+  if vim.v.shell_error ~= 0 then
+    print(result)
+  end
+end

@@ -6,6 +6,7 @@ return {
             options = {
                 section_separators = '',
                 component_separators = '',
+                theme = 'lackluster'
             },
             sections = {
                 lualine_a = { 'mode' },

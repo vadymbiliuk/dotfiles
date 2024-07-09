@@ -10,6 +10,15 @@ return {
   {
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
+      local color = require('lackluster').color
+
+      vim.api.nvim_set_hl(0, 'TreesitterContext', {
+        ctermbg = 0, bg = color.gray1
+      })
+      vim.api.nvim_set_hl(0, 'TreesitterContextLineNumber', {
+        ctermbg = 0, bg = color.gray1
+      })
+
       require('treesitter-context').setup({
         max_lines = 4,
         multiline_threshold = 1,

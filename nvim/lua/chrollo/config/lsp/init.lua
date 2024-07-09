@@ -6,7 +6,7 @@ local mason_lspconfig = require('mason-lspconfig')
 require('lspconfig.ui.windows').default_options.border = BORDER_STYLE
 
 local lsp_servers = {
-  "vtsls",
+  -- 'vtsls',
   "bashls",
   "dockerls",
   "pylsp",
@@ -29,8 +29,26 @@ local lsp_servers = {
   "lua_ls",
   "eslint",
   "nil_ls",
-  "hls",
+  -- "hls",
 }
+
+require("typescript-tools").setup({
+  on_attach = on_attach,
+  handlers = handlers,
+  capabilities = capabilities,
+  settings = {
+    tsserver_file_preferences = {
+      includeInlayParameterNameHints = "all",
+      includeCompletionsForModuleExports = true,
+      quotePreference = "auto",
+    },
+    tsserver_format_options = {
+      allowIncompleteCompletions = false,
+      allowRenameOfImportPath = false,
+    }
+  },
+})
+
 
 local lsp_servers_custom = {
   eslint = {
@@ -140,6 +158,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>f=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', ']g', '<cmd>lua vim.diagnostic.goto_next({ float = true })<CR>', opts)
   buf_set_keymap('n', '[g', '<cmd>lua vim.diagnostic.goto_prev({ float = true })<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua require("pretty_hover").hover()<CR>', opts)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -201,25 +220,6 @@ for _, server in pairs(lsp_servers) do
   ::continue::
 end
 
-
--- require("typescript-tools").setup({
---   on_attach = on_attach,
---   handlers = handlers,
---   capabilities = capabilities,
---   settings = {
---     tsserver_file_preferences = {
---       includeInlayParameterNameHints = "all",
---       includeCompletionsForModuleExports = true,
---       quotePreference = "auto",
---     },
---     tsserver_format_options = {
---       allowIncompleteCompletions = false,
---       allowRenameOfImportPath = false,
---     }
---   },
--- })
-
-
 local signs = {
   Error = '󰇴 ',
   Warn = '󱚝 ',
@@ -227,15 +227,16 @@ local signs = {
   Hint = '󱜙 '
 }
 
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
-
 vim.diagnostic.config({
   virtual_text = false,
-  signs = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = signs.Error,
+      [vim.diagnostic.severity.WARN] = signs.Warn,
+      [vim.diagnostic.severity.INFO] = signs.Info,
+      [vim.diagnostic.severity.HINT] = signs.Hint,
+    }
+  },
   underline = true,
   float = { border = BORDER_STYLE },
 })

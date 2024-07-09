@@ -42,7 +42,7 @@ local M = {
     },
   },
   lazy_loaded_colorschemes = {
-    'github_dark_dimmed',
+    'lackluster',
   },
 }
 
@@ -127,12 +127,12 @@ M.apply = function()
       shell = '/opt/homebrew/bin/fish',
       display = 'lastline'
     },
-    env = {
-      GIT_WORK_TREE = in_dotfiles and vim.env.HOME or vim.env.GIT_WORK_TREE,
-      GIT_DIR = in_dotfiles and vim.env.HOME .. '/.dotfiles' or vim.env.GIT_DIR,
-      -- for constant paging in Telescope delta commands
-      GIT_PAGER = 'delta --paging=always',
-    },
+    -- env = {
+    --   GIT_WORK_TREE = in_dotfiles and vim.env.HOME or vim.env.GIT_WORK_TREE,
+    --   GIT_DIR = in_dotfiles and vim.env.HOME .. '/.dotfiles' or vim.env.GIT_DIR,
+    --   -- for constant paging in Telescope delta commands
+    --   GIT_PAGER = 'delta --paging=always',
+    -- },
   }
 
   -- apply the above settings
