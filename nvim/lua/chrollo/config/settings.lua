@@ -118,13 +118,15 @@ M.apply = function()
     wo = {
       foldexpr = 'v:lua.vim.treesitter.foldexpr()',
       foldtext = '',
-      linebreak = true
+      linebreak = true,
     },
     opt = {
       wrap = true,
       completeopt = { 'menu', 'menuone', 'preview', 'noselect', 'noinsert' },
-      listchars = { tab = '<->', nbsp = '␣' },
+      listchars = { tab = '  ', nbsp = ' ' },
+      list = false,
       shell = '/opt/homebrew/bin/fish',
+      expandtab = true,
       display = 'lastline'
     },
     -- env = {

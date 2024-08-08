@@ -1,58 +1,58 @@
 local create_autocmd = vim.api.nvim_create_autocmd
 -- javascript-family files nvim-surround setup
-create_autocmd('FileType', {
-  pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
-  callback = function()
-    local config = require('nvim-surround.config')
-    ---@diagnostic disable-next-line: missing-fields
-    require('nvim-surround').buffer_setup {
-      surrounds = {
-        ---@diagnostic disable-next-line: missing-fields
-        F = {
-          add = function()
-            local result = require('nvim-surround.config').get_input(
-              'Enter the function name: '
-            )
-            if result then
-              if result == '' then
-                return {
-                  { '() => {' },
-                  { '}' },
-                }
-              else
-                return {
-                  { 'function ' .. result .. '() {' },
-                  { '}' },
-                }
-              end
-            end
-          end,
-          find = function()
-            return require('nvim-surround.config').get_selection {
-              query = { capture = '@function.outer', type = 'textobjects' },
-            }
-          end,
-          ---@param char string
-          delete = function(char)
-            local match = config.get_selections {
-              char = char,
-              --> INJECT: luap
-              pattern = '^(function%s+[%w_]-%s-%(.-%).-{)().-(})()$',
-            }
-            if not match then
-              match = config.get_selections {
-                char = char,
-                --> INJECT: luap
-                pattern = '^(%(.-%)%s-=>%s-{)().-(})()$',
-              }
-            end
-            return match
-          end,
-        },
-      },
-    }
-  end,
-})
+-- create_autocmd('FileType', {
+--   pattern = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
+--   callback = function()
+--     local config = require('nvim-surround.config')
+--     ---@diagnostic disable-next-line: missing-fields
+--     require('nvim-surround').buffer_setup {
+--       surrounds = {
+--         ---@diagnostic disable-next-line: missing-fields
+--         F = {
+--           add = function()
+--             local result = require('nvim-surround.config').get_input(
+--               'Enter the function name: '
+--             )
+--             if result then
+--               if result == '' then
+--                 return {
+--                   { '() => {' },
+--                   { '}' },
+--                 }
+--               else
+--                 return {
+--                   { 'function ' .. result .. '() {' },
+--                   { '}' },
+--                 }
+--               end
+--             end
+--           end,
+--           find = function()
+--             return require('nvim-surround.config').get_selection {
+--               query = { capture = '@function.outer', type = 'textobjects' },
+--             }
+--           end,
+--           ---@param char string
+--           delete = function(char)
+--             local match = config.get_selections {
+--               char = char,
+--               --> INJECT: luap
+--               pattern = '^(function%s+[%w_]-%s-%(.-%).-{)().-(})()$',
+--             }
+--             if not match then
+--               match = config.get_selections {
+--                 char = char,
+--                 --> INJECT: luap
+--                 pattern = '^(%(.-%)%s-=>%s-{)().-(})()$',
+--               }
+--             end
+--             return match
+--           end,
+--         },
+--       },
+--     }
+--   end,
+-- })
 
 create_autocmd("BufReadPost", {
   pattern = { "*" },
@@ -110,3 +110,19 @@ function Hpack()
     print(result)
   end
 end
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*",
+      callback = function(args)
+        require("conform").format({ bufnr = args.buf })
+      end,
+    })
+  end,
+})
+
+vim.cmd([[
+  autocmd BufLeave,FocusLost * silent! wall
+]])

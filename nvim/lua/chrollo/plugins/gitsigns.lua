@@ -8,9 +8,12 @@ return {
             require('gitsigns').setup {
                 attach_to_untracked = true,
                 signs = {
-                    add = { text = '┃' },
-                    change = { text = '┃' },
-                    delete = { text = '•' },
+                    add          = { text = '┃' },
+                    change       = { text = '┃' },
+                    delete       = { text = '•' },
+                    topdelete    = { text = '•' },
+                    changedelete = { text = '•' },
+                    untracked    = { text = '┃' },
                 },
                 current_line_blame = true,
                 current_line_blame_opts = {
@@ -22,9 +25,12 @@ return {
                 },
                 current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
                 signs_staged = {
-                    add = { text = '┃' },
-                    change = { text = '┃' },
-                    delete = { text = '•' },
+                    add          = { text = '┃' },
+                    change       = { text = '┃' },
+                    delete       = { text = '•' },
+                    topdelete    = { text = '•' },
+                    changedelete = { text = '•' },
+                    untracked    = { text = '┃' },
                 },
                 sign_priority = 0,
                 preview_config = {

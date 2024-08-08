@@ -8,9 +8,15 @@ return {
 
 		vim.keymap.set("n", "<space>e", function()
 			edgy.toggle "left"
+			edgy.toggle "right"
 		end, { desc = "Toggle sidebar" })
 	end,
 	dependencies = {
+		{
+			"nvim-neotest/neotest",
+			"nvim-neotest/neotest-jest",
+			"nvim-neotest/neotest-python",
+		},
 		{
 			"folke/trouble.nvim",
 			branch = "main",
@@ -25,11 +31,11 @@ return {
 					"<cmd>Trouble symbols toggle<cr>",
 					desc = "Symbols (Trouble)",
 				},
-				{
-					"<leader>tl",
-					"<cmd>Trouble loclist toggle<cr>",
-					desc = "Location List (Trouble)",
-				},
+				-- {
+				-- 	"<leader>tl",
+				-- 	"<cmd>Trouble loclist toggle<cr>",
+				-- 	desc = "Location List (Trouble)",
+				-- },
 			},
 			opts = {}, -- for default options, refer to the configuration section for custom setup.
 			init = function()
@@ -47,8 +53,20 @@ return {
 			left = {
 				size = 35,
 			},
+			right = {
+				size = 35,
+			},
 		},
 		close_when_all_hidden = true,
+		right = {
+			{
+				ft = "Neotest",
+				pinned = true,
+				title = "Test",
+				open = "Neotest summary",
+				size = { height = 0.5 },
+			}
+		},
 		left = {
 
 			-- Neo-tree filesystem always takes half the screen height

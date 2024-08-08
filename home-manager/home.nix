@@ -28,33 +28,40 @@
   programs.fish = {
     enable = true;
     plugins = [ ];
-    shellInit = ''
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+
       # Set EDITOR to nvim
       set -x EDITOR nvim
 
       set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME
       set -gx PATH $HOME/.cabal/bin $PATH /Users/vadymbiliuk/.ghcup/bin # ghcup-env
 
-      source /opt/homebrew/share/google-cloud-sdk/path.fish.inc
-    '';
-    interactiveShellInit = ''
-      # Disable fish greeting
-      set fish_greeting
-
-      # Initialize pyenv
-      if type -q pyenv
-        pyenv init - | source
+      # nix
+      if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+         fenv source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
       end
+
+      starship init fish | source
+
+      status is-interactive; and source (pyenv init --path | psub)
 
       # Configure fnm
       if type -q fnm
         fnm env --use-on-cd | source
       end
 
-      # Configure gcp
-      if [ -f '/Users/vadymbiliuk/google-cloud-sdk/path.fish.inc' ]; . '/Users/vadymbiliuk/google-cloud-sdk/path.fish.inc'; end
+      # Source Google Cloud SDK path setup
+      set GOOGLE_CLOUD_SDK (brew --prefix)/share/google-cloud-sdk
+      source $GOOGLE_CLOUD_SDK/path.fish.inc
 
+      # Source Google Cloud SDK completion setup
+      # bash source $GOOGLE_CLOUD_SDK/completion.bash.inc
 
+      alias v "nvim" 
+      alias vi "nvim" 
+    '';
+    shellInit = ''
       set -gx fish_color_end 7a7a7a
       set -gx fish_color_error ffaa88
       set -gx fish_color_quote 708090

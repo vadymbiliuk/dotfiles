@@ -10,6 +10,7 @@ return {
         { 'hrsh7th/cmp-nvim-lua' },
         { 'hrsh7th/cmp-omni' },
         { 'onsails/lspkind-nvim' },
+        { 'luckasRanarison/tailwind-tools.nvim' },
     },
     config = function()
         local cmp = require('cmp')
@@ -42,7 +43,12 @@ return {
         local luasnip = require('luasnip')
         local function ins_tab_mapping(fallback)
             local entry = cmp.get_selected_entry()
-            if
+            local tab_shift_width = vim.opt.shiftwidth:get()
+            local copilot_keys = vim.fn["copilot#Accept"](string.rep(" ", tab_shift_width))
+
+            if copilot_keys ~= "" and type(copilot_keys) == "string" then
+                vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            elseif
                 cmp.visible()
                 -- if tabbing on an entry that already matches what we have, just
                 -- skip and fall through to the next action
@@ -82,6 +88,22 @@ return {
         end
 
         local cmp_mappings = {
+            ['<C-p>'] = {
+                i = cmp.mapping.select_prev_item {
+                    behavior = cmp.SelectBehavior.Select,
+                },
+                c = cmp.mapping.select_prev_item {
+                    behavior = cmp.SelectBehavior.Insert,
+                },
+            },
+            ['<C-n>'] = {
+                i = cmp.mapping.select_next_item {
+                    behavior = cmp.SelectBehavior.Select,
+                },
+                c = cmp.mapping.select_next_item {
+                    behavior = cmp.SelectBehavior.Insert,
+                },
+            },
             ['<C-b>'] = cmp.mapping.scroll_docs(-4),
             ['<C-f>'] = cmp.mapping.scroll_docs(4),
             ['<C-Enter>'] = cmp.mapping.complete(),
@@ -90,26 +112,66 @@ return {
                 behavior = cmp.ConfirmBehavior.Replace,
                 select = true,
             },
-            ["<Tab>"] = cmp.mapping(function(fallback)
-                -- provide a value for copilot to fallback if there is no suggestion to accept. If no suggestion accept mimic normal tab behavior.
-                local tab_shift_width = vim.opt.shiftwidth:get()
-                local copilot_keys = vim.fn["copilot#Accept"](string.rep(" ", tab_shift_width))
+            ['<Tab>'] = {
+                i = ins_tab_mapping,
+                s = ins_tab_mapping,
+                c = function()
+                    if vim.fn.getcmdline():sub(1, 1) == '!' then
+                        vim.api.nvim_feedkeys(
+                            vim.api.nvim_replace_termcodes('<C-z>', true, false, true),
+                            'n',
+                            false
+                        )
+                        return
+                    end
+                    local tab_shift_width = vim.opt.shiftwidth:get()
+                    local copilot_keys = vim.fn["copilot#Accept"](string.rep(" ", tab_shift_width))
 
-                if luasnip.expand_or_locally_jumpable() then
-                    luasnip.expand_or_jump()
-                elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
-                    vim.api.nvim_feedkeys(copilot_keys, "i", true)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
-            ["<S-Tab>"] = cmp.mapping(function(fallback)
-                if luasnip.locally_jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { "i", "s" }),
+                    if luasnip.expand_or_locally_jumpable() then
+                        luasnip.expand_or_jump()
+                    elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
+                        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+                    elseif cmp.visible() then
+                        cmp.confirm { select = true }
+                    else
+                        cmp.complete()
+                        cmp.select_next_item()
+                        cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
+                    end
+                end,
+            },
+            ['<S-Tab>'] = {
+                i = ins_s_tab_mapping,
+                s = ins_s_tab_mapping,
+                c = function()
+                    if cmp.visible() then
+                        cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
+                    else
+                        cmp.complete()
+                    end
+                end,
+            },
+            ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+            -- ["<Tab>"] = cmp.mapping(function(fallback)
+            --     -- provide a value for copilot to fallback if there is no suggestion to accept. If no suggestion accept mimic normal tab behavior.
+            --     local tab_shift_width = vim.opt.shiftwidth:get()
+            --     local copilot_keys = vim.fn["copilot#Accept"](string.rep(" ", tab_shift_width))
+            --
+            --     if luasnip.expand_or_locally_jumpable() then
+            --         luasnip.expand_or_jump()
+            --     elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
+            --         vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            --     else
+            --         fallback()
+            --     end
+            -- end, { "i", "s" }),
+            -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+            --     if luasnip.locally_jumpable(-1) then
+            --         luasnip.jump(-1)
+            --     else
+            --         fallback()
+            --     end
+            -- end, { "i", "s" }),
         }
 
         local BORDER_STYLE = require('chrollo.config.settings').border

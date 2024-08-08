@@ -15,6 +15,7 @@ return {
     "slugbyte/lackluster.nvim",
     lazy = false,
     priority = 1000,
+    dev = true,
     init = function()
       local lackluster = require("lackluster")
       lackluster.setup({
@@ -22,9 +23,59 @@ return {
           popup = '#101010',
         },
       })
+
+      local make_bold = function(name)
+        local value = vim.api.nvim_get_hl(0, { name = name })
+        value.bold = true
+        vim.api.nvim_set_hl(0, name, value)
+      end
+
+      local make_italic = function(name)
+        local value = vim.api.nvim_get_hl(0, { name = name })
+        value.italic = true
+        vim.api.nvim_set_hl(0, name, value)
+      end
+
+      local make_bold_italic = function(name)
+        local value = vim.api.nvim_get_hl(0, { name = name })
+        value.bold = true
+        value.italic = true
+        vim.api.nvim_set_hl(0, name, value)
+      end
+
       vim.cmd.colorscheme("lackluster")
+
+      make_bold("Bold")
+      make_bold("markdownBold")
+      make_bold("@function")
+      make_bold("@text.strong")
+      make_bold("@symbol")
+      make_bold("StatusLineDiagnosticWarn")
+      make_bold("StatusLineDiagnosticError")
+      make_bold("TelescopeMatching")
+      make_bold("@lsp.type.function")
+      make_bold("@lsp.type.method")
+
+      make_italic("Comment")
+      make_italic("markdownItalic")
+      make_italic("markdownRule")
+      make_italic("@keyword")
+      make_italic("@text.emphasis")
+      make_italic("@comment")
+      make_italic("@lsp.type.comment")
+      make_italic("markdownRule")
+
+      make_bold_italic("markdownBoldItalic")
     end,
-  }
+  },
+  -- {
+  --   "horanmustaplot/xcarbon.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd("colorscheme xcarbon")
+  --   end,
+  -- }
   -- {
   --   'arzg/vim-colors-xcode',
   --   lazy = false,

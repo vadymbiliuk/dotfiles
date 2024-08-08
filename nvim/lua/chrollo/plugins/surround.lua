@@ -1,77 +1,77 @@
 return {
-    'kylechui/nvim-surround',
-    keys = {
-        'ys',
-        'yS',
-        'cs',
-        'ds',
-        { 's',      'S',           remap = true, mode = { 'x' } },
-        { 'S',      mode = { 'x' } },
-        { 'gS',     mode = { 'x' } },
-        { '<C-g>s', mode = { 'i' } },
-        { '<C-g>S', mode = { 'i' } },
-    },
-    config = function()
-        local input = require('nvim-surround.input').get_input
-        ---@diagnostic disable-next-line: missing-fields
-        require('nvim-surround').setup {
-            aliases = {
-                ['d'] = { '{', '[', '(', '<', '"', "'", '`' }, -- any delimiter
-                ['b'] = { '{', '[', '(', '<' },          -- bracket
-                ['p'] = { '(' },
-            },
-            surrounds = {
-                ---@diagnostic disable-next-line: missing-fields
-                ['f'] = {
-                    change = {
-                        --> INJECT: luap
-                        target = '^.-([%w_.]+!?)()%(.-%)()()$',
-                        replacement = function()
-                            local result = input('Enter the function name: ')
-                            if result then
-                                return { { result }, { '' } }
-                            end
-                        end,
-                    },
-                },
-                ---@diagnostic disable-next-line: missing-fields
-                ['g'] = {
-                    add = function()
-                        local result = require('nvim-surround.config').get_input(
-                            'Enter the generic name: '
-                        )
-                        if result then
-                            return {
-                                { result .. '<' },
-                                { '>' },
-                            }
-                        end
-                    end,
-                    --> INJECT: luap
-                    find = '[%w_]-<.->',
-                    --> INJECT: luap
-                    delete = '^([%w_]-<)().-(>)()$',
-                },
-                ---@diagnostic disable-next-line: missing-fields
-                ['G'] = {
-                    add = function()
-                        local result = require('nvim-surround.config').get_input(
-                            'Enter the generic name: '
-                        )
-                        if result then
-                            return {
-                                { result .. '<' },
-                                { '>' },
-                            }
-                        end
-                    end,
-                    --> INJECT: luap
-                    find = '[%w_]-<.->',
-                    --> INJECT: luap
-                    delete = '^([%w_]-<)().-(>)()$',
-                },
-            },
-            move_cursor = false,
-        }
-    end,
+    -- 'kylechui/nvim-surround',
+    -- keys = {
+    --     'ys',
+    --     'yS',
+    --     'cs',
+    --     'ds',
+    --     { 's',      'S',           remap = true, mode = { 'x' } },
+    --     { 'S',      mode = { 'x' } },
+    --     { 'gS',     mode = { 'x' } },
+    --     { '<C-g>s', mode = { 'i' } },
+    --     { '<C-g>S', mode = { 'i' } },
+    -- },
+    -- config = function()
+    --     local input = require('nvim-surround.input').get_input
+    --     ---@diagnostic disable-next-line: missing-fields
+    --     require('nvim-surround').setup {
+    --         aliases = {
+    --             ['d'] = { '{', '[', '(', '<', '"', "'", '`' }, -- any delimiter
+    --             ['b'] = { '{', '[', '(', '<' },                -- bracket
+    --             ['p'] = { '(' },
+    --         },
+    --         surrounds = {
+    --             ---@diagnostic disable-next-line: missing-fields
+    --             ['f'] = {
+    --                 change = {
+    --                     --> INJECT: luap
+    --                     target = '^.-([%w_.]+!?)()%(.-%)()()$',
+    --                     replacement = function()
+    --                         local result = input('Enter the function name: ')
+    --                         if result then
+    --                             return { { result }, { '' } }
+    --                         end
+    --                     end,
+    --                 },
+    --             },
+    --             ---@diagnostic disable-next-line: missing-fields
+    --             ['g'] = {
+    --                 add = function()
+    --                     local result = require('nvim-surround.config').get_input(
+    --                         'Enter the generic name: '
+    --                     )
+    --                     if result then
+    --                         return {
+    --                             { result .. '<' },
+    --                             { '>' },
+    --                         }
+    --                     end
+    --                 end,
+    --                 --> INJECT: luap
+    --                 find = '[%w_]-<.->',
+    --                 --> INJECT: luap
+    --                 delete = '^([%w_]-<)().-(>)()$',
+    --             },
+    --             ---@diagnostic disable-next-line: missing-fields
+    --             ['G'] = {
+    --                 add = function()
+    --                     local result = require('nvim-surround.config').get_input(
+    --                         'Enter the generic name: '
+    --                     )
+    --                     if result then
+    --                         return {
+    --                             { result .. '<' },
+    --                             { '>' },
+    --                         }
+    --                     end
+    --                 end,
+    --                 --> INJECT: luap
+    --                 find = '[%w_]-<.->',
+    --                 --> INJECT: luap
+    --                 delete = '^([%w_]-<)().-(>)()$',
+    --             },
+    --         },
+    --         move_cursor = false,
+    --     }
+    -- end,
 }

@@ -10,10 +10,47 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("chrollo.plugins", {
-  install = {
-    colorscheme = {"minimal", "habamax"}
+require("lazy").setup(
+  {
+    import = "chrollo/plugins",
+  },
+  {
+    ui = {
+      icons = {
+        cmd = " ",
+        config = " ",
+        event = " ",
+        ft = " ",
+        init = " ",
+        import = " ",
+        keys = " ",
+        lazy = " ",
+        loaded = "●",
+        not_loaded = "○",
+        plugin = " ",
+        runtime = " ",
+        require = " ",
+        source = " ",
+        start = " ",
+        task = "✔ ",
+        list = {
+          "●",
+          "➜",
+          "★",
+          "‒",
+        },
+      },
+    },
+    change_detection = {
+      enabled = true,
+      notify = false,
+    },
+    install = { colorscheme = { "lackluster" } },
+    dev = {
+      path = "~/Documents/Programming/Open Source/Neovim Plugins"
+    },
   }
-})
+)

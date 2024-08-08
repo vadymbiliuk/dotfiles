@@ -9,7 +9,7 @@ local lsp_servers = {
   -- 'vtsls',
   "bashls",
   "dockerls",
-  "pylsp",
+  "pyright",
   "ruff_lsp",
   "vimls",
   "yamlls",
@@ -17,7 +17,6 @@ local lsp_servers = {
   "svelte",
   "graphql",
   "rust_analyzer",
-  "gopls",
   "clangd",
   "intelephense",
   "prismals",
@@ -29,7 +28,8 @@ local lsp_servers = {
   "lua_ls",
   "eslint",
   "nil_ls",
-  -- "hls",
+  "biome",
+  "tailwindcss"
 }
 
 require("typescript-tools").setup({
@@ -51,6 +51,20 @@ require("typescript-tools").setup({
 
 
 local lsp_servers_custom = {
+  pyright = {
+    settings = {
+      pyright = {
+        -- Using Ruff's import organizer
+        disableOrganizeImports = true,
+      },
+      python = {
+        analysis = {
+          -- Ignore all files for analysis to exclusively use Ruff for linting
+          ignore = { '*' },
+        },
+      },
+    },
+  },
   eslint = {
     filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
   },

@@ -1,28 +1,35 @@
+local function has_biome_config()
+  local uv = vim.loop
+  local cwd = uv.cwd()
+  local biome_path = cwd .. "/biome.json"
+  local stat = uv.fs_stat(biome_path)
+  return stat ~= nil
+end
+
 return {
   "stevearc/conform.nvim",
   config = function()
     require("conform").setup {
-      format_on_save = function(bufnr)
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-          return
-        end
-        return { timeout_ms = 500, lsp_fallback = true }
-      end,
+      notify_on_error = true,
+      format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+      },
       formatters_by_ft = {
         lua = { "stylua" },
         rust = { "rustfmt" },
         c = { "clang-format" },
         cpp = { "clang-format" },
         python = { "ruff format" },
-        javascript = { { "prettierd", "prettier" }, { "eslint" } },
+        javascript = has_biome_config() and { "biome" } or { "prettierd" },
         markdown = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        css = { { "prettierd", "prettier" } },
-        json = { { "prettierd", "prettier" } },
-        yaml = { { "prettierd", "prettier" } },
-        graphql = { { "prettierd", "prettier" } },
+        typescript = has_biome_config() and { "biome" } or { "prettierd" },
+        typescriptreact = has_biome_config() and { "biome" } or { "prettierd" },
+        javascriptreact = has_biome_config() and { "biome" } or { "prettierd" },
+        css = { { "prettierd" } },
+        json = has_biome_config() and { "biome" } or { "prettierd" },
+        yaml = { { "prettierd" } },
+        graphql = { { "prettierd" } },
         rescript = { "rescript" },
         ocaml = { "ocamlformat" },
         prisma = { "prisma format" },
@@ -31,13 +38,5 @@ return {
         cabal = { 'cabal-fmt --inplace' }
       },
     }
-
-    local function format()
-      require("conform").format {
-      }
-    end
-
-    vim.keymap.set({ "n", "i" }, "<F12>", format, { desc = "Format", silent = true })
-    vim.api.nvim_create_user_command("Format", format, { desc = "Format current buffer with LSP" })
   end,
 }
