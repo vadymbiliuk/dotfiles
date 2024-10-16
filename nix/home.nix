@@ -1,7 +1,5 @@
 { config, pkgs, ... }:
 let
-  homeDir = builtins.getEnv "HOME";
-
   packages = import (builtins.fetchGit {
     name = "my-old-revision";
     url = "https://github.com/NixOS/nixpkgs/";
