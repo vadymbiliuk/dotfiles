@@ -34,6 +34,9 @@ return {
 					enable = true,
 					additional_vim_regex_highlighting = false,
 				},
+				scope = {
+					enable = true,
+				},
 			})
 		end,
 	},
@@ -543,6 +546,18 @@ return {
 		},
 		keys = {
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+		},
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		main = "ibl",
+		---@module "ibl"
+		---@type ibl.config
+		opts = {
+			scope = { enabled = true },
+		},
+		include = {
+			node_type = { haskell = { "do" } },
 		},
 	},
 }
