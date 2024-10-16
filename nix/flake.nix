@@ -34,8 +34,38 @@
           pkgs.yabai
         ];
 
-        services.postgresql.enable = true;
-        services.postgresql.package = pkgs.postgresql_16;
+        services.postgresql = {
+          enable = true;
+          package = pkgs.postgresql_16;
+        };
+
+        services.yabai = {
+          enable = true;
+          config = {
+            focus_follows_mouse = "autoraise";
+            mouse_follows_focus = "on";
+            window_placement = "second_child";
+            window_opacity = "off";
+            top_padding = 12;
+            bottom_padding = 12;
+            left_padding = 12;
+            right_padding = 12;
+            window_gap = 10;
+          };
+          extraConfig = ''
+            yabai -m config mouse_modifier alt
+            yabai -m config mouse_action1 move
+            yabai -m config mouse_action2 resize
+
+            yabai -m mouse_drop_action swap
+
+            yabai -m rule --add app="^System Settings$" manage=off
+            yabai -m rule --add app="^Calculator$" manage=off
+            yabai -m rule --add app="^Karabiner-Elements$" manage=off
+            yabai -m rule --add app="^QuickTime Player$" manage=off
+            yabai -m rule --add app="^1Password$" manage=off
+          '';
+        };
 
         users.users.vadymbiliuk = {
           name = username;
