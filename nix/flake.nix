@@ -15,10 +15,14 @@
     let
       username = "vadymbiliuk";
       configuration = { pkgs, ... }: {
-        imports = [ ./yabai.nix ];
+        imports = [ ./yabai.nix ./skhd.nix ];
 
         nixpkgs.config.allowUnfree = true;
 
+        environment.variables = {
+          EDITOR = "nvim";
+          VISUAL = "nvim";
+        };
         environment.systemPackages = [
           pkgs.jdk11
           pkgs.opam
@@ -37,6 +41,7 @@
           pkgs.skhd
         ];
 
+        services.nix-daemon.enable = true;
         services.postgresql = {
           enable = true;
           package = pkgs.postgresql_16;
@@ -100,8 +105,6 @@
           NSGlobalDomain.KeyRepeat = 1;
           NSGlobalDomain.InitialKeyRepeat = 10;
         };
-
-        services.nix-daemon.enable = true;
 
         nix.settings.experimental-features = "nix-command flakes";
 
