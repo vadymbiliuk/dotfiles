@@ -31,6 +31,7 @@
           pkgs.mkalias
           pkgs.ffmpeg
           pkgs.postgresql_16
+          pkgs.yabai
         ];
 
         services.postgresql.enable = true;
