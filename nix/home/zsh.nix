@@ -41,6 +41,8 @@
     export CPATH="/usr/local/include:$CPATH"
     export PG_CONFIG=/usr/bin/pg_config
     export PATH="/usr/local/opt/openssl/bin:$PATH"
+
+    [[ ! -r '/Users/vadymbiliuk/.opam/opam-init/init.zsh' ]] || source '/Users/vadymbiliuk/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
   '';
   oh-my-zsh = {
     enable = true;

@@ -30,15 +30,17 @@ in {
     pkgs.ruff
     pkgs.vscode-langservers-extracted
     pkgs.haskellPackages.fourmolu
+    pkgs.stylish-haskell
     pkgs.haskellPackages.hoogle
-    pkgs.haskellPackages.fourmolu
     (googleCloudSdk.withExtraComponents [
       googleCloudSdk.components.app-engine-python
       googleCloudSdk.components.app-engine-python-extras
     ])
     pkgs.luajitPackages.luarocks
     pkgs.lua51Packages.lua
+    pkgs.ocamlPackages.dune_3
     pkgs.ocamlPackages.ocamlformat
+    pkgs.ocamlPackages.ocaml-lsp
     pkgs.haskellPackages.cabal-fmt
     pkgs.clang-tools
     pkgs.ruff

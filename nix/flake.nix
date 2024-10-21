@@ -25,6 +25,7 @@
         };
         environment.systemPackages = [
           pkgs.jdk11
+          pkgs.ocaml
           pkgs.opam
           pkgs.lldb
           pkgs.cmake
@@ -57,17 +58,7 @@
 
         homebrew = {
           enable = true;
-          brews = [
-            "mas"
-            "libjpeg"
-            "libtiff"
-            "little-cms2"
-            "openjpeg"
-            "webp"
-            "openssl"
-            "ca-certificates"
-            "curl"
-          ];
+          brews = [ "mas" "libjpeg" "openjpeg" ];
           casks = [
             "google-chrome"
             "the-unarchiver"
@@ -79,6 +70,9 @@
             "fork"
             "telegram"
             "steam"
+            "unnaturalscrollwheels"
+            "tableplus"
+            "docker"
           ];
           masApps = { };
           onActivation.cleanup = "zap";

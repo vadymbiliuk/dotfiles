@@ -35,7 +35,7 @@ return {
 					ocaml = { "ocamlformat" },
 					prisma = { "prisma format" },
 					nix = { "nixfmt" },
-					haskell = { "fourmolu" },
+					haskell = { "stylish-haskell" },
 					cabal = { "cabal-fmt --inplace" },
 				},
 			})
