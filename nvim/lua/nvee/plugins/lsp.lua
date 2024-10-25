@@ -27,11 +27,12 @@ return {
 					typescript = has_biome_config() and { "biome" } or { "prettierd" },
 					typescriptreact = has_biome_config() and { "biome" } or { "prettierd" },
 					javascriptreact = has_biome_config() and { "biome" } or { "prettierd" },
-					css = { { "prettierd" } },
 					json = has_biome_config() and { "biome" } or { "prettierd" },
+					-- css = { "prettierd" },
+					-- scss = { "prettierd" },
 					yaml = { { "prettierd" } },
 					graphql = { { "prettierd" } },
-					rescript = { "rescript" },
+					recript = { "rescript" },
 					ocaml = { "ocamlformat" },
 					prisma = { "prisma format" },
 					nix = { "nixfmt" },
@@ -69,7 +70,7 @@ return {
 				"biome",
 				"tailwindcss",
 				"ocamllsp",
-				"cssls",
+				-- "cssls",
 				"hls",
 			}
 
