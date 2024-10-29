@@ -45,6 +45,7 @@ return {
 
 	{
 		"nvim-lualine/lualine.nvim",
+		dependencies = { "AndreM222/copilot-lualine" },
 		config = function()
 			require("lualine").setup({
 				options = {
@@ -55,8 +56,8 @@ return {
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = {
-						"branch",
-						"diff",
+						-- "branch",
+						-- "diff",
 						{
 							"diagnostics",
 							sources = { "nvim_diagnostic" },
@@ -78,8 +79,8 @@ return {
 							always_visible = false,
 						},
 					},
-					lualine_c = { "filename" },
-					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_c = { "copilot" },
+					lualine_x = { { "filetype", icon_only = false, icon = { align = "left" } }, "filename" },
 					lualine_y = { "progress" },
 					lualine_z = { "location" },
 				},

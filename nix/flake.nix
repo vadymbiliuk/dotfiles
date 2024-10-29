@@ -73,6 +73,7 @@
             "unnaturalscrollwheels"
             "tableplus"
             "docker"
+            "zed"
           ];
           masApps = { };
           onActivation.cleanup = "zap";
