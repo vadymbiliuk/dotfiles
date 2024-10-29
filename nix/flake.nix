@@ -40,6 +40,8 @@
           pkgs.postgresql_16
           pkgs.yabai
           pkgs.skhd
+          pkgs.hub
+          pkgs.curl
         ];
 
         services.nix-daemon.enable = true;
