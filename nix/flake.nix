@@ -76,8 +76,10 @@
             "tableplus"
             "docker"
             "zed"
+            "battle-net"
+            "postman"
           ];
-          masApps = { };
+          masApps = { "1Password for Safari" = 1569813296; };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
           onActivation.upgrade = true;
@@ -85,7 +87,7 @@
 
         system.defaults = {
           dock.persistent-apps = [
-            "/Applications/Google Chrome.app"
+            "/System/Applications/Safari.app"
             "/Applications/Telegram.app"
             "${pkgs.kitty}/Applications/Kitty.app"
             "${pkgs.obsidian}/Applications/Obsidian.app"
