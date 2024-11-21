@@ -41,7 +41,6 @@
           pkgs.yabai
           pkgs.skhd
           pkgs.hub
-          pkgs.curl
         ];
 
         services.nix-daemon.enable = true;
@@ -78,8 +77,12 @@
             "zed"
             "battle-net"
             "postman"
+            "hstracker"
           ];
-          masApps = { "1Password for Safari" = 1569813296; };
+          masApps = {
+            "1Password for Safari" = 1569813296;
+            "Dark Reader for Safari" = 1438243180;
+          };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
           onActivation.upgrade = true;
@@ -87,7 +90,7 @@
 
         system.defaults = {
           dock.persistent-apps = [
-            "/System/Applications/Safari.app"
+            "/Applications/Safari.app/"
             "/Applications/Telegram.app"
             "${pkgs.kitty}/Applications/Kitty.app"
             "${pkgs.obsidian}/Applications/Obsidian.app"

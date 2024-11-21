@@ -72,6 +72,7 @@ return {
 				"ocamllsp",
 				-- "cssls",
 				"hls",
+				"grammarly",
 			}
 
 			require("vtsls").config({})

@@ -38,6 +38,7 @@ return {
 					enable = true,
 				},
 			})
+			require("nvim-treesitter.install").prefer_git = true
 		end,
 	},
 	{ "echasnovski/mini.trailspace", version = "*", config = true },

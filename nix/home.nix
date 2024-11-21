@@ -23,6 +23,7 @@ in {
   };
 
   home.packages = [
+    pkgs.tree-sitter
     pkgs.black
     pkgs.thefuck
     pkgs.prettierd
@@ -41,6 +42,7 @@ in {
     pkgs.ocamlPackages.dune_3
     pkgs.ocamlPackages.ocamlformat
     pkgs.ocamlPackages.ocaml-lsp
+    pkgs.emacsPackages.lsp-grammarly
     pkgs.haskellPackages.cabal-fmt
     pkgs.clang-tools
     pkgs.ruff
