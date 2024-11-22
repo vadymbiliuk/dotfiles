@@ -7,6 +7,11 @@ local function has_biome_config()
 end
 
 return {
+	-- {
+	-- 	"ravibrock/spellwarn.nvim",
+	-- 	event = "VeryLazy",
+	-- 	config = true,
+	-- },
 	{
 		"stevearc/conform.nvim",
 		config = function()

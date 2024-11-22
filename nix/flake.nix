@@ -24,7 +24,7 @@
           VISUAL = "nvim";
         };
         environment.systemPackages = [
-          pkgs.jdk11
+          pkgs.jdk23
           pkgs.ocaml
           pkgs.opam
           pkgs.lldb

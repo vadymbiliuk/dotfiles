@@ -77,6 +77,9 @@ function M.setup(path)
 			list = false,
 			expandtab = true,
 			display = "lastline",
+			spell = true,
+			spelllang = "en_us",
+			spelloptions = "camel",
 		},
 	}
 
