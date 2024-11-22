@@ -39,9 +39,13 @@ in {
     ])
     pkgs.luajitPackages.luarocks
     pkgs.lua51Packages.lua
+    pkgs.ocamlPackages.ocaml
     pkgs.ocamlPackages.dune_3
-    pkgs.ocamlPackages.ocamlformat
+    pkgs.ocamlPackages.findlib
+    pkgs.ocamlPackages.utop
+    pkgs.ocamlPackages.odoc
     pkgs.ocamlPackages.ocaml-lsp
+    pkgs.ocamlPackages.ocamlformat
     pkgs.emacsPackages.lsp-grammarly
     pkgs.haskellPackages.cabal-fmt
     pkgs.clang-tools

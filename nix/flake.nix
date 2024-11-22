@@ -26,8 +26,6 @@
         environment.systemPackages = [
           pkgs.niv
           pkgs.jdk23
-          pkgs.ocaml
-          pkgs.opam
           pkgs.lldb
           pkgs.cmake
           pkgs.gettext
