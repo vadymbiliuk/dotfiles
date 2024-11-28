@@ -127,7 +127,7 @@ return {
 				current_line_blame_opts = {
 					virt_text = true,
 					virt_text_pos = "eol",
-					delay = 300,
+					delay = 50,
 					ignore_whitespace = false,
 					virt_text_priority = 100,
 				},
@@ -528,8 +528,10 @@ return {
 			{ "nvim-lua/plenary.nvim" },
 		},
 		build = "make tiktoken",
+		opts = {
+			config = { chat_autocomplete = true },
+		},
 		config = function()
-			require("CopilotChat.integrations.cmp").setup()
 			require("CopilotChat").setup()
 		end,
 	},

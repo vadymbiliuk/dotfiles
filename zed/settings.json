@@ -14,5 +14,23 @@
     "mode": "system",
     "light": "One Light",
     "dark": "Xcode Default Dark"
+  },
+
+  "language_overrides": {
+    "Python": {
+      "format_on_save": {
+        "external": {
+          "command": "ruff",
+          "arguments": [
+            "check",
+            "--exit-zero",
+            "--fix",
+            "--stdin-filename",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      }
+    }
   }
 }

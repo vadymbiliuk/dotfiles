@@ -61,7 +61,7 @@ return {
 				"bashls",
 				"dockerls",
 				"pyright",
-				"ruff_lsp",
+				"ruff",
 				"vimls",
 				"yamlls",
 				"vuels",
@@ -116,6 +116,13 @@ return {
 								-- Ignore all files for analysis to exclusively use Ruff for linting
 								ignore = { "*" },
 							},
+						},
+					},
+				},
+				ruff = {
+					init_options = {
+						settings = {
+							args = {},
 						},
 					},
 				},
