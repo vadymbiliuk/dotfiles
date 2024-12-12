@@ -13,11 +13,16 @@ return {
 				ctermbg = 0,
 				bg = color.gray1,
 			})
+			vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", {
+				ctermbg = 0,
+				bg = color.gray1,
+			})
 
 			require("treesitter-context").setup({
-				max_lines = 3,
+				max_lines = 2,
 				multiline_threshold = 1,
-				mode = "topline",
+				mode = "cursor",
+				separator = nil,
 			})
 		end,
 	},
@@ -41,73 +46,14 @@ return {
 			require("nvim-treesitter.install").prefer_git = true
 		end,
 	},
+	{ "echasnovski/mini.icons", version = "*", config = true },
 	{ "echasnovski/mini.trailspace", version = "*", config = true },
 	{ "echasnovski/mini.cursorword", version = "*", config = true },
-
+	{ "echasnovski/mini.statusline", version = "*", config = true },
 	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "AndreM222/copilot-lualine" },
-		config = function()
-			require("lualine").setup({
-				options = {
-					section_separators = "",
-					component_separators = "",
-					theme = "lackluster",
-				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = {
-						-- "branch",
-						-- "diff",
-						{
-							"diagnostics",
-							sources = { "nvim_diagnostic" },
-							sections = { "error", "warn", "info", "hint" },
-							diagnostics_color = {
-								error = "DiagnosticError",
-								warn = "DiagnosticWarn",
-								info = "DiagnosticInfo",
-								hint = "DiagnosticHint",
-							},
-							symbols = {
-								error = "󰇴 ",
-								warn = "󱚝 ",
-								info = "󰇳 ",
-								hint = "󱜙 ",
-							},
-							colored = true,
-							update_in_insert = false,
-							always_visible = false,
-						},
-					},
-					lualine_c = { "copilot" },
-					lualine_x = { { "filetype", icon_only = false, icon = { align = "left" } }, "filename" },
-					lualine_y = { "progress" },
-					lualine_z = { "location" },
-				},
-			})
-		end,
-	},
-	{
-		"akinsho/bufferline.nvim",
+		"echasnovski/mini.tabline",
 		version = "*",
-		config = function()
-			require("bufferline").setup({
-				options = {
-					numbers = "ordinal",
-					diagnostics = "nvim_lsp",
-					show_buffer_close_icons = false,
-					show_close_icon = false,
-					persist_buffer_sort = true,
-					enforce_regular_tabs = false,
-					always_show_bufferline = false,
-					offsets = {
-						{ filetype = "NvimTree", text = "Files", text_align = "center" },
-						{ filetype = "DiffviewFiles", text = "Source Control", text_align = "center" },
-					},
-				},
-			})
-		end,
+		config = true,
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -203,7 +149,6 @@ return {
 		priority = 100,
 		config = function()
 			local builtin = require("statuscol.builtin")
-			local c = require("statuscol.ffidef").C
 
 			require("statuscol").setup({
 				relculright = true,
@@ -211,25 +156,22 @@ return {
 					{
 						sign = {
 							namespace = { "gitsigns" },
-							name = { ".*" },
 							maxwidth = 1,
 							colwidth = 1,
 							auto = false,
+							fillchar = " ",
+							fillcharhl = " ",
 						},
 						click = "v:lua.ScSa",
-						condition = {
-							function(args)
-								return args.sclnu
-							end,
-						},
 					},
 					{
 						sign = {
 							namespace = { "diagnostic" },
 							name = { "neotest_" },
-							maxwidth = 2,
-							colwidth = 1,
 							auto = false,
+							wrap = true,
+							fillchar = " ",
+							fillcharhl = " ",
 						},
 						click = "v:lua.ScSa",
 						condition = {
@@ -239,6 +181,7 @@ return {
 						},
 					},
 					{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+					{ text = { builtin.foldfunc, " " }, click = "v:luaScFa" },
 				},
 			})
 		end,
@@ -550,18 +493,6 @@ return {
 		},
 		keys = {
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-		},
-	},
-	{
-		"lukas-reineke/indent-blankline.nvim",
-		main = "ibl",
-		---@module "ibl"
-		---@type ibl.config
-		opts = {
-			scope = { enabled = true },
-		},
-		include = {
-			node_type = { haskell = { "do" } },
 		},
 	},
 }

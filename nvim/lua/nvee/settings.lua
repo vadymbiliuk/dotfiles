@@ -35,7 +35,7 @@ function M.setup(path)
 			diffopt = "internal,filler,closeoff,linematch:60",
 			encoding = "utf-8",
 			expandtab = true,
-			fillchars = [[eob: ,fold: ,foldopen:▽,foldsep: ,foldclose:▷]],
+			fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
 			foldcolumn = "1",
 			foldenable = true,
 			foldlevel = 99,
