@@ -202,14 +202,14 @@ return {
 				buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 				buf_set_keymap("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
 				buf_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-				buf_set_keymap("n", "<leader>ga", '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
-				buf_set_keymap("v", "<leader>ga", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
+				buf_set_keymap("n", "<leader>ac", '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
+				buf_set_keymap("v", "<leader>ac", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
 				buf_set_keymap("i", "<C-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 				buf_set_keymap("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 				buf_set_keymap("n", "<leader>gr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 				buf_set_keymap("n", "g]", "<cmd>lua vim.diagnostic.goto_next({ float = true })<CR>", opts)
 				buf_set_keymap("n", "g[", "<cmd>lua vim.diagnostic.goto_prev({ float = true })<CR>", opts)
-				buf_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+				buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			end
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
