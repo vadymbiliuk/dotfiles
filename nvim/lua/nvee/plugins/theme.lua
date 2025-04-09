@@ -29,19 +29,20 @@ return {
 					comment = lackluster.color.gray4,
 				},
 				tweak_background = {
-					normal = "none",
-					telescope = "none",
-					menu = color.gray3,
-					popup = "none",
+					-- normal = "none",
+					normal = color.gray1,
+					-- telescope = "none",
+					menu = color.gray1,
+					popup = color.gray1,
 				},
 			})
 
 			vim.cmd.colorscheme("lackluster")
-			vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3c4048", bg = "none" })
-			vim.api.nvim_set_hl(0, "TroubleNormal", { bg = "none", ctermbg = "none" })
-			vim.api.nvim_set_hl(0, "TroubleNormalNC", { bg = "none", ctermbg = "none" })
-			vim.api.nvim_set_hl(0, "TroubleNormal", { bg = "none", ctermbg = "none" })
-			vim.api.nvim_set_hl(0, "TroubleNormalNC", { bg = "none", ctermbg = "none" })
+			-- vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3c4048", bg = "none" })
+			-- vim.api.nvim_set_hl(0, "TroubleNormal", { bg = "none", ctermbg = "none" })
+			-- vim.api.nvim_set_hl(0, "TroubleNormalNC", { bg = "none", ctermbg = "none" })
+			-- vim.api.nvim_set_hl(0, "TroubleNormal", { bg = "none", ctermbg = "none" })
+			-- vim.api.nvim_set_hl(0, "TroubleNormalNC", { bg = "none", ctermbg = "none" })
 		end,
 	},
 	{
