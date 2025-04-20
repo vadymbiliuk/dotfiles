@@ -98,7 +98,7 @@
           dock.persistent-apps = [
             "/Applications/Safari.app/"
             "/Applications/Telegram.app"
-            "/Applications/Kitty.app"
+            "/Applications/Ghostty.app"
             "/Applications/Obsidian.app"
             "/System/Applications/Calendar.app"
             "/System/Applications/Mail.app"
