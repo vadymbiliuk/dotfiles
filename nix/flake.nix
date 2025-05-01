@@ -88,6 +88,7 @@
             "1Password for Safari" = 1569813296;
             "Dark Reader for Safari" = 1438243180;
             "MeetingBar" = 1532419400;
+            "Microsot Word" = 462054704;
           };
           onActivation.cleanup = "zap";
           onActivation.autoUpdate = true;
