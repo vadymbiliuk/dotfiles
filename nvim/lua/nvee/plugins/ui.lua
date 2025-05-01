@@ -47,14 +47,41 @@ return {
       require("nvim-treesitter.install").prefer_git = true
     end,
   },
-  { "echasnovski/mini.icons", version = "*", config = true },
-  { "echasnovski/mini.trailspace", version = "*", config = true },
-  { "echasnovski/mini.cursorword", version = "*", config = true },
-  { "echasnovski/mini.statusline", version = "*", config = true },
   {
-    "echasnovski/mini.tabline",
+    "RRethy/vim-illuminate",
     version = "*",
-    config = true,
+    config = function()
+      require("illuminate").configure {}
+    end,
+  },
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      local lackluster = require "lackluster"
+      require("lualine").setup {
+        options = {
+          theme = "lackluster-dark",
+          icons_enabled = false,
+          section_separators = { left = "", right = "" },
+          component_separators = { left = "", right = "" },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { { "filename", path = 1 } },
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {
+            "searchcount",
+            "selectioncount",
+            "diagnostics",
+            { "branch", color = { fg = lackluster.color.gray6 } },
+            "diff",
+          },
+          lualine_z = {},
+        },
+      }
+    end,
   },
   {
     "lewis6991/gitsigns.nvim",

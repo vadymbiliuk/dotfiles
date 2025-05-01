@@ -199,8 +199,8 @@ return {
         -- buf_set_keymap("i", "<C-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
         -- buf_set_keymap("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
         -- buf_set_keymap("n", "<leader>gr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-        -- buf_set_keymap("n", "g]", "<cmd>lua vim.diagnostic.goto_next({ float = true })<CR>", opts)
-        -- buf_set_keymap("n", "g[", "<cmd>lua vim.diagnostic.goto_prev({ float = true })<CR>", opts)
+        buf_set_keymap("n", "g]", "<cmd>lua vim.diagnostic.goto_next({ float = true })<CR>", opts)
+        buf_set_keymap("n", "g[", "<cmd>lua vim.diagnostic.goto_prev({ float = true })<CR>", opts)
         -- buf_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
       end
 

@@ -81,7 +81,14 @@ return {
       },
     },
   },
-  { "echasnovski/mini.surround", version = "*", config = true },
+  {
+    "kylechui/nvim-surround",
+    version = "^3.0.0",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {}
+    end,
+  },
   {
     "echasnovski/mini.move",
     version = "*",
@@ -104,8 +111,8 @@ return {
     },
   },
   {
-    "echasnovski/mini.pairs",
-    version = "*",
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
     config = true,
   },
   {
