@@ -1,3 +1,5 @@
+DEFAULT_CONFIG = { wrap = true, find_command = { "rg", "--files", "--no-require-git" } }
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -21,21 +23,14 @@ return {
     {
       "<leader><space>",
       function()
-        Snacks.picker.smart()
+        Snacks.picker.smart(DEFAULT_CONFIG)
       end,
       desc = "Smart Find Files",
     },
     {
-      "<leader>,",
+      "<leader>fg",
       function()
-        Snacks.picker.buffers()
-      end,
-      desc = "Buffers",
-    },
-    {
-      "<leader>/",
-      function()
-        Snacks.picker.grep()
+        Snacks.picker.grep { wrap = true, live = true }
       end,
       desc = "Grep",
     },
@@ -64,7 +59,7 @@ return {
     {
       "<leader>fb",
       function()
-        Snacks.picker.buffers()
+        Snacks.picker.buffers(DEFAULT_CONFIG)
       end,
       desc = "Buffers",
     },
@@ -78,16 +73,9 @@ return {
     {
       "<leader>ff",
       function()
-        Snacks.picker.files()
+        Snacks.picker.files { wrap = true, find_command = { DEFAULT_CONFIG } }
       end,
       desc = "Find Files",
-    },
-    {
-      "<leader>fg",
-      function()
-        Snacks.picker.git_files()
-      end,
-      desc = "Find Git Files",
     },
     {
       "<leader>fp",
@@ -99,7 +87,7 @@ return {
     {
       "<leader>fr",
       function()
-        Snacks.picker.recent()
+        Snacks.picker.recent(DEFAULT_CONFIG)
       end,
       desc = "Recent",
     },

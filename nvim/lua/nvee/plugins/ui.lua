@@ -61,7 +61,7 @@ return {
       local lackluster = require "lackluster"
       require("lualine").setup {
         options = {
-          theme = "lackluster-dark",
+          theme = "lackluster",
           icons_enabled = false,
           section_separators = { left = "", right = "" },
           component_separators = { left = "", right = "" },

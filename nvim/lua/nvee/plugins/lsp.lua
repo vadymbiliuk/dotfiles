@@ -7,11 +7,19 @@ local function has_biome_config()
 end
 
 return {
-  -- {
-  -- 	"mrcjkb/haskell-tools.nvim",
-  -- 	version = "^4",
-  -- 	lazy = false,
-  -- },
+  {
+    "nvimdev/lspsaga.nvim",
+    config = function()
+      require("lspsaga").setup {
+        lightbulb = { enable = false },
+        symbol_in_winbar = { enable = false },
+      }
+    end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter", -- optional
+      "nvim-tree/nvim-web-devicons", -- optional
+    },
+  },
   {
     "stevearc/conform.nvim",
     config = function()
@@ -27,11 +35,11 @@ return {
           c = { "clang-format" },
           cpp = { "clang-format" },
           python = { "ruff format" },
-          javascript = has_biome_config() and { "biome" } or { "prettierd" },
           markdown = { "prettierd", "prettier" },
-          typescript = has_biome_config() and { "biome" } or { "prettierd" },
-          typescriptreact = has_biome_config() and { "biome" } or { "prettierd" },
-          javascriptreact = has_biome_config() and { "biome" } or { "prettierd" },
+          javascript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
+          javascriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
+          typescript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
+          typescriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           json = has_biome_config() and { "biome" } or { "prettierd" },
           yaml = { "yamlfmt" },
           graphql = { "prettierd" },
@@ -191,17 +199,11 @@ return {
           vim.api.nvim_buf_set_keymap(bufnr, ...)
         end
         local opts = { noremap = true, silent = true }
-        -- buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-        -- buf_set_keymap("n", "gw", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", opts)
-        -- buf_set_keymap("n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-        -- buf_set_keymap("n", "<leader>ga", '<cmd>lua require("actions-preview").code_actions()<CR>', opts)
-        -- buf_set_keymap("v", "<leader>ga", "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
-        -- buf_set_keymap("i", "<C-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-        -- buf_set_keymap("n", "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-        -- buf_set_keymap("n", "<leader>gr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-        buf_set_keymap("n", "g]", "<cmd>lua vim.diagnostic.goto_next({ float = true })<CR>", opts)
-        buf_set_keymap("n", "g[", "<cmd>lua vim.diagnostic.goto_prev({ float = true })<CR>", opts)
-        -- buf_set_keymap("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+        buf_set_keymap("n", "g]", "<cmd>:Lspsaga diagnostic_jump_next<CR>", opts)
+        buf_set_keymap("n", "g[", "<cmd>:Lspsaga diagnostic_jump_next<CR>", opts)
+        buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
+        buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
+        buf_set_keymap("v", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
