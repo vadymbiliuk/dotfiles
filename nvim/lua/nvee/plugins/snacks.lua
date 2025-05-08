@@ -8,8 +8,13 @@ return {
     "nvim-lua/plenary.nvim",
   },
   opts = {
+    animate = { enable = true },
+    bigfile = { enable = true },
     git = { enable = true },
     gitbrowse = { enable = true },
+    input = { enable = true },
+    image = { enable = true },
+    notify = { enable = true },
     notifier = {
       enabled = true,
       timeout = 3000,
