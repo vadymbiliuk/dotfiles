@@ -25,6 +25,17 @@ return {
         panel = { enabled = false },
       }
       require("blink.cmp").setup {
+        fuzzy = {
+          implementation = "rust",
+          use_frecency = true,
+          use_unsafe_no_lock = false,
+          sorts = {
+            -- (optionally) always prioritize exact matches
+            "exact",
+            "score",
+            "sort_text",
+          },
+        },
         signature = { enabled = true },
         cmdline = {
           completion = {
