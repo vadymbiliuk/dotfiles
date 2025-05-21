@@ -24,11 +24,11 @@ return {
           ["@function"] = {
             link = "@keyword",
           },
-          -- FloatBorder = {
-          --   overwrite = true,
-          --   fg = lackluster.color.gray5,
-          --   bg = "NONE",
-          -- },
+          FloatBorder = {
+            overwrite = true,
+            fg = lackluster.color.gray6,
+            bg = "NONE",
+          },
         },
         tweak_syntax = {
           comment = lackluster.color.gray4,
