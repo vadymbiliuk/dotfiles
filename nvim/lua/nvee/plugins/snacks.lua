@@ -1,4 +1,4 @@
-DEFAULT_CONFIG = { wrap = true, find_command = { "rg", "--files", "--no-require-git" } }
+DEFAULT_CONFIG = { filter = { cwd = true }, wrap = true, find_command = { "rg", "--files", "--no-require-git" } }
 
 return {
   "folke/snacks.nvim",
