@@ -78,7 +78,18 @@ return {
             { "branch", color = { fg = lackluster.color.gray6 } },
             "diff",
           },
-          lualine_z = {},
+          lualine_z = {
+            {
+              "lsp_status",
+              icon = "",
+              symbols = {
+                spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+                done = "",
+                separator = " ",
+              },
+              ignore_lsp = {},
+            },
+          },
         },
       }
     end,

@@ -14,7 +14,7 @@ return {
           },
         },
       }
-      local color = require("lackluster").color
+      -- local color = require("lackluster").color
       lackluster.setup {
         tweak_highlight = {
           ["@keyword"] = {
@@ -24,6 +24,11 @@ return {
           ["@function"] = {
             link = "@keyword",
           },
+          -- FloatBorder = {
+          --   overwrite = true,
+          --   fg = lackluster.color.gray5,
+          --   bg = "NONE",
+          -- },
         },
         tweak_syntax = {
           comment = lackluster.color.gray4,

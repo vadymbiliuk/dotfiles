@@ -25,6 +25,11 @@ return {
         panel = { enabled = false },
       }
       require("blink.cmp").setup {
+        completion = {
+          menu = { border = "rounded" },
+          documentation = { window = { border = "rounded" } },
+        },
+        signature = { enabled = true, window = { border = "rounded" } },
         fuzzy = {
           implementation = "rust",
           use_frecency = true,
@@ -36,7 +41,6 @@ return {
             "sort_text",
           },
         },
-        signature = { enabled = true },
         cmdline = {
           completion = {
             ghost_text = { enabled = true },

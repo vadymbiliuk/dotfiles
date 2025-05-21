@@ -64,6 +64,7 @@ function M.setup(path)
       undofile = true,
       virtualedit = "block,insert",
       wrap = false,
+      winborder = "rounded",
     },
     wo = {
       foldexpr = "v:lua.vim.treesitter.foldexpr()",

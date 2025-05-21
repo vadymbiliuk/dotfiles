@@ -206,6 +206,16 @@ return {
         buf_set_keymap("v", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
       end
 
+      -- LSP settings (for overriding per client)
+      local handlers = {
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+          border = "rounded",
+        }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+          border = "rounded",
+        }),
+      }
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.foldingRange = {
         dynamicRegistration = false,
@@ -214,12 +224,6 @@ return {
 
       -- optimizes cpu usage source https://github.com/neovim/neovim/issues/23291
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-
-      -- LSP settings (for overriding per client)
-      local handlers = {
-        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {}),
-        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {}),
-      }
 
       local defaults = {
         on_attach = function(client, bufnr)
@@ -230,6 +234,7 @@ return {
       }
 
       local opts = {}
+      local capabilities
 
       for _, server in pairs(lsp_servers) do
         opts = defaults
@@ -239,6 +244,7 @@ return {
           opts = vim.tbl_extend("force", opts, lsp_servers_custom[server])
         end
 
+        opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
         lspconfig[server].setup(opts)
         ::continue::
       end
