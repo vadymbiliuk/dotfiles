@@ -1,0 +1,7 @@
+theme = lucklaster
+
+font-family = "Berkeley Mono Variable"
+font-size   = 20
+
+background-opacity = 0.85
+background-blur    = 100
