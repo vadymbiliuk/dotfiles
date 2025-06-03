@@ -43,6 +43,7 @@
           pkgs.docker
           pkgs.docker-compose
           pkgs.htop
+          pkgs.gh
         ];
 
         services.postgresql = {
