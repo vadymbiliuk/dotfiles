@@ -175,51 +175,51 @@ return {
     end,
   },
   { "aznhe21/actions-preview.nvim" },
-  {
-    "goolord/alpha-nvim",
-    event = "VimEnter",
-    opts = function()
-      local dashboard = require "alpha.themes.dashboard"
-      dashboard.opts.layout[1].val = 8
-
-      dashboard.section.buttons.val = {
-        {
-          type = "text",
-          val = " ",
-          opts = {
-            position = "center",
-          },
-        },
-        dashboard.button("f", " Open file", ":lua require('telescope.builtin').find_files()<CR>"),
-        dashboard.button("g", " Grep", ":lua require('telescope.builtin').live_grep()<CR>"),
-        dashboard.button("b", " Buffers", ":lua require('telescope.builtin').buffers()<CR>"),
-        dashboard.button("r", " Recent files", ":lua require('telescope.builtin').oldfiles()<CR>"),
-        dashboard.button("h", " Help tags", ":lua require('telescope.builtin').help_tags()<CR>"),
-        dashboard.button("o", " Open Oil", ":Oil<CR>"),
-      }
-      dashboard.opts.layout[3].val = 0
-      dashboard.section.footer.opts.hl = "@alpha.footer"
-      table.insert(dashboard.config.layout, 5, {
-        type = "padding",
-        val = 1,
-      })
-      return dashboard
-    end,
-    config = function(_, dashboard)
-      -- close Lazy and re-open when the dashboard is ready
-      if vim.o.filetype == "lazy" then
-        vim.cmd.close()
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "AlphaReady",
-          callback = function()
-            require("lazy").show()
-          end,
-        })
-      end
-
-      require("alpha").setup(dashboard.opts)
-    end,
-  },
+  -- {
+  --   "goolord/alpha-nvim",
+  --   event = "VimEnter",
+  --   opts = function()
+  --     local dashboard = require "alpha.themes.dashboard"
+  --     dashboard.opts.layout[1].val = 8
+  --
+  --     dashboard.section.buttons.val = {
+  --       {
+  --         type = "text",
+  --         val = " ",
+  --         opts = {
+  --           position = "center",
+  --         },
+  --       },
+  --       dashboard.button("f", " Open file", ":lua require('telescope.builtin').find_files()<CR>"),
+  --       dashboard.button("g", " Grep", ":lua require('telescope.builtin').live_grep()<CR>"),
+  --       dashboard.button("b", " Buffers", ":lua require('telescope.builtin').buffers()<CR>"),
+  --       dashboard.button("r", " Recent files", ":lua require('telescope.builtin').oldfiles()<CR>"),
+  --       dashboard.button("h", " Help tags", ":lua require('telescope.builtin').help_tags()<CR>"),
+  --       dashboard.button("o", " Open Oil", ":Oil<CR>"),
+  --     }
+  --     dashboard.opts.layout[3].val = 0
+  --     dashboard.section.footer.opts.hl = "@alpha.footer"
+  --     table.insert(dashboard.config.layout, 5, {
+  --       type = "padding",
+  --       val = 1,
+  --     })
+  --     return dashboard
+  --   end,
+  --   config = function(_, dashboard)
+  --     -- close Lazy and re-open when the dashboard is ready
+  --     if vim.o.filetype == "lazy" then
+  --       vim.cmd.close()
+  --       vim.api.nvim_create_autocmd("User", {
+  --         pattern = "AlphaReady",
+  --         callback = function()
+  --           require("lazy").show()
+  --         end,
+  --       })
+  --     end
+  --
+  --     require("alpha").setup(dashboard.opts)
+  --   end,
+  -- },
   {
     "nvim-neotest/neotest",
     dependencies = {
@@ -437,6 +437,7 @@ return {
         local user = vim.env.USER or "User"
         user = user:sub(1, 1):upper() .. user:sub(2)
         return {
+          model = "claude-3.7-sonnet",
           auto_insert_mode = true,
           question_header = "  " .. user .. " ",
           answer_header = "  Copilot ",
