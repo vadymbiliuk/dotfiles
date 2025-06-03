@@ -89,5 +89,7 @@ in {
     pkgs.nodejs_22
     pkgs.haskell-language-server
     pkgs.stylelint-lsp
+    pkgs.pokemon-colorscripts-mac
+    pkgs.direnv
   ];
 }

@@ -43,6 +43,9 @@
     export PATH="/usr/local/opt/openssl/bin:$PATH"
 
     [[ ! -r '/Users/vadymbiliuk/.opam/opam-init/init.zsh' ]] || source '/Users/vadymbiliuk/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+
+    export DIRENV_LOG_FORMAT=""
+    eval "$(direnv hook zsh)"
   '';
   oh-my-zsh = {
     enable = true;
