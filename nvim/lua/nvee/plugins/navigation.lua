@@ -60,4 +60,9 @@ return {
     end,
   },
   { "mg979/vim-visual-multi" },
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = {},
+  },
 }
