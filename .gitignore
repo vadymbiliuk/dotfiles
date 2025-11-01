@@ -1,5 +1,9 @@
-# Ignore everything except nix/ and nvim/
+# Ignore everything first
 *
+
+# Then include these directories and their contents
 !nix/
+!nix/**
 !nvim/
+!nvim/**
 !.gitignore
