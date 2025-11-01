@@ -26,7 +26,7 @@
           "height": 30,
           "modules-left": ["custom/launcher", "hyprland/workspaces"],
           "modules-center": ["clock"],
-          "modules-right": ["privacy", "group/tray-expander", "custom/weather", "cpu", "network", "pulseaudio", "hyprland/language"],
+          "modules-right": ["privacy", "group/tray-expander", "custom/weather", "temperature", "network", "pulseaudio", "hyprland/language"],
 
           "hyprland/workspaces": {
             "rotate": 0,
@@ -81,25 +81,28 @@
             }
           },
           
-          "cpu": {
-            "format": "󰻠 {usage}%",
-            "tooltip": true,
-            "tooltip-format": "CPU Usage: {usage}%\nAverage load: {load}",
-            "interval": 2
-          },
-          
-          "pulseaudio": {
-            "format": "{icon}",
-            "on-click": "env PULSE_SERVER=unix:/run/user/1000/pulse/native pavucontrol",
-            "on-click-right": "pamixer -t",
-            "tooltip-format": "Playing at {volume}%",
-            "scroll-step": 5,
-            "format-muted": "",
+         "pulseaudio": {
+            // "scroll-step": 1, // %, can be a float
+            "reverse-scrolling": 1,
+            "format": "{volume}% {icon} {format_source}",
+            "format-bluetooth": "{volume}% {icon} {format_source}",
+            "format-bluetooth-muted": " {icon} {format_source}",
+            "format-muted": "󰖁 {format_source}",
+            "format-source": "{volume}% 󰍬",
+            "format-source-muted": "󰍭",
             "format-icons": {
-              "default": ["", "", ""]
-            }
-          },
-          
+                "headphone": "󰋋",
+                "hands-free": "󱡏",
+                "headset": "󰋎",
+                "phone": "󰏲",
+                "portable": "󰦢",
+                "car": "󰄋",
+                "default": ["󰕿", "󰖀", "󰕾"]
+            },
+            "on-click": "pavucontrol",
+            "min-length": 13,
+          }, 
+
           "network": {
             "format-wifi": "󰤨",
             "format-ethernet": "󰈀",
@@ -107,6 +110,13 @@
             "tooltip-format": "Network: {ifname}\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}",
             "tooltip-format-wifi": "WiFi: {essid} ({signalStrength}%)\nIP: {ipaddr}/{cidr}\nFrequency: {frequency}MHz",
             "on-click": "nm-connection-editor"
+          },
+
+          "temperature": {
+              "critical-threshold": 80,
+              "format": "{temperatureC}°C {icon}",
+              "format-icons": ["", "", "", "", ""],
+              "tooltip": false,
           },
           
           "battery": {
@@ -145,9 +155,9 @@
           "custom/weather": {
             "format": "{}",
             "tooltip": true,
-            "interval": 300,
-            "exec": "curl -s 'http://wttr.in/?format=1' | sed 's/[+]//g'",
-            "return-type": ""
+            "interval": 1800,
+            "exec": "$HOME/.config/waybar/scripts/wttr.py",
+            "return-type": "json"
           },
 
           "privacy": {
@@ -175,11 +185,13 @@
     ".config/waybar/style.css" = {
       text = ''
         * {
-          font-family: "BerkeleyMonoMinazuki Nerd Font";
-          font-size: 13px;
+          font-family: "BerkeleyMonoMinazuki Nerd Font Mono";
+          font-size: 16px;
           border: none;
           border-radius: 0;
           min-height: 0;
+          margin: 0;
+          padding: 0 5px;
         }
 
         window#waybar {
@@ -206,6 +218,14 @@
           border-radius: 8px;
         }
 
+        #workspaces {
+          padding: 0;
+        }
+
+        #network {
+          padding: 0;
+        }
+
         #workspaces button.active {
           background: #DDD;
           color: #080808;
@@ -225,9 +245,8 @@
         }
 
         #custom-launcher {
-          padding: 0 10px;
-          font-size: 18px;
           color: #DDD;
+          font-size: 20px;
         }
 
         #custom-launcher:hover {
@@ -235,71 +254,7 @@
           border-radius: 6px;
         }
 
-        #clock, #battery {
-          padding: 0 10px;
-        }
 
-        #pulseaudio {
-          padding: 0 10px;
-          font-size: 20px;
-        }
-
-        #pulseaudio.muted {
-          color: #888;
-        }
-
-        #cpu {
-          color: #DDD;
-          font-weight: bold;
-          font-size: 20px;
-          padding: 0 10px;
-        }
-
-        #network {
-          font-size: 20px;
-          padding: 0 10px;
-        }
-
-        #battery {
-          font-size: 13px;
-        }
-
-        #language {
-          font-size: 13px;
-          padding: 0 10px;
-        }
-
-        #tray {
-          padding: 0 10px;
-        }
-
-        #tray > .item {
-          padding: 0 5px;
-        }
-
-        #custom-expand-icon {
-          font-size: 16px;
-          padding: 0 5px;
-        }
-
-        .tray-group-item {
-          background: rgba(25, 25, 25, 0.15);
-          border-radius: 6px;
-          padding: 0 2px;
-        }
-
-        #custom-weather {
-          font-size: 14px;
-          padding: 0 10px;
-        }
-
-        #privacy {
-          padding: 0 10px;
-        }
-
-        #privacy-item {
-          padding: 0 3px;
-        }
 
         #privacy-item.screenshare {
           color: #ff6b6b;
@@ -310,6 +265,122 @@
         }
       '';
       force = true;
+    };
+
+    ".config/waybar/scripts/wttr.py" = {
+      text = ''
+        #!${
+          pkgs.python312.withPackages (ps: with ps; [ requests ])
+        }/bin/python3.12
+
+        import json
+        import requests
+        from datetime import datetime
+
+        WEATHER_CODES = {
+            '113': '☀️',
+            '116': '⛅️',
+            '119': '☁️',
+            '122': '☁️',
+            '143': '🌫',
+            '176': '🌦',
+            '179': '🌧',
+            '182': '🌧',
+            '185': '🌧',
+            '200': '⛈',
+            '227': '🌨',
+            '230': '❄️',
+            '248': '🌫',
+            '260': '🌫',
+            '263': '🌦',
+            '266': '🌦',
+            '281': '🌧',
+            '284': '🌧',
+            '293': '🌦',
+            '296': '🌦',
+            '299': '🌧',
+            '302': '🌧',
+            '305': '🌧',
+            '308': '🌧',
+            '311': '🌧',
+            '314': '🌧',
+            '317': '🌧',
+            '320': '🌨',
+            '323': '🌨',
+            '326': '🌨',
+            '329': '❄️',
+            '332': '❄️',
+            '335': '❄️',
+            '338': '❄️',
+            '350': '🌧',
+            '353': '🌦',
+            '356': '🌧',
+            '359': '🌧',
+            '362': '🌧',
+            '365': '🌧',
+            '368': '🌨',
+            '371': '❄️',
+            '374': '🌧',
+            '377': '🌧',
+            '386': '⛈',
+            '389': '🌩',
+            '392': '⛈',
+            '395': '❄️'
+        }
+
+        data = {}
+
+        weather = requests.get("https://wttr.in/Kyiv?format=j1").json()
+
+        def format_time(time):
+            return time.replace("00", "").zfill(2)
+
+        def format_temp(temp):
+            return (hour['FeelsLikeC']+"°").ljust(3)
+
+        def format_chances(hour):
+            chances = {
+                "chanceoffog": "Fog",
+                "chanceoffrost": "Frost",
+                "chanceofovercast": "Overcast",
+                "chanceofrain": "Rain",
+                "chanceofsnow": "Snow",
+                "chanceofsunshine": "Sunshine",
+                "chanceofthunder": "Thunder",
+                "chanceofwindy": "Wind"
+            }
+
+            conditions = []
+            for event in chances.keys():
+                if int(hour[event]) > 0:
+                    conditions.append(chances[event]+" "+hour[event]+"%")
+            return ", ".join(conditions)
+
+        data['text'] = WEATHER_CODES[weather['current_condition'][0]['weatherCode']] + \
+            " " + weather['current_condition'][0]['FeelsLikeC']+ "°"
+
+        data['tooltip'] = f"<b>{weather['current_condition'][0]['weatherDesc'][0]['value']} {weather['current_condition'][0]['temp_C']}°</b>\n"
+        data['tooltip'] += f"Feels like: {weather['current_condition'][0]['FeelsLikeC']}°\n"
+        data['tooltip'] += f"Wind: {weather['current_condition'][0]['windspeedKmph']}Km/h\n"
+        data['tooltip'] += f"Humidity: {weather['current_condition'][0]['humidity']}%\n"
+        for i, day in enumerate(weather['weather']):
+            data['tooltip'] += f"\n<b>"
+            if i == 0:
+                data['tooltip'] += "Today, "
+            if i == 1:
+                data['tooltip'] += "Tomorrow, "
+            data['tooltip'] += f"{day['date']}</b>\n"
+            data['tooltip'] += f"⬆️ {day['maxtempC']}° ⬇️ {day['mintempC']}° "
+            data['tooltip'] += f" {day['astronomy'][0]['sunrise']}  {day['astronomy'][0]['sunset']}\n"
+            for hour in day['hourly']:
+                if i == 0:
+                    if int(format_time(hour['time'])) < datetime.now().hour-2:
+                        continue
+                data['tooltip'] += f"{format_time(hour['time'])} {WEATHER_CODES[hour['weatherCode']]} {format_temp(hour['FeelsLikeC'])} {hour['weatherDesc'][0]['value']}, {format_chances(hour)}\n"
+
+        print(json.dumps(data))
+      '';
+      executable = true;
     };
 
   };

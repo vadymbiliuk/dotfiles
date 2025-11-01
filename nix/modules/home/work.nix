@@ -41,10 +41,10 @@ in {
       exec ${pkgs.python27}/bin/python2.7 "$@"
     '')
     (pkgs.writeShellScriptBin "python" ''
-      exec ${pkgs.python312}/bin/python3.12 "$@"
+      exec ${pkgs.python312.withPackages (ps: with ps; [requests])}/bin/python3.12 "$@"
     '')
     (pkgs.writeShellScriptBin "python3" ''
-      exec ${pkgs.python312}/bin/python3.12 "$@"
+      exec ${pkgs.python312.withPackages (ps: with ps; [requests])}/bin/python3.12 "$@"
     '')
   ];
 }
