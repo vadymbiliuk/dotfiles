@@ -26,7 +26,7 @@
           "height": 30,
           "modules-left": ["custom/launcher", "hyprland/workspaces"],
           "modules-center": ["clock"],
-          "modules-right": ["group/tray-expander", "cpu",  "network", "pulseaudio", "hyprland/language"],
+          "modules-right": ["privacy", "group/tray-expander", "custom/weather", "cpu", "network", "pulseaudio", "hyprland/language"],
 
           "hyprland/workspaces": {
             "rotate": 0,
@@ -82,7 +82,7 @@
           },
           
           "cpu": {
-            "format": "󰻠",
+            "format": "󰻠 {usage}%",
             "tooltip": true,
             "tooltip-format": "CPU Usage: {usage}%\nAverage load: {load}",
             "interval": 2
@@ -140,6 +140,32 @@
             "format-uk": "UA",
             "keyboard-name": "wooting-wooting-80he",
             "on-click": "hyprctl switchxkblayout wooting-wooting-80he next"
+          },
+
+          "custom/weather": {
+            "format": "{}",
+            "tooltip": true,
+            "interval": 300,
+            "exec": "curl -s 'http://wttr.in/?format=1' | sed 's/[+]//g'",
+            "return-type": ""
+          },
+
+          "privacy": {
+            "icon-spacing": 4,
+            "icon-size": 18,
+            "transition-duration": 250,
+            "modules": [
+              {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+              },
+              {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+              }
+            ]
           }
         }
       '';
@@ -260,6 +286,27 @@
           background: rgba(25, 25, 25, 0.15);
           border-radius: 6px;
           padding: 0 2px;
+        }
+
+        #custom-weather {
+          font-size: 14px;
+          padding: 0 10px;
+        }
+
+        #privacy {
+          padding: 0 10px;
+        }
+
+        #privacy-item {
+          padding: 0 3px;
+        }
+
+        #privacy-item.screenshare {
+          color: #ff6b6b;
+        }
+
+        #privacy-item.audio-in {
+          color: #4ecdc4;
         }
       '';
       force = true;
