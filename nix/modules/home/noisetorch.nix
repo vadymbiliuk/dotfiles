@@ -19,8 +19,6 @@
       WantedBy = [ "graphical-session.target" "default.target" ];
     };
   };
-  
-  systemd.user.services.noisetorch.enable = true;
 
   home.file.".config/scripts/noisetorch-toggle.sh" = {
     executable = true;
