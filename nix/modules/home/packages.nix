@@ -64,6 +64,7 @@ let
 
   utilityPackages = with pkgs;
     [
+      noisetorch
       tree-sitter
       (tree-sitter.withPlugins (p:
         with p; [
