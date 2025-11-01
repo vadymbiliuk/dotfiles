@@ -1,0 +1,5 @@
+# Ignore everything except nix/ and nvim/
+*
+!nix/
+!nvim/
+!.gitignore
