@@ -12,11 +12,4 @@
     pkiBundle = "/var/lib/sbctl";
     configurationLimit = 10;
   };
-
-  boot.loader.systemd-boot.extraEntries = {
-    "windows.conf" = ''
-      title Windows 11
-      efi /EFI/Microsoft/Boot/bootmgfw.efi
-    '';
-  };
 }

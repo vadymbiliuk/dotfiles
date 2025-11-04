@@ -152,7 +152,7 @@
     enable = true;
     plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
     settings = {
-      monitor = "DP-1,2560x1440@359.98,0x0,1";
+      monitor = "DP-5,2560x1440@359.98,0x0,1";
 
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";

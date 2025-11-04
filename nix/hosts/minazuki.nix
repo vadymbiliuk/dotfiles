@@ -10,7 +10,6 @@
     ../modules/nixos/boot.nix
     ../modules/nixos/networking.nix
     ../modules/nixos/services.nix
-    ../modules/nixos/virtualization.nix
     ../modules/nixos/lanzaboote.nix
     ../modules/nixos/system.nix
     ../modules/nixos/hyprland.nix
@@ -47,7 +46,7 @@
         ../modules/home/noisetorch.nix
         ../modules/home/auto-english.nix
       ];
-      
+
       programs.mangohud = {
         enable = true;
         settings = {
@@ -76,9 +75,10 @@
           toggle_logging = "Shift_L+F2";
           reload_cfg = "Shift_L+F4";
           upload_log = "Shift_L+F3";
+          pci_dev = 1;
         };
       };
-      
+
       home.enableNixpkgsReleaseCheck = false;
       home.stateVersion = "25.05";
     };
