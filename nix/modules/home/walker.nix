@@ -54,21 +54,26 @@ in {
       monitor = ""
       hotreload_theme = false
       as_window = false
-      timeout = 0
+      timeout = 200
       disable_click_to_close = false
       force_keyboard_focus = false
+      show_initial_entries = true
       
       [[modules]]
       name = "applications"
+      prefix = ""
       
       [[modules]]
       name = "runner"
+      prefix = "!"
       
       [[modules]]
       name = "dmenu"
+      prefix = "?"
       
       [[modules]]
       name = "clipboard"
+      prefix = "#"
 
       [keys]
       accept_typeahead = ["tab"]
