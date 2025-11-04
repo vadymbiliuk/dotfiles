@@ -26,7 +26,7 @@
           "height": 30,
           "modules-left": ["custom/launcher", "hyprland/workspaces"],
           "modules-center": ["clock"],
-          "modules-right": ["privacy", "group/tray-expander", "custom/weather", "temperature", "network", "pulseaudio", "hyprland/language"],
+          "modules-right": ["privacy", "group/tray-expander", "custom/weather", "temperature", "pulseaudio", "network", "hyprland/language"],
 
           "hyprland/workspaces": {
             "rotate": 0,
@@ -84,11 +84,11 @@
          "pulseaudio": {
             // "scroll-step": 1, // %, can be a float
             "reverse-scrolling": 1,
-            "format": "{volume}% {icon} {format_source}",
-            "format-bluetooth": "{volume}% {icon} {format_source}",
-            "format-bluetooth-muted": " {icon} {format_source}",
+            "format": "{icon} {volume}% {format_source}",
+            "format-bluetooth": "{icon} {volume}% {format_source}",
+            "format-bluetooth-muted": "{icon}  {format_source}",
             "format-muted": "󰖁 {format_source}",
-            "format-source": "{volume}% 󰍬",
+            "format-source": "󰍬 {volume}%",
             "format-source-muted": "󰍭",
             "format-icons": {
                 "headphone": "󰋋",
@@ -99,24 +99,29 @@
                 "car": "󰄋",
                 "default": ["󰕿", "󰖀", "󰕾"]
             },
+            "tooltip": true,
+            "tooltip-format": "Output: {desc}\nVolume: {volume}%\nInput: {source_desc}\nInput Volume: {source_volume}%",
             "on-click": "pavucontrol",
             "min-length": 13,
           }, 
 
           "network": {
-            "format-wifi": "󰤨",
-            "format-ethernet": "󰈀",
-            "format-disconnected": "󰤭",
+            "format-wifi": "WiFi",
+            "format-ethernet": "Ethernet",
+            "format-disconnected": "Disconnected",
             "tooltip-format": "Network: {ifname}\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}",
             "tooltip-format-wifi": "WiFi: {essid} ({signalStrength}%)\nIP: {ipaddr}/{cidr}\nFrequency: {frequency}MHz",
             "on-click": "nm-connection-editor"
           },
 
           "temperature": {
+              "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
               "critical-threshold": 80,
-              "format": "{temperatureC}°C {icon}",
-              "format-icons": ["", "", "", "", ""],
-              "tooltip": false,
+              "format": "{icon} {temperatureC}°C",
+              "format-icons": ["󱃃", "󰔏", "󱃂", "󰸁", "󰈸"],
+              "tooltip": true,
+              "tooltip-format": "CPU Temperature: {temperatureC}°C",
+              "on-click": "ghostty -e btop",
           },
           
           "battery": {
@@ -157,7 +162,8 @@
             "tooltip": true,
             "interval": 1800,
             "exec": "$HOME/.config/waybar/scripts/wttr.py",
-            "return-type": "json"
+            "return-type": "json",
+            "on-click": "xdg-open https://wttr.in/Kyiv"
           },
 
           "privacy": {
@@ -254,7 +260,19 @@
           border-radius: 6px;
         }
 
+        #pulseaudio,
+        #temperature,
+        #network,
+        #custom-weather {
+          min-width: 40px;
+        }
 
+        #temperature .format-icons,
+        #pulseaudio .format-icons {
+          font-family: "BerkeleyMonoMinazuki Nerd Font Mono";
+          font-size: 16px;
+          min-width: 20px;
+        }
 
         #privacy-item.screenshare {
           color: #ff6b6b;
