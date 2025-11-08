@@ -38,7 +38,7 @@ return {
       timeout = 3000,
     },
     picker = { enabled = true },
-    terminal = { enabled = true },
+    terminal = { enabled = false },
     rename = { enabled = true },
   },
   keys = {
@@ -386,20 +386,6 @@ return {
         Snacks.lazygit()
       end,
       desc = "Lazygit",
-    },
-    {
-      "<c-/>",
-      function()
-        Snacks.terminal()
-      end,
-      desc = "Toggle Terminal",
-    },
-    {
-      "<c-_>",
-      function()
-        Snacks.terminal()
-      end,
-      desc = "which_key_ignore",
     },
   },
 }

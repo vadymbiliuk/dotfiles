@@ -409,7 +409,7 @@ return {
       { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
   },
-  { "akinsho/toggleterm.nvim", version = "*", opts = { size = 10 } },
+  { "akinsho/toggleterm.nvim", version = "*", opts = { size = 10, open_mapping = [[<c-\>]] } },
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
