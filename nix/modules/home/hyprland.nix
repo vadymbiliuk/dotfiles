@@ -62,7 +62,7 @@
       .notification {
         background: @noti-bg;
         border: 3px solid rgba(42, 42, 42, 0.65);
-        border-radius: 8px;
+        border-radius: 10px;
         margin: 6px 12px;
         padding: 10px;
       }
@@ -81,7 +81,7 @@
 
       .control-center {
         background: @noti-bg;
-        border-radius: 8px;
+        border-radius: 10px;
         margin: 12px;
       }
 
@@ -152,7 +152,7 @@
     enable = true;
     plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
     settings = {
-      monitor = "DP-5,2560x1440@359.98,0x0,1";
+      monitor = "DP-2,2560x1440@359.98,0x0,1";
 
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";
