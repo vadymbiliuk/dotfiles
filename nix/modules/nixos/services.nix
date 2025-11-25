@@ -5,6 +5,13 @@
   services.fstrim.enable = true;
   services.logind.lidSwitch = "suspend";
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
+  services.blueman.enable = true;
+
   services.greetd = {
     enable = true;
     settings = {

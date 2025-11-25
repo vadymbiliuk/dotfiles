@@ -56,26 +56,38 @@
           gpu_stats = true;
           gpu_temp = true;
           gpu_power = true;
-          ram = true;
-          vram = true;
+          ram = false;
+          vram = false;
           fps = true;
           frametime = false;
-          frame_timing = false;
+          frame_timing = true;
+          fps_limit_method = "late";
+          histogram = true;
           gamemode = true;
           vulkan_driver = false;
           wine = true;
           position = "top-left";
-          font_size = 16;
-          background_alpha = 0.3;
-          offset_x = 0;
-          offset_y = 0;
+          font_size = 14;
+          background_alpha = 0;
+          offset_x = -10;
+          offset_y = -10;
           no_display = false;
           toggle_hud = "Shift_R+F12";
           toggle_fps_limit = "Shift_L+F1";
           toggle_logging = "Shift_L+F2";
           reload_cfg = "Shift_L+F4";
           upload_log = "Shift_L+F3";
-          pci_dev = 1;
+          gpu_load_change = false;
+          cpu_load_change = false;
+          core_load_change = false;
+          gpu_mem_clock = false;
+          gpu_core_clock = false;
+          cpu_mhz = false;
+          table_columns = 6;
+          width = 280;
+          histogram_size = 80;
+          height = 100;
+          cellpadding_y = 0;
         };
       };
 
@@ -102,6 +114,7 @@
     telegram-desktop
     discord
     teamspeak3
+    thunderbird
 
     obs-studio
     obsidian
