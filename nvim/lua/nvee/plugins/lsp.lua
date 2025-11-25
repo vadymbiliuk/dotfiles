@@ -66,6 +66,7 @@ return {
           c = { "clang-format" },
           cpp = { "clang-format" },
           python = { "ruff format" },
+          ruby = { "rubocop", "standard" },
           markdown = { "prettierd", "prettier" },
           javascript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           javascriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
@@ -114,11 +115,24 @@ return {
         "ocamllsp",
         "eslint",
         "cssls",
+        "solargraph",
       }
 
       require("vtsls").config {}
 
       local lsp_servers_custom = {
+        solargraph = {
+          cmd = { "solargraph", "stdio" },
+          filetypes = { "ruby" },
+          root_dir = lsp_util.root_pattern("Gemfile", ".git"),
+          settings = {
+            solargraph = {
+              diagnostics = true,
+              completion = true,
+              formatting = true,
+            },
+          },
+        },
         stylelint_lsp = {
           filetypes = { "css", "scss" },
           root_dir = lsp_util.root_pattern("package.json", ".git"),

@@ -75,6 +75,7 @@ return {
             "selectioncount",
             "diagnostics",
             { "branch", color = { fg = lackluster.color.gray6 } },
+            "branch",
             "diff",
           },
           lualine_z = {

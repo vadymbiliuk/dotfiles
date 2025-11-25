@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
+  home.enableNixpkgsReleaseCheck = false;
   home.packages = with pkgs;
     [
       unzip
@@ -73,6 +74,20 @@
       if command -v direnv >/dev/null 2>&1; then
         eval "$(direnv hook zsh)"
       fi
+
+      ${lib.optionalString pkgs.stdenv.isDarwin ''
+        export PATH="/opt/homebrew/bin:$PATH"
+        if command -v pyenv >/dev/null 2>&1; then
+          export PYENV_ROOT="$HOME/.pyenv"
+          export PATH="$PYENV_ROOT/bin:$PATH"
+          eval "$(pyenv init -)"
+        fi
+        if command -v rbenv >/dev/null 2>&1; then
+          export RBENV_ROOT="$HOME/.rbenv"
+          export PATH="$RBENV_ROOT/bin:$PATH"
+          eval "$(rbenv init -)"
+        fi
+      ''}
 
       if command -v pokemonsay >/dev/null 2>&1; then
         pokemonthink --pokemon Gengar -N "Hello!"

@@ -17,7 +17,7 @@ return {
       local accent = "#F3669E"
       lackluster.setup {
         tweak_syntax = {
-          string = accent,
+          string = lackluster.color.gray9,
           comment = lackluster.color.gray4,
         },
         tweak_highlight = {
@@ -54,9 +54,28 @@ return {
       vim.api.nvim_set_hl(0, "SnacksNormalNC", { bg = "NONE" })
     end,
   },
-  {
-    "xiyaowong/transparent.nvim",
-    lazy = false,
-    opts = {},
-  },
+  -- {
+  --   "amedoeyes/eyes.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --     highlights = {
+  --       core = "all",
+  --       plugins = (package.loaded.lazy or package.loaded["mini.deps"]) and "auto" or "all",
+  --     },
+  --     extend = {
+  --       highlights = {},
+  --       palette = {},
+  --     },
+  --   },
+  --   init = function()
+  --     vim.cmd.colorscheme "eyes"
+  --   end,
+  -- },
+  -- {
+  --   "xiyaowong/transparent.nvim",
+  --   lazy = false,
+  --   opts = {},
+  -- },
 }

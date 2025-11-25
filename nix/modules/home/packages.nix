@@ -17,6 +17,7 @@ let
   ];
 
   lspPackages = with pkgs; [
+    vtsls
     black
     prettierd
     nixfmt-classic
@@ -40,7 +41,6 @@ let
     vue-language-server
     svelte-language-server
     rust-analyzer
-    tailwindcss-language-server
     eslint_d
     nil
     biome
@@ -49,6 +49,10 @@ let
     hpack
     stylelint-lsp
     pre-commit
+    solargraph
+    rubocop
+    rubyPackages.standard
+    typos
   ];
 
   programmingPackages = with pkgs; [
@@ -60,12 +64,11 @@ let
     poetry
     nodejs_22
     claude-code
+    bundler
   ];
 
   utilityPackages = with pkgs;
     [
-      noisetorch
-      woeusb
       tree-sitter
       (tree-sitter.withPlugins (p:
         with p; [
@@ -90,7 +93,8 @@ let
           tree-sitter-vim
           tree-sitter-yaml
         ]))
-    ] ++ lib.optionals isDarwin [ mkalias ];
+    ] ++ lib.optionals isDarwin [ mkalias ]
+    ++ lib.optionals isLinux [ noisetorch woeusb ];
 in {
   home.packages = developmentPackages ++ lspPackages ++ programmingPackages
     ++ utilityPackages;
