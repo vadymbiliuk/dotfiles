@@ -399,6 +399,13 @@ return {
     end,
   },
   {
+    "esmuellert/vscode-diff.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("vscode-diff").setup()
+    end,
+  },
+  {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
