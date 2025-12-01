@@ -71,6 +71,7 @@ let
 
   utilityPackages = with pkgs;
     [
+      jujutsu
       tree-sitter
       (tree-sitter.withPlugins (p:
         with p; [
