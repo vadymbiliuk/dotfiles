@@ -400,9 +400,16 @@ return {
   },
   {
     "esmuellert/vscode-diff.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    cmd = "CodeDiff",
     config = function()
-      require("vscode-diff").setup()
+      require("vscode-diff").setup({
+        highlights = {
+          line_insert = "DiffAdd",
+          line_delete = "DiffDelete",
+          char_brightness = nil,
+        },
+      })
     end,
   },
   {
