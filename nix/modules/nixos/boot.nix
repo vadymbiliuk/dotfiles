@@ -8,6 +8,12 @@
     supportedFilesystems = [ "ntfs" ];
     tmp.cleanOnBoot = true;
 
+    extraModprobeConfig = ''
+      blacklist nouveau
+      options nouveau modeset=0
+    '';
+    blacklistedKernelModules = [ "nouveau" ];
+
     loader = {
       efi.canTouchEfiVariables = true;
       grub = {
