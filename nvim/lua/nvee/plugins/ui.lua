@@ -399,20 +399,6 @@ return {
     end,
   },
   {
-    "esmuellert/vscode-diff.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = "CodeDiff",
-    config = function()
-      require("vscode-diff").setup({
-        highlights = {
-          line_insert = "DiffAdd",
-          line_delete = "DiffDelete",
-          char_brightness = nil,
-        },
-      })
-    end,
-  },
-  {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
