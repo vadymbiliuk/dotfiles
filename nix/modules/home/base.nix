@@ -145,6 +145,7 @@
     settings = {
       font-family = "BerkeleyMonoMinazuki Nerd Font Mono";
       font-size = if pkgs.stdenv.isDarwin then 22 else 18;
+      font-feature = [ "+liga" "+calt" "+dlig" ];
 
       window-padding-x = 14;
       window-padding-y = 14;

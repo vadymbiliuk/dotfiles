@@ -112,7 +112,7 @@
       }
 
       .osd-text {
-        font-family: "CaskaydiaMono Nerd Font";
+        font-family: "BerkeleyMonoMinazuki Nerd Font Mono";
         font-size: 11pt;
         color: rgba(138, 138, 141, 1);
       }
