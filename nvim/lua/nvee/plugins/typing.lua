@@ -92,13 +92,20 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {
-      modes = {
-        search = {
-          enabled = true,
+    config = function()
+      require("flash").setup {
+        modes = {
+          search = {
+            enabled = true,
+          },
         },
-      },
-    },
+      }
+      
+      local lackluster = require("lackluster")
+      vim.api.nvim_set_hl(0, "FlashLabel", { bg = lackluster.color.gray8, fg = lackluster.color.gray1 })
+      vim.api.nvim_set_hl(0, "FlashMatch", { bg = lackluster.color.gray9, fg = lackluster.color.gray1 })
+      vim.api.nvim_set_hl(0, "FlashCurrent", { bg = lackluster.color.gray8, fg = lackluster.color.gray1 })
+    end,
   },
   {
     "kylechui/nvim-surround",

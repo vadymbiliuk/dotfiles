@@ -199,6 +199,7 @@
       background = "0a0a0a";
       foreground = "deeeed";
       cursor-color = "deeeed";
+      cursor-text = "0a0a0a";
       selection-background = "7a7a7a";
       selection-foreground = "0a0a0a";
     };
