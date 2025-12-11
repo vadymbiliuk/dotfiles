@@ -52,6 +52,7 @@ let
     solargraph
     rubocop
     rubyPackages.standard
+    rubyPackages.ruby-lsp
     typos
   ];
 

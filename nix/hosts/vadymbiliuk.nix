@@ -168,8 +168,12 @@
       "rbenv"
       "ruby-build"
       "libpq"
+      "postgresql@16"
       "imagemagick"
       "vips"
+      "mkcert"
+      "nss"
+      "libiconv"
     ];
     casks = [
       "1password"

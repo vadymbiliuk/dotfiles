@@ -27,7 +27,6 @@ return {
             buf_set_keymap("n", "g[", "<cmd>:Lspsaga diagnostic_jump_prev<CR>", opts)
             buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
             buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
-            buf_set_keymap("v", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
 
             -- Haskell-specific keymaps
             buf_set_keymap("n", "<leader>hs", "<cmd>Hls start<CR>", opts)
@@ -44,6 +43,9 @@ return {
       require("lspsaga").setup {
         lightbulb = { enable = false },
         symbol_in_winbar = { enable = false },
+        ui = {
+          border = "rounded",
+        },
       }
     end,
     dependencies = {
@@ -115,21 +117,59 @@ return {
         "ocamllsp",
         "eslint",
         "cssls",
-        "solargraph",
+        "ruby_lsp",
       }
 
       require("vtsls").config {}
 
       local lsp_servers_custom = {
+        ruby_lsp = {
+          cmd = { "ruby-lsp" },
+          filetypes = { "ruby", "eruby", "haml", "slim" },
+          root_dir = lsp_util.root_pattern("Gemfile", ".git"),
+          on_new_config = function(config, root_dir)
+            config.cmd_env = {
+              BUNDLE_GEMFILE = root_dir .. "/Gemfile",
+              BUNDLE_PATH = vim.fn.expand("~/.local/share/ruby-lsp/bundle"),
+              BUNDLE_USER_CACHE = vim.fn.expand("~/.cache/ruby-lsp/bundle"),
+              BUNDLE_USER_CONFIG = vim.fn.expand("~/.config/ruby-lsp/bundle"),
+            }
+          end,
+          init_options = {
+            enabledFeatures = {
+              codeActions = true,
+              diagnostics = true,
+              documentHighlights = true,
+              documentLink = true,
+              documentSymbols = true,
+              foldingRanges = true,
+              formatting = true,
+              hover = true,
+              inlayHint = true,
+              onTypeFormatting = true,
+              selectionRanges = true,
+              semanticHighlighting = true,
+              completion = true,
+              definition = true,
+              typeHierarchy = true,
+              workspaceSymbol = true,
+            },
+          },
+          settings = {},
+        },
         solargraph = {
           cmd = { "solargraph", "stdio" },
           filetypes = { "ruby" },
           root_dir = lsp_util.root_pattern("Gemfile", ".git"),
           settings = {
             solargraph = {
-              diagnostics = true,
+              diagnostics = false,
               completion = true,
-              formatting = true,
+              formatting = false,
+              definitions = true,
+              references = true,
+              rename = true,
+              symbols = true,
             },
           },
         },
@@ -258,16 +298,34 @@ return {
         buf_set_keymap("n", "g[", "<cmd>:Lspsaga diagnostic_jump_next<CR>", opts)
         buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
         buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
-        buf_set_keymap("v", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
+        buf_set_keymap("n", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
       end
 
       -- LSP settings (for overriding per client)
       local handlers = {
         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-          border = "rounded",
+          border = {
+            { "┌", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "┐", "FloatBorder" },
+            { "│", "FloatBorder" },
+            { "┘", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "└", "FloatBorder" },
+            { "│", "FloatBorder" },
+          },
         }),
         ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-          border = "rounded",
+          border = {
+            { "┌", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "┐", "FloatBorder" },
+            { "│", "FloatBorder" },
+            { "┘", "FloatBorder" },
+            { "─", "FloatBorder" },
+            { "└", "FloatBorder" },
+            { "│", "FloatBorder" },
+          },
         }),
       }
 
@@ -276,6 +334,9 @@ return {
         dynamicRegistration = false,
         lineFoldingOnly = true,
       }
+      
+      capabilities.general = capabilities.general or {}
+      capabilities.general.positionEncodings = { "utf-16" }
 
       -- optimizes cpu usage source https://github.com/neovim/neovim/issues/23291
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
@@ -321,7 +382,8 @@ return {
             [vim.diagnostic.severity.HINT] = signs.Hint,
           },
         },
-        underline = true,
+        underline = false,
+        severity_sort = true,
       }
 
       local ns = vim.api.nvim_create_namespace "my_namespace"
