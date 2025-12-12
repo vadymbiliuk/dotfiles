@@ -63,12 +63,12 @@
     enable = true;
     settings = {
       gaps = {
-        inner.horizontal = 10;
-        inner.vertical = 10;
-        outer.left = 10;
-        outer.bottom = 10;
-        outer.top = 10;
-        outer.right = 10;
+        inner.horizontal = 8;
+        inner.vertical = 8;
+        outer.left = 12;
+        outer.bottom = 12;
+        outer.top = 12;
+        outer.right = 12;
       };
 
       mode.main.binding = {
