@@ -76,21 +76,25 @@ in {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
           installation_mode = "force_installed";
+          pinned = true;
         };
         "addon@darkreader.org" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
           installation_mode = "force_installed";
+          pinned = true;
         };
         "@react-devtools" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/react-devtools/latest.xpi";
           installation_mode = "force_installed";
+          pinned = true;
         };
         "extension@redux.devtools" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/reduxdevtools/latest.xpi";
           installation_mode = "force_installed";
+          pinned = true;
         };
       };
     };
