@@ -62,19 +62,27 @@ return {
           timeout_ms = 500,
           lsp_format = "fallback",
         },
+        formatters = {
+          standardrb = {
+            command = "/etc/profiles/per-user/vadymbiliuk/bin/standardrb",
+            args = { "--fix", "--stdin", "$FILENAME" },
+            stdin = true,
+          },
+        },
         formatters_by_ft = {
           lua = { "stylua" },
           rust = { "rustfmt" },
           c = { "clang-format" },
           cpp = { "clang-format" },
           python = { "ruff format" },
-          ruby = { "rubocop", "standard" },
+          ruby = { "rubocop", "trim_whitespace" },
+          eruby = { "erb_lint", "trim_whitespace" },
           markdown = { "prettierd", "prettier" },
           javascript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           javascriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           typescript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           typescriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
-          json = has_biome_config() and { "biome" } or { "prettierd" },
+          json = has_biome_config() and { "biome" } or { "prettierd", "fixjson" },
           yaml = { "yamlfmt" },
           graphql = { "prettierd" },
           recript = { "rescript" },
@@ -85,6 +93,7 @@ return {
           cabal = { "cabal-fmt --inplace" },
           scss = { "stylelint" },
           css = { "stylelint" },
+          ["*"] = { "trim_whitespace" },
         },
       }
     end,
@@ -130,9 +139,9 @@ return {
           on_new_config = function(config, root_dir)
             config.cmd_env = {
               BUNDLE_GEMFILE = root_dir .. "/Gemfile",
-              BUNDLE_PATH = vim.fn.expand("~/.local/share/ruby-lsp/bundle"),
-              BUNDLE_USER_CACHE = vim.fn.expand("~/.cache/ruby-lsp/bundle"),
-              BUNDLE_USER_CONFIG = vim.fn.expand("~/.config/ruby-lsp/bundle"),
+              BUNDLE_PATH = vim.fn.expand "~/.local/share/ruby-lsp/bundle",
+              BUNDLE_USER_CACHE = vim.fn.expand "~/.cache/ruby-lsp/bundle",
+              BUNDLE_USER_CONFIG = vim.fn.expand "~/.config/ruby-lsp/bundle",
             }
           end,
           init_options = {
@@ -155,7 +164,19 @@ return {
               workspaceSymbol = true,
             },
           },
-          settings = {},
+          settings = {
+            rubyLsp = {
+              rubyVersionManager = "auto",
+              enabledFeatures = {
+                diagnostics = true,
+              },
+              featuresConfiguration = {
+                diagnostics = {
+                  rubocop = true,
+                },
+              },
+            },
+          },
         },
         solargraph = {
           cmd = { "solargraph", "stdio" },
@@ -165,11 +186,11 @@ return {
             solargraph = {
               diagnostics = false,
               completion = true,
-              formatting = false,
-              definitions = true,
-              references = true,
-              rename = true,
-              symbols = true,
+              formatting = true,
+              definitions = false,
+              references = false,
+              rename = false,
+              symbols = false,
             },
           },
         },
@@ -334,7 +355,7 @@ return {
         dynamicRegistration = false,
         lineFoldingOnly = true,
       }
-      
+
       capabilities.general = capabilities.general or {}
       capabilities.general.positionEncodings = { "utf-16" }
 

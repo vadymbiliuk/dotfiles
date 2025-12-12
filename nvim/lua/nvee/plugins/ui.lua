@@ -184,6 +184,7 @@ return {
       "nvim-neotest/neotest-jest",
       "marilari88/neotest-vitest",
       "nvim-neotest/neotest-python",
+      "olimorris/neotest-rspec",
     },
     keys = {
       {
@@ -274,6 +275,11 @@ return {
           require "neotest-vitest",
           require "neotest-python" {
             dap = { justMyCode = false },
+          },
+          require "neotest-rspec" {
+            command = "bundle exec rspec",
+            root_files = { "Gemfile", ".rspec", ".gitignore" },
+            filter_dirs = { "vendor", "node_modules" },
           },
         },
         icons = {
@@ -466,51 +472,33 @@ return {
       "rcarriga/nvim-notify",
     },
   },
-  -- {
-  --   "folke/sidekick.nvim",
-  --   opts = {
-  --     cli = {
-  --       mux = {
-  --         backend = "tmux",
-  --         enabled = true,
-  --       },
-  --     },
-  --   },
-  --   keys = {
-  --     {
-  --       "<tab>",
-  --       function()
-  --         if not require("sidekick").nes_jump_or_apply() then
-  --           return "<Tab>" -- fallback to normal tab
-  --         end
-  --       end,
-  --       expr = true,
-  --       desc = "Goto/Apply Next Edit Suggestion",
-  --     },
-  --     {
-  --       "<c-.>",
-  --       function()
-  --         require("sidekick.cli").focus()
-  --       end,
-  --       mode = { "n", "x", "i", "t" },
-  --       desc = "Sidekick Switch Focus",
-  --     },
-  --     {
-  --       "<leader>aa",
-  --       function()
-  --         require("sidekick.cli").toggle()
-  --       end,
-  --       desc = "Sidekick Toggle CLI",
-  --       mode = { "n", "v" },
-  --     },
-  --     {
-  --       "<leader>sa",
-  --       function()
-  --         require("sidekick.cli").toggle { name = "claude", focus = true }
-  --       end,
-  --       desc = "Sidekick Claude Toggle",
-  --       mode = { "n", "v" },
-  --     },
-  --   },
-  -- },
+  {
+    "folke/sidekick.nvim",
+    opts = {
+      cli = {
+        tools = {
+          claude = { cmd = { "claude" } }
+        }
+      }
+    },
+    keys = {
+      {
+        "<leader>ac",
+        function() 
+          require("sidekick.cli").toggle({ 
+            name = "claude", 
+            focus = true 
+          }) 
+        end,
+        desc = "Sidekick Toggle Claude"
+      },
+      {
+        "<leader>aC",
+        function() 
+          require("sidekick.cli").select()
+        end,
+        desc = "Sidekick Select CLI Tool"
+      }
+    }
+  },
 }
