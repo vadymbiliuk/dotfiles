@@ -35,7 +35,7 @@
       imports = [
         ../modules/home/base.nix
         ../modules/home/wallpaper.nix
-        ../modules/home/walker.nix
+        ../modules/home/rofi.nix
         ../modules/home/firefox.nix
         ../modules/home/packages.nix
         ../modules/home/hyprland.nix

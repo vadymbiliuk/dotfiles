@@ -59,7 +59,7 @@
 
           "custom/launcher": {
             "format": "  ",
-            "on-click": "walker",
+            "on-click": "rofi -show drun",
             "tooltip": false
           },
           

@@ -156,7 +156,7 @@
 
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";
-      "$menu" = "walker";
+      "$menu" = "rofi -show drun";
 
       env = [
         "XCURSOR_SIZE,24"
@@ -358,8 +358,8 @@
       ];
 
       layerrule = [
-        "blur, walker"
-        "ignorealpha 0.2, walker"
+        "blur, rofi"
+        "ignorealpha 0.2, rofi"
         "blur, swaync-control-center"
         "blur, swaync-notification-window"
         "ignorezero, swaync-control-center"
