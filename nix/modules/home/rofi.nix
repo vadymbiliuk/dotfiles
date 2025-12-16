@@ -40,12 +40,12 @@ in {
       }
 
       window {
-          background-color: @gray2;
+          background-color: rgba(25, 25, 25, 0.80);
           y-offset: @y-offset;
           width: @width;
           border-radius: 10px;
           border: 3px solid;
-          border-color: rgba(42, 42, 42, 65%);
+          border-color: rgba(42, 42, 42, 0.65);
       }
 
       mainbox {
@@ -53,7 +53,7 @@ in {
       }
 
       inputbar {
-          background-color: @gray3;
+          background-color: rgba(42, 42, 42, 0.75);
           padding: 8px 16px;
           spacing: 16px;
           children: [ prompt, entry ];
@@ -70,7 +70,7 @@ in {
 
       message {
           margin: 16px 0 0;
-          background-color: @gray2;
+          background-color: rgba(25, 25, 25, 0.75);
       }
 
       textbox {
@@ -89,9 +89,9 @@ in {
       }
 
       scrollbar {
-          background-color: @gray3;
+          background-color: rgba(42, 42, 42, 0.5);
           handle-width: 10px;
-          handle-color: @gray5;
+          handle-color: rgba(85, 85, 85, 0.8);
           margin: 0px 0px 0px 10px;
       }
 
@@ -109,7 +109,7 @@ in {
           text-color: @gray6;
       }
       element selected normal, element selected active {
-          background-color: @gray9;
+          background-color: rgba(221, 221, 221, 0.95);
           text-color: @gray0;
       }
 
