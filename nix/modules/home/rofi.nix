@@ -40,12 +40,12 @@ in {
       }
 
       window {
-          background-color: rgba(25, 25, 25, 0.80);
+          background-color: rgba(10, 10, 10, 0.6);
           y-offset: @y-offset;
           width: @width;
           border-radius: 10px;
           border: 3px solid;
-          border-color: rgba(42, 42, 42, 0.65);
+          border-color: rgba(42, 42, 42, 0.4);
       }
 
       mainbox {
@@ -53,7 +53,7 @@ in {
       }
 
       inputbar {
-          background-color: rgba(42, 42, 42, 0.75);
+          background-color: transparent;
           padding: 8px 16px;
           spacing: 16px;
           children: [ prompt, entry ];
@@ -70,7 +70,7 @@ in {
 
       message {
           margin: 16px 0 0;
-          background-color: rgba(25, 25, 25, 0.75);
+          background-color: transparent;
       }
 
       textbox {
@@ -78,7 +78,7 @@ in {
       }
 
       listview {
-          background-color:transparent;
+          background-color: transparent;
           scrollbar: true;
           scrollbar-width: 5;
           margin: 10px 0 0;
@@ -89,9 +89,9 @@ in {
       }
 
       scrollbar {
-          background-color: rgba(42, 42, 42, 0.5);
+          background-color: rgba(42, 42, 42, 0.3);
           handle-width: 10px;
-          handle-color: rgba(85, 85, 85, 0.8);
+          handle-color: rgba(85, 85, 85, 0.5);
           margin: 0px 0px 0px 10px;
       }
 
@@ -109,12 +109,12 @@ in {
           text-color: @gray6;
       }
       element selected normal, element selected active {
-          background-color: rgba(221, 221, 221, 0.95);
-          text-color: @gray0;
+          background-color: @gray1;
+          text-color: @gray9;
       }
 
       element-text selected {
-          text-color: @gray1;
+          text-color: @gray9;
       }
     '';
     extraConfig = {
@@ -134,6 +134,8 @@ in {
       click-to-exit = true;
       me-select-entry = "";
       me-accept-entry = "MousePrimary";
+      normal-window = false;
+      steal-focus = true;
     };
   };
 

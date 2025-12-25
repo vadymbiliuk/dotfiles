@@ -26,7 +26,7 @@
     };
     
     targets = {
-      waybar.enable = true;
+      
     };
   };
 }

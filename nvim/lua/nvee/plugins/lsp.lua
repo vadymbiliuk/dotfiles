@@ -68,6 +68,11 @@ return {
             args = { "--fix", "--stdin", "$FILENAME" },
             stdin = true,
           },
+          qmlformat = {
+            command = "qmlformat",
+            args = { "--inplace", "$FILENAME" },
+            stdin = false,
+          },
         },
         formatters_by_ft = {
           lua = { "stylua" },
@@ -93,6 +98,7 @@ return {
           cabal = { "cabal-fmt --inplace" },
           scss = { "stylelint" },
           css = { "stylelint" },
+          qml = { "qmlformat" },
           ["*"] = { "trim_whitespace" },
         },
       }
@@ -382,7 +388,7 @@ return {
         end
 
         opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
-        require("lspconfig")[server].setup(opts)
+        vim.lsp.config[server] = opts
         ::continue::
       end
 

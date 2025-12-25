@@ -72,6 +72,8 @@ let
   utilityPackages = with pkgs;
     [
       jujutsu
+      pamixer
+      brightnessctl
       tree-sitter
       (tree-sitter.withPlugins (p:
         with p; [

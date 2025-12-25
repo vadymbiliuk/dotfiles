@@ -1,6 +1,12 @@
 { config, pkgs, lib, inputs, ... }:
 
-{
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config.allowUnfree = true;
+  };
+
+in {
   imports = [
     ./hardware-configuration.nix
     ../modules/nixos/nix.nix
@@ -14,18 +20,28 @@
     ../modules/nixos/system.nix
     ../modules/nixos/hyprland.nix
     ../modules/nixos/1password.nix
+    ../modules/nixos/nordvpn.nix
   ];
 
-  networking.hostName = "minazuki";
+  networking.hostName = "nixos";
 
   users.users.minazuki = {
     isNormalUser = true;
-    extraGroups =
-      [ "wheel" "networkmanager" "audio" "video" "docker" "libvirtd" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "audio"
+      "video"
+      "docker"
+      "libvirtd"
+      "nordvpn"
+    ];
     shell = pkgs.zsh;
   };
 
   programs.zsh.enable = true;
+
+  fonts.packages = with pkgs; [ material-symbols ];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -39,7 +55,7 @@
         ../modules/home/firefox.nix
         ../modules/home/packages.nix
         ../modules/home/hyprland.nix
-        ../modules/home/waybar.nix
+        ../modules/home/quickshell.nix
         ../modules/home/theme.nix
         ../modules/home/editors.nix
         ../modules/home/cursor.nix
@@ -103,7 +119,13 @@
     curl
     wl-clipboard
 
-    waybar
+    unstable.quickshell
+    qt6.qt5compat
+    qt5.qtgraphicaleffects
+    qt6.qtbase
+    qt6.qtdeclarative
+    qt6.qtquickeffectmaker
+    kdePackages.qt5compat
     hyprpaper
     kdePackages.dolphin
     grim
@@ -115,6 +137,7 @@
     discord
     teamspeak3
     thunderbird
+    slack
 
     obs-studio
     obsidian
@@ -128,7 +151,12 @@
     niv
     ghostty
     libnotify
+    clamav
   ];
+
+  services.nordvpn.enable = true;
+  services.clamav.daemon.enable = true;
+  services.clamav.updater.enable = true;
 
 }
 

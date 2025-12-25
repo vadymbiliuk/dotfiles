@@ -2,151 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    swaynotificationcenter
-    swayosd
     hyprlandPlugins.hyprexpo
   ];
 
   services.mako.enable = false;
 
-  services.swaync = {
-    enable = true;
-    settings = {
-      positionX = "right";
-      positionY = "top";
-      layer = "overlay";
-      control-center-layer = "top";
-      layer-shell = true;
-      cssPriority = "user";
-      control-center-margin-top = 10;
-      control-center-margin-bottom = 10;
-      control-center-margin-right = 10;
-      control-center-margin-left = 10;
-      notification-2fa-action = true;
-      notification-inline-replies = false;
-      notification-icon-size = 64;
-      notification-body-image-height = 100;
-      notification-body-image-width = 200;
-      timeout = 10;
-      timeout-low = 5;
-      timeout-critical = 0;
-      fit-to-screen = true;
-      control-center-width = 500;
-      control-center-height = 600;
-      notification-window-width = 500;
-      keyboard-shortcuts = true;
-      image-visibility = "when-available";
-      transition-time = 200;
-      hide-on-clear = false;
-      hide-on-action = true;
-      script-fail-notify = true;
-      widgets = [ "inhibitors" "title" "dnd" "notifications" ];
-      widget-config = {
-        inhibitors = {
-          text = "Inhibitors";
-          button-text = "Clear All";
-          clear-all-button = true;
-        };
-        title = {
-          text = "Notifications";
-          clear-all-button = true;
-          button-text = "Clear All";
-        };
-        dnd = { text = "Do Not Disturb"; };
-      };
-    };
-    style = ''
-      @define-color noti-bg rgba(8, 8, 8, 0.85);
-      @define-color text-color #DDD;
-
-      .notification {
-        background: @noti-bg;
-        border: 3px solid rgba(42, 42, 42, 0.65);
-        border-radius: 10px;
-        margin: 6px 12px;
-        padding: 10px;
-      }
-
-      .notification:hover {
-        background: @noti-bg;
-      }
-
-      .notification-window {
-        background: @noti-bg;
-      }
-
-      .floating-notifications .notification {
-        background: @noti-bg;
-      }
-
-      .control-center {
-        background: @noti-bg;
-        border-radius: 10px;
-        margin: 12px;
-      }
-
-      .control-center-list .notification:hover {
-        background: @noti-bg;
-      }
-
-      .mpris-background {
-        background: @noti-bg;
-      }
-    '';
-  };
-
-  services.swayosd = {
-    enable = true;
-    topMargin = 0.5;
-    stylePath = pkgs.writeText "swayosd-style.css" ''
-      .osd-window {
-        padding: 12px 20px;
-        border-radius: 10px;
-        border: 3px solid rgba(42, 42, 42, 0.65);
-        background: rgba(18, 18, 18, 0.97);
-      }
-
-      .container {
-        margin: 16px;
-        border-radius: 10px;
-      }
-
-      .osd-text {
-        font-family: "BerkeleyMonoMinazuki Nerd Font Mono";
-        font-size: 11pt;
-        color: rgba(138, 138, 141, 1);
-      }
-
-      .osd-image {
-        color: rgba(138, 138, 141, 1);
-        margin-right: 6px;
-      }
-
-      .level-bar {
-        border-radius: 10px;
-      }
-
-      .level-bar trough {
-        min-height: 6px;
-        border-radius: 10px;
-        background: rgba(138, 138, 141, 0.15);
-      }
-
-      .level-bar block {
-        min-height: 6px;
-        border-radius: 10px;
-        background: rgba(138, 138, 141, 1);
-      }
-
-      .level-bar block.filled {
-        background: rgba(138, 138, 141, 1);
-      }
-
-      .level-bar block.empty {
-        background: rgba(138, 138, 141, 0.15);
-      }
-    '';
-  };
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -263,12 +123,11 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
-        "waybar"
+        "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell"
         "hyprpaper"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "1password --silent-launch --ozone-platform-hint=x11"
-        "swaync"
-        "swayosd-server"
+        "nm-applet --indicator"
         "[workspace 1 silent] firefox"
         "[workspace 2 silent] ghostty"
         "[workspace 3 silent] telegram-desktop"
@@ -318,9 +177,8 @@
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
         "$mainMod, TAB, hyprexpo:expo, toggle"
-        "$mainMod, N, exec, swaync-client -t -sw"
-        "$mainMod SHIFT, N, exec, swaync-client -d -sw"
-        "$mainMod ALT, N, exec, swaync-client -C"
+        "$mainMod, N, exec, notify-send 'Test' 'Quickshell notification test'"
+        "$mainMod, O, exec, echo 'test' > /tmp/quickshell-volume-trigger"
       ];
 
       bindd = [
@@ -330,12 +188,12 @@
       ];
 
       bindel = [
-        ",XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
-        ",XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
-        ",XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
-        ",XF86AudioMicMute, exec, swayosd-client --input-volume mute-toggle"
-        ",XF86MonBrightnessUp, exec, swayosd-client --brightness raise"
-        ",XF86MonBrightnessDown, exec, swayosd-client --brightness lower"
+        ",XF86AudioRaiseVolume, exec, pamixer -i 5 && touch /tmp/quickshell-volume-trigger"
+        ",XF86AudioLowerVolume, exec, pamixer -d 5 && touch /tmp/quickshell-volume-trigger"
+        ",XF86AudioMute, exec, pamixer -t && touch /tmp/quickshell-volume-trigger"
+        ",XF86AudioMicMute, exec, pamixer --default-source -t"
+        ",XF86MonBrightnessUp, exec, brightnessctl set +5% && touch /tmp/quickshell-brightness-trigger"
+        ",XF86MonBrightnessDown, exec, brightnessctl set 5%- && touch /tmp/quickshell-brightness-trigger"
       ];
 
       bindl = [
@@ -360,12 +218,12 @@
       layerrule = [
         "blur, rofi"
         "ignorealpha 0.2, rofi"
-        "blur, swaync-control-center"
-        "blur, swaync-notification-window"
-        "ignorezero, swaync-control-center"
-        "ignorezero, swaync-notification-window"
-        "ignorealpha 0.5, swaync-control-center"
-        "ignorealpha 0.5, swaync-notification-window"
+        "blur, quickshell"
+        "ignorealpha 0.1, quickshell"
+        "blur, notifications"
+        "ignorealpha 0.2, notifications"
+        "blur, osd"
+        "ignorealpha 0.2, osd"
       ];
 
       windowrulev2 = [
