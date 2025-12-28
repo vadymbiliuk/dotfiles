@@ -149,11 +149,22 @@ PanelWindow {
                 }
             }
 
+            Local.Protection {
+                anchors.verticalCenter: parent.verticalCenter
+                onRequestViewSwitch: view => {
+                    bar.openControlCenterWithView(view);
+                }
+            }
+
             Local.DndWidget {
                 anchors.verticalCenter: parent.verticalCenter
                 onRequestViewSwitch: view => {
                     bar.openControlCenterWithView(view);
                 }
+            }
+
+            Local.Weather {
+                anchors.verticalCenter: parent.verticalCenter
             }
 
             Local.OutputVolume {

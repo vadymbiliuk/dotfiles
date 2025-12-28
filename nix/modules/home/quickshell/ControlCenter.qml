@@ -37,6 +37,10 @@ Item {
         id: vpnModule
     }
 
+    Local.AntivirusModule {
+        id: antivirusModule
+    }
+
     Process {
         id: clipboardProcess
         running: false
@@ -89,8 +93,10 @@ Item {
         {
             icon: "shield",
             title: "Protection",
-            description: "System protected",
-            action: function () {}
+            description: antivirusModule.getDisplayText(),
+            action: function () {
+                currentView = "protection";
+            }
         }
     ]
 
@@ -2230,6 +2236,244 @@ Item {
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Column {
+                                anchors.fill: parent
+                                anchors.topMargin: Local.Theme.spacing.large
+                                spacing: Local.Theme.spacing.large
+                                visible: controlCenter.currentView === "protection"
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: 60
+                                    color: "transparent"
+
+                                    Rectangle {
+                                        id: protectionBackButton
+                                        width: 40
+                                        height: 40
+                                        radius: Local.Theme.radius.normal
+                                        color: protectionBackMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                        border.width: Local.Theme.border.thick
+                                        border.color: Local.Theme.border.color
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+
+                                        Local.MaterialSymbol {
+                                            icon: "arrow_back"
+                                            iconSize: Local.Theme.font.huge
+                                            color: Local.Theme.colors.foreground
+                                            anchors.centerIn: parent
+                                        }
+
+                                        MouseArea {
+                                            id: protectionBackMouse
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: controlCenter.currentView = "main"
+                                        }
+                                    }
+
+                                    Column {
+                                        spacing: Local.Theme.spacing.small
+                                        anchors.left: protectionBackButton.right
+                                        anchors.leftMargin: Local.Theme.spacing.large
+                                        anchors.verticalCenter: parent.verticalCenter
+
+                                        Text {
+                                            text: "Protection Settings"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.large
+                                            color: Local.Theme.colors.foreground
+                                        }
+
+                                        Text {
+                                            text: antivirusModule.getDisplayText()
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.gray7
+                                        }
+                                    }
+
+                                    Rectangle {
+                                        id: protectionToggle
+                                        width: 60
+                                        height: 30
+                                        radius: 15
+                                        color: antivirusModule.enabled ? Local.Theme.colors.foreground : Local.Theme.colors.gray3
+                                        anchors.right: parent.right
+                                        anchors.verticalCenter: parent.verticalCenter
+
+                                        Rectangle {
+                                            width: 24
+                                            height: 24
+                                            radius: 12
+                                            color: Local.Theme.colors.gray1
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            x: antivirusModule.enabled ? parent.width - width - 3 : 3
+
+                                            Behavior on x {
+                                                NumberAnimation {
+                                                    duration: 200
+                                                    easing.type: Easing.OutQuad
+                                                }
+                                            }
+                                        }
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: {
+                                                antivirusModule.toggleProtection();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: 120
+                                    radius: Local.Theme.radius.normal
+                                    color: Local.Theme.colors.gray1
+                                    border.width: Local.Theme.border.thick
+                                    border.color: Local.Theme.border.color
+                                    visible: antivirusModule.enabled
+
+                                    Column {
+                                        anchors.fill: parent
+                                        anchors.margins: Local.Theme.spacing.normal
+                                        spacing: Local.Theme.spacing.small
+
+                                        Text {
+                                            text: "Protection Status"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.large
+                                            font.weight: Font.Bold
+                                            color: Local.Theme.colors.foreground
+                                        }
+
+                                        Text {
+                                            text: "Last Scan: " + (antivirusModule.lastScanDate || "Never")
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.gray7
+                                        }
+
+                                        Text {
+                                            text: "Definitions: " + (antivirusModule.virusDefinitionDate || "Unknown")
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.gray7
+                                        }
+                                    }
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: 140
+                                    radius: Local.Theme.radius.normal
+                                    color: Local.Theme.colors.gray1
+                                    border.width: Local.Theme.border.thick
+                                    border.color: Local.Theme.border.color
+
+                                    Row {
+                                        anchors.centerIn: parent
+                                        spacing: Local.Theme.spacing.large
+
+                                        Rectangle {
+                                            width: 200
+                                            height: 50
+                                            color: scanButtonMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                            radius: Local.Theme.radius.normal
+                                            border.width: Local.Theme.border.thick
+                                            border.color: Local.Theme.border.color
+
+                                            Text {
+                                                text: antivirusModule.isScanning ? "Scanning..." : "Quick Scan"
+                                                font.family: Local.Theme.font.family
+                                                font.pixelSize: Local.Theme.font.normal
+                                                color: Local.Theme.colors.foreground
+                                                anchors.centerIn: parent
+                                            }
+
+                                            MouseArea {
+                                                id: scanButtonMouse
+                                                anchors.fill: parent
+                                                enabled: !antivirusModule.isScanning
+                                                hoverEnabled: !antivirusModule.isScanning
+                                                cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                                onClicked: {
+                                                    antivirusModule.quickScan();
+                                                }
+                                            }
+                                        }
+
+                                        Rectangle {
+                                            width: 200
+                                            height: 50
+                                            color: updateButtonMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                            radius: Local.Theme.radius.normal
+                                            border.width: Local.Theme.border.thick
+                                            border.color: Local.Theme.border.color
+
+                                            Text {
+                                                text: "Update Definitions"
+                                                font.family: Local.Theme.font.family
+                                                font.pixelSize: Local.Theme.font.normal
+                                                color: Local.Theme.colors.foreground
+                                                anchors.centerIn: parent
+                                            }
+
+                                            MouseArea {
+                                                id: updateButtonMouse
+                                                anchors.fill: parent
+                                                hoverEnabled: true
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: {
+                                                    antivirusModule.updateVirusDefinitions();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Rectangle {
+                                    width: parent.width
+                                    height: 60
+                                    radius: Local.Theme.radius.normal
+                                    color: Local.Theme.colors.gray1
+                                    border.width: Local.Theme.border.thick
+                                    border.color: Local.Theme.border.color
+                                    visible: antivirusModule.isScanning
+
+                                    Column {
+                                        anchors.centerIn: parent
+                                        spacing: Local.Theme.spacing.small
+
+                                        Text {
+                                            text: "Scan Progress"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.foreground
+                                            anchors.horizontalCenter: parent.horizontalCenter
+                                        }
+
+                                        Text {
+                                            text: antivirusModule.scanProgress || "Starting scan..."
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.small
+                                            color: Local.Theme.colors.gray7
+                                            anchors.horizontalCenter: parent.horizontalCenter
+                                            width: 400
+                                            wrapMode: Text.WordWrap
+                                            maximumLineCount: 1
+                                            elide: Text.ElideRight
                                         }
                                     }
                                 }

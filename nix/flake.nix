@@ -20,6 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    drata-agent.url = "path:./drata-agent";
   };
 
   outputs = { self, nixpkgs, nix-darwin, determinate, home-manager, lanzaboote

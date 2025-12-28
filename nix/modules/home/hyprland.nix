@@ -1,12 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  home.packages = with pkgs; [
-    hyprlandPlugins.hyprexpo
-  ];
+  home.packages = with pkgs; [ hyprlandPlugins.hyprexpo ];
 
   services.mako.enable = false;
-
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -123,8 +120,9 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
-        "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell"
+        "quickshell"
         "hyprpaper"
+        "hypridle"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "1password --silent-launch --ozone-platform-hint=x11"
         "nm-applet --indicator"
@@ -179,6 +177,7 @@
         "$mainMod, TAB, hyprexpo:expo, toggle"
         "$mainMod, N, exec, notify-send 'Test' 'Quickshell notification test'"
         "$mainMod, O, exec, echo 'test' > /tmp/quickshell-volume-trigger"
+        "$mainMod, L, exec, hyprlock"
       ];
 
       bindd = [
