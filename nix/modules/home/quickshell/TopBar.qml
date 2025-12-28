@@ -163,15 +163,21 @@ PanelWindow {
                 }
             }
 
-            Local.Weather {
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
             Local.OutputVolume {
                 anchors.verticalCenter: parent.verticalCenter
+                onRequestViewSwitch: view => {
+                    bar.openControlCenterWithView(view);
+                }
             }
 
             Local.InputVolume {
+                anchors.verticalCenter: parent.verticalCenter
+                onRequestViewSwitch: view => {
+                    bar.openControlCenterWithView(view);
+                }
+            }
+
+            Local.Weather {
                 anchors.verticalCenter: parent.verticalCenter
             }
 

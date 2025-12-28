@@ -40,6 +40,14 @@ Item {
     Local.AntivirusModule {
         id: antivirusModule
     }
+    
+    Local.AudioOutputModule {
+        id: audioOutputModule
+    }
+    
+    Local.AudioInputModule {
+        id: audioInputModule  
+    }
 
     Process {
         id: clipboardProcess
@@ -131,22 +139,47 @@ Item {
         }
     }
 
-    function isDNDControl(controlIndex) {
-        return controlIndex < controlsData.length && controlsData[controlIndex].title === "Silent mode";
+    function isControlActive(controlIndex) {
+        if (controlIndex >= controlsData.length) return false;
+        
+        const title = controlsData[controlIndex].title;
+        switch(title) {
+            case "WiFi":
+                return wifiModule.radioEnabled && wifiModule.connectedNetwork !== "";
+            case "Ethernet":
+                return ethernetModule.connected;
+            case "Bluetooth":
+                return bluetoothModule.enabled;
+            case "Silent mode":
+                return dndModule.enabled;
+            case "VPN":
+                return vpnModule.connected;
+            case "Protection":
+                return antivirusModule.connected;
+            default:
+                return false;
+        }
     }
-
-    function getDNDBackgroundColor(controlIndex, isHovered) {
-        if (isDNDControl(controlIndex) && dndModule.enabled) {
+    
+    function getControlBackgroundColor(controlIndex, isHovered) {
+        if (isControlActive(controlIndex)) {
             return Local.Theme.colors.gray9;
         }
         return isHovered ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2;
     }
-
-    function getDNDTextColor(controlIndex) {
-        if (isDNDControl(controlIndex) && dndModule.enabled) {
+    
+    function getControlTextColor(controlIndex) {
+        if (isControlActive(controlIndex)) {
             return Local.Theme.colors.gray0;
         }
         return Local.Theme.colors.foreground;
+    }
+    
+    function getControlDescriptionColor(controlIndex) {
+        if (isControlActive(controlIndex)) {
+            return Local.Theme.colors.gray0;
+        }
+        return Local.Theme.colors.gray7;
     }
 
 
@@ -343,14 +376,14 @@ Item {
                                                 width: (parent.width - parent.spacing) / 2
                                                 height: 80
                                                 radius: Local.Theme.radius.normal
-                                                color: getDNDBackgroundColor(index * 2, firstMouse.containsMouse)
+                                                color: getControlBackgroundColor(index * 2, firstMouse.containsMouse)
                                                 border.width: Local.Theme.border.thick
                                                 border.color: Local.Theme.border.color
 
                                                 Local.MaterialSymbol {
                                                     icon: controlCenter.controlsData[index * 2].icon
                                                     iconSize: 32
-                                                    color: isDNDControl(index * 2) && dndModule.enabled ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
+                                                    color: getControlTextColor(index * 2)
                                                     anchors.left: parent.left
                                                     anchors.leftMargin: Local.Theme.spacing.large
                                                     anchors.verticalCenter: parent.verticalCenter
@@ -369,14 +402,14 @@ Item {
                                                         font.family: Local.Theme.font.family
                                                         font.pixelSize: Local.Theme.font.huge
                                                         font.weight: Font.Bold
-                                                        color: getDNDTextColor(index * 2)
+                                                        color: getControlTextColor(index * 2)
                                                     }
 
                                                     Text {
                                                         text: controlCenter.controlsData[index * 2].description
                                                         font.family: Local.Theme.font.family
                                                         font.pixelSize: Local.Theme.font.normal
-                                                        color: isDNDControl(index * 2) && dndModule.enabled ? Local.Theme.colors.gray0 : Local.Theme.colors.gray7
+                                                        color: getControlDescriptionColor(index * 2)
                                                     }
                                                 }
 
@@ -395,7 +428,7 @@ Item {
                                                 width: (parent.width - parent.spacing) / 2
                                                 height: 80
                                                 radius: Local.Theme.radius.normal
-                                                color: getDNDBackgroundColor(index * 2 + 1, secondMouse.containsMouse)
+                                                color: getControlBackgroundColor(index * 2 + 1, secondMouse.containsMouse)
                                                 border.width: Local.Theme.border.thick
                                                 border.color: Local.Theme.border.color
                                                 visible: index * 2 + 1 < controlCenter.controlsData.length
@@ -403,7 +436,7 @@ Item {
                                                 Local.MaterialSymbol {
                                                     icon: index * 2 + 1 < controlCenter.controlsData.length ? controlCenter.controlsData[index * 2 + 1].icon : ""
                                                     iconSize: 32
-                                                    color: isDNDControl(index * 2 + 1) && dndModule.enabled ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
+                                                    color: getControlTextColor(index * 2 + 1)
                                                     anchors.left: parent.left
                                                     anchors.leftMargin: Local.Theme.spacing.large
                                                     anchors.verticalCenter: parent.verticalCenter
@@ -422,14 +455,14 @@ Item {
                                                         font.family: Local.Theme.font.family
                                                         font.pixelSize: Local.Theme.font.huge
                                                         font.weight: Font.Bold
-                                                        color: getDNDTextColor(index * 2 + 1)
+                                                        color: getControlTextColor(index * 2 + 1)
                                                     }
 
                                                     Text {
                                                         text: index * 2 + 1 < controlCenter.controlsData.length ? controlCenter.controlsData[index * 2 + 1].description : ""
                                                         font.family: Local.Theme.font.family
                                                         font.pixelSize: Local.Theme.font.normal
-                                                        color: isDNDControl(index * 2 + 1) && dndModule.enabled ? Local.Theme.colors.gray0 : Local.Theme.colors.gray7
+                                                        color: getControlDescriptionColor(index * 2 + 1)
                                                     }
                                                 }
 
@@ -1674,7 +1707,12 @@ Item {
                                         width: (parent.width - parent.spacing) / 2
                                         height: parent.height
                                         radius: Local.Theme.radius.normal
-                                        color: silentModeMouseArea.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                        color: {
+                                            if (Local.DNDState.enabled && Local.DNDState.profile === "silent") {
+                                                return Local.Theme.colors.gray9;
+                                            }
+                                            return silentModeMouseArea.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2;
+                                        }
                                         border.width: Local.Theme.border.thick
                                         border.color: Local.Theme.border.color
 
@@ -1685,7 +1723,7 @@ Item {
                                             Local.MaterialSymbol {
                                                 icon: "nightlight"
                                                 iconSize: 20
-                                                color: Local.Theme.colors.foreground
+                                                color: (Local.DNDState.enabled && Local.DNDState.profile === "silent") ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
 
@@ -1694,7 +1732,7 @@ Item {
                                                 font.family: Local.Theme.font.family
                                                 font.pixelSize: Local.Theme.font.large
                                                 font.weight: Font.Bold
-                                                color: Local.Theme.colors.foreground
+                                                color: (Local.DNDState.enabled && Local.DNDState.profile === "silent") ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
                                         }
@@ -1705,8 +1743,12 @@ Item {
                                             hoverEnabled: true
                                             cursorShape: Qt.PointingHandCursor
                                             onClicked: {
-                                                Local.DNDState.setProfile("silent");
-                                                Local.DNDState.enabled = true;
+                                                if (Local.DNDState.enabled && Local.DNDState.profile === "silent") {
+                                                    Local.DNDState.enabled = false;
+                                                } else {
+                                                    Local.DNDState.setProfile("silent");
+                                                    Local.DNDState.enabled = true;
+                                                }
                                             }
                                         }
                                     }
@@ -1715,7 +1757,12 @@ Item {
                                         width: (parent.width - parent.spacing) / 2
                                         height: parent.height
                                         radius: Local.Theme.radius.normal
-                                        color: workModeMouseArea.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                        color: {
+                                            if (Local.DNDState.enabled && Local.DNDState.profile === "work") {
+                                                return Local.Theme.colors.gray9;
+                                            }
+                                            return workModeMouseArea.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2;
+                                        }
                                         border.width: Local.Theme.border.thick
                                         border.color: Local.Theme.border.color
 
@@ -1726,7 +1773,7 @@ Item {
                                             Local.MaterialSymbol {
                                                 icon: "work"
                                                 iconSize: 20
-                                                color: Local.Theme.colors.foreground
+                                                color: (Local.DNDState.enabled && Local.DNDState.profile === "work") ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
 
@@ -1735,7 +1782,7 @@ Item {
                                                 font.family: Local.Theme.font.family
                                                 font.pixelSize: Local.Theme.font.large
                                                 font.weight: Font.Bold
-                                                color: Local.Theme.colors.foreground
+                                                color: (Local.DNDState.enabled && Local.DNDState.profile === "work") ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
                                         }
@@ -1746,49 +1793,13 @@ Item {
                                             hoverEnabled: true
                                             cursorShape: Qt.PointingHandCursor
                                             onClicked: {
-                                                Local.DNDState.setProfile("work");
-                                                Local.DNDState.enabled = true;
+                                                if (Local.DNDState.enabled && Local.DNDState.profile === "work") {
+                                                    Local.DNDState.enabled = false;
+                                                } else {
+                                                    Local.DNDState.setProfile("work");
+                                                    Local.DNDState.enabled = true;
+                                                }
                                             }
-                                        }
-                                    }
-                                }
-
-                                Rectangle {
-                                    width: parent.width
-                                    height: 48
-                                    radius: Local.Theme.radius.normal
-                                    color: turnOffMouseArea.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
-                                    border.width: Local.Theme.border.thick
-                                    border.color: Local.Theme.border.color
-
-                                    Row {
-                                        anchors.centerIn: parent
-                                        spacing: Local.Theme.spacing.normal
-
-                                        Local.MaterialSymbol {
-                                            icon: "block"
-                                            iconSize: 24
-                                            color: Local.Theme.colors.foreground
-                                            anchors.verticalCenter: parent.verticalCenter
-                                        }
-
-                                        Text {
-                                            text: "Turn Off All Modes"
-                                            font.family: Local.Theme.font.family
-                                            font.pixelSize: Local.Theme.font.large
-                                            font.weight: Font.Bold
-                                            color: Local.Theme.colors.foreground
-                                            anchors.verticalCenter: parent.verticalCenter
-                                        }
-                                    }
-
-                                    MouseArea {
-                                        id: turnOffMouseArea
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            Local.DNDState.enabled = false;
                                         }
                                     }
                                 }
@@ -2485,12 +2496,142 @@ Item {
                                 spacing: Local.Theme.spacing.large
                                 visible: controlCenter.currentView === "output"
 
-                                Text {
-                                    text: "Output volume view content"
-                                    font.family: Local.Theme.font.family
-                                    font.pixelSize: Local.Theme.font.large
-                                    color: Local.Theme.colors.gray7
-                                    anchors.horizontalCenter: parent.horizontalCenter
+                                Rectangle {
+                                    width: parent.width
+                                    height: 60
+                                    color: "transparent"
+                                    
+                                    Rectangle {
+                                        id: audioOutputBackButton
+                                        width: 40
+                                        height: 40
+                                        radius: Local.Theme.radius.normal
+                                        color: audioOutputBackMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                        border.width: Local.Theme.border.thick
+                                        border.color: Local.Theme.border.color
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        
+                                        Local.MaterialSymbol {
+                                            icon: "arrow_back"
+                                            iconSize: Local.Theme.font.huge
+                                            color: Local.Theme.colors.foreground
+                                            anchors.centerIn: parent
+                                        }
+                                        
+                                        MouseArea {
+                                            id: audioOutputBackMouse
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: controlCenter.currentView = "main"
+                                        }
+                                    }
+                                    
+                                    Column {
+                                        spacing: Local.Theme.spacing.small
+                                        anchors.left: audioOutputBackButton.right
+                                        anchors.leftMargin: Local.Theme.spacing.large
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        
+                                        Text {
+                                            text: "Audio Output Devices"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.large
+                                            font.weight: Font.Bold
+                                            color: Local.Theme.colors.foreground
+                                        }
+                                        
+                                        Text {
+                                            text: audioOutputModule.currentDevice || "No device selected"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.gray7
+                                        }
+                                    }
+                                }
+                                
+                                Rectangle {
+                                    width: parent.width
+                                    height: parent.height - 80
+                                    radius: Local.Theme.radius.normal
+                                    color: Local.Theme.colors.gray1
+                                    border.width: Local.Theme.border.thick
+                                    border.color: Local.Theme.border.color
+                                    
+                                    Column {
+                                        anchors.fill: parent
+                                        anchors.margins: Local.Theme.spacing.normal
+                                        spacing: Local.Theme.spacing.normal
+                                        
+                                        Text {
+                                            text: "Available devices"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.huge
+                                            font.weight: Font.Bold
+                                            color: Local.Theme.colors.foreground
+                                        }
+                                        
+                                        Column {
+                                            width: parent.width
+                                            spacing: Local.Theme.spacing.small
+                                        
+                                            Repeater {
+                                                model: audioOutputModule.devices
+                                                
+                                                Rectangle {
+                                                    visible: !modelData.isDefault
+                                                    width: parent.width
+                                                    height: visible ? 70 : 0
+                                                    radius: Local.Theme.radius.small
+                                                    color: outputDeviceMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                                
+                                                    Row {
+                                                        anchors.left: parent.left
+                                                        anchors.leftMargin: Local.Theme.spacing.large
+                                                        anchors.verticalCenter: parent.verticalCenter
+                                                        spacing: Local.Theme.spacing.normal
+                                                        
+                                                        Local.MaterialSymbol {
+                                                            icon: "volume_up"
+                                                            iconSize: 28
+                                                            color: Local.Theme.colors.foreground
+                                                            anchors.verticalCenter: parent.verticalCenter
+                                                        }
+                                                        
+                                                        Column {
+                                                            spacing: Local.Theme.spacing.tiny
+                                                            anchors.verticalCenter: parent.verticalCenter
+                                                            
+                                                            Text {
+                                                                text: modelData.name
+                                                                font.family: Local.Theme.font.family
+                                                                font.pixelSize: Local.Theme.font.normal
+                                                                color: Local.Theme.colors.foreground
+                                                            }
+                                                            
+                                                            Text {
+                                                                text: "Volume: " + modelData.volume + "%"
+                                                                font.family: Local.Theme.font.family
+                                                                font.pixelSize: Local.Theme.font.small
+                                                                color: Local.Theme.colors.gray7
+                                                            }
+                                                        }
+                                                    }
+                                                    
+                                                    MouseArea {
+                                                        id: outputDeviceMouse
+                                                        anchors.fill: parent
+                                                        hoverEnabled: true
+                                                        cursorShape: Qt.PointingHandCursor
+                                                        onClicked: {
+                                                            audioOutputModule.setDevice(modelData.id);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
 
@@ -2500,12 +2641,144 @@ Item {
                                 spacing: Local.Theme.spacing.large
                                 visible: controlCenter.currentView === "input"
 
-                                Text {
-                                    text: "Input volume view content"
-                                    font.family: Local.Theme.font.family
-                                    font.pixelSize: Local.Theme.font.large
-                                    color: Local.Theme.colors.gray7
-                                    anchors.horizontalCenter: parent.horizontalCenter
+                                Rectangle {
+                                    width: parent.width
+                                    height: 60
+                                    color: "transparent"
+                                    
+                                    Rectangle {
+                                        id: audioInputBackButton
+                                        width: 40
+                                        height: 40
+                                        radius: Local.Theme.radius.normal
+                                        color: audioInputBackMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                        border.width: Local.Theme.border.thick
+                                        border.color: Local.Theme.border.color
+                                        anchors.left: parent.left
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        
+                                        Local.MaterialSymbol {
+                                            icon: "arrow_back"
+                                            iconSize: Local.Theme.font.huge
+                                            color: Local.Theme.colors.foreground
+                                            anchors.centerIn: parent
+                                        }
+                                        
+                                        MouseArea {
+                                            id: audioInputBackMouse
+                                            anchors.fill: parent
+                                            hoverEnabled: true
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: controlCenter.currentView = "main"
+                                        }
+                                    }
+                                    
+                                    Column {
+                                        spacing: Local.Theme.spacing.small
+                                        anchors.left: audioInputBackButton.right
+                                        anchors.leftMargin: Local.Theme.spacing.large
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        
+                                        Text {
+                                            text: "Audio Input Devices"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.large
+                                            font.weight: Font.Bold
+                                            color: Local.Theme.colors.foreground
+                                        }
+                                        
+                                        Text {
+                                            text: audioInputModule.currentDevice || "No device selected"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.normal
+                                            color: Local.Theme.colors.gray7
+                                        }
+                                    }
+                                }
+                                
+                                Rectangle {
+                                    width: parent.width
+                                    height: parent.height - 80
+                                    radius: Local.Theme.radius.normal
+                                    color: Local.Theme.colors.gray1
+                                    border.width: Local.Theme.border.thick
+                                    border.color: Local.Theme.border.color
+                                    
+                                    Column {
+                                        anchors.fill: parent
+                                        anchors.margins: Local.Theme.spacing.normal
+                                        spacing: Local.Theme.spacing.normal
+                                        
+                                        Text {
+                                            text: "Available devices"
+                                            font.family: Local.Theme.font.family
+                                            font.pixelSize: Local.Theme.font.huge
+                                            font.weight: Font.Bold
+                                            color: Local.Theme.colors.foreground
+                                        }
+                                        
+                                        Column {
+                                            width: parent.width
+                                            spacing: Local.Theme.spacing.small
+                                        
+                                            Repeater {
+                                                model: audioInputModule.devices
+                                                
+                                                Rectangle {
+                                                    width: parent.width
+                                                    height: 70
+                                                    radius: Local.Theme.radius.small
+                                                    color: modelData.isDefault ? Local.Theme.colors.gray9 : 
+                                                           (inputDeviceMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2)
+                                                
+                                                Row {
+                                                    anchors.left: parent.left
+                                                    anchors.leftMargin: Local.Theme.spacing.large
+                                                    anchors.verticalCenter: parent.verticalCenter
+                                                    spacing: Local.Theme.spacing.normal
+                                                    
+                                                    Local.MaterialSymbol {
+                                                        icon: modelData.isDefault ? "check_circle" : "mic"
+                                                        iconSize: 28
+                                                        color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
+                                                        anchors.verticalCenter: parent.verticalCenter
+                                                    }
+                                                    
+                                                    Column {
+                                                        spacing: Local.Theme.spacing.tiny
+                                                        anchors.verticalCenter: parent.verticalCenter
+                                                        
+                                                        Text {
+                                                            text: modelData.name
+                                                            font.family: Local.Theme.font.family
+                                                            font.pixelSize: Local.Theme.font.normal
+                                                            font.weight: modelData.isDefault ? Font.Bold : Font.Normal
+                                                            color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
+                                                        }
+                                                        
+                                                        Text {
+                                                            text: modelData.muted ? "Muted" : ("Volume: " + modelData.volume + "%")
+                                                            font.family: Local.Theme.font.family
+                                                            font.pixelSize: Local.Theme.font.small
+                                                            color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.gray7
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                MouseArea {
+                                                    id: inputDeviceMouse
+                                                    anchors.fill: parent
+                                                    hoverEnabled: true
+                                                    cursorShape: Qt.PointingHandCursor
+                                                    onClicked: {
+                                                        if (!modelData.isDefault) {
+                                                            audioInputModule.setDevice(modelData.id);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -2674,6 +2947,6 @@ Item {
                 }
             }
         }
-
+    }
     }
 }

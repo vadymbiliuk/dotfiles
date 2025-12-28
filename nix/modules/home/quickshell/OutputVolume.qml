@@ -7,6 +7,7 @@ Rectangle {
     id: outputVolume
 
     property string volume: "0"
+    signal requestViewSwitch(string view)
 
     width: row.implicitWidth
     height: Local.Theme.size.barHeight - Local.Theme.spacing.normal
@@ -55,6 +56,16 @@ Rectangle {
             font.pixelSize: Local.Theme.font.large
             color: Local.Theme.colors.foreground
             anchors.verticalCenter: parent.verticalCenter
+        }
+    }
+    
+    MouseArea {
+        id: outputVolumeMouse
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: {
+            outputVolume.requestViewSwitch("output");
         }
     }
 }
