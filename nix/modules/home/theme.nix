@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    libsForQt5.qtstyleplugin-kvantum
+    qt6Packages.qtstyleplugin-kvantum
+  ];
+  
   gtk = {
     enable = true;
     theme = {
@@ -8,8 +13,8 @@
       package = pkgs.gnome-themes-extra;
     };
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "Tela-circle-dracula";
+      package = pkgs.tela-icon-theme;
     };
     gtk3.extraConfig = { gtk-application-prefer-dark-theme = true; };
     gtk4.extraConfig = { gtk-application-prefer-dark-theme = true; };
@@ -17,10 +22,9 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "adwaita";
+    platformTheme.name = "qtct";
     style = {
-      name = "adwaita-dark";
-      package = pkgs.adwaita-qt;
+      name = "kvantum";
     };
   };
 

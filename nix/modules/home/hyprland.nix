@@ -51,6 +51,7 @@
           vibrancy = 1.0;
           new_optimizations = true;
           ignore_opacity = true;
+          popups = true;
         };
       };
 
@@ -126,7 +127,7 @@
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "1password --silent-launch --ozone-platform-hint=x11"
         "nm-applet --indicator"
-        "[workspace 1 silent] firefox"
+        "[workspace 1 silent] MOZ_ENABLE_WAYLAND=1 firefox"
         "[workspace 2 silent] ghostty"
         "[workspace 3 silent] telegram-desktop"
       ];
@@ -138,6 +139,7 @@
         "$mainMod, E, exec, $fileManager"
         "$mainMod, F, togglefloating,"
         "ALT, Space, exec, $menu"
+        "ALT, Tab, focuscurrentorlast,"
         "$mainMod, P, pseudo,"
         "$mainMod, B, togglesplit,"
         '', Print, exec, grim -g "$(slurp)" - | wl-copy''
@@ -234,6 +236,7 @@
         "center,class:^(1Password)$"
         "pin,class:^(1Password)$"
         "noanim,class:^(1Password)$"
+        "opacity 0.95 0.9,class:^(firefox)$"
       ];
 
       plugin = {

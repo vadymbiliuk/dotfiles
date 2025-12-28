@@ -39,6 +39,8 @@ let
 
     "browser.urlbar.suggest.searches" = true;
     "browser.search.suggest.enabled" = true;
+    
+    "ui.key.menuAccessKeyFocuses" = false;
   };
 
   baseSearch = {
