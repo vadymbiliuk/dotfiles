@@ -7,18 +7,21 @@ import "." as Local
 PanelWindow {
     id: notificationArea
     WlrLayershell.layer: WlrLayer.Top
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
     anchors {
         right: true
         top: true
     }
-    implicitWidth: 400
-    implicitHeight: 600
+    implicitWidth: hasNotifications ? 400 : 1
+    implicitHeight: hasNotifications ? 600 : 1
     margins {
-        right: 12
-        top: 12
+        right: hasNotifications ? 12 : 0
+        top: hasNotifications ? 12 : 0
     }
     color: "transparent"
-    visible: Local.NotificationService.notifications.length > 0 && !Local.DNDState.enabled
+    visible: hasNotifications
+    
+    property bool hasNotifications: Local.NotificationService.notifications.length > 0 && !Local.DNDState.enabled
 
     Column {
         anchors.fill: parent

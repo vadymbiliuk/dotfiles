@@ -22,5 +22,11 @@
     wayland-protocols
     wayland-utils
     wlroots
+    hyprlock
+    hypridle
   ];
+  
+  security.pam.services.hyprlock.text = ''
+    auth include login
+  '';
 }

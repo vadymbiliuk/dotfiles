@@ -21,8 +21,7 @@ in {
     ../modules/nixos/hyprland.nix
     ../modules/nixos/1password.nix
     ../modules/nixos/nordvpn.nix
-    ../modules/nixos/drata-compliance.nix
-    ../modules/nixos/drata-agent.nix
+    # ../modules/nixos/drata-agent.nix
   ];
 
   networking.hostName = "nixos";

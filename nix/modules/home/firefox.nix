@@ -41,6 +41,10 @@ let
     "browser.search.suggest.enabled" = true;
     
     "ui.key.menuAccessKeyFocuses" = false;
+    
+    "browser.formfill.enable" = false;
+    "signon.rememberSignons" = false;
+    "signon.autofillForms" = false;
   };
 
   baseSearch = {

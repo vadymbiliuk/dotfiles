@@ -45,7 +45,7 @@ Item {
     
     Process {
         id: devicesProcess
-        command: ["bash", "-c", "wpctl status | awk '/├─ Sources:/{flag=1} /├─ Filters:/{flag=0} flag && /^[[:space:]│]+[[:space:]]*\\*?[[:space:]]*[0-9]+\\..*\\[vol:/'"]
+        command: ["bash", "-c", "(wpctl status | awk '/├─ Sources:/{flag=1} /├─ Filters:/{flag=0} flag && /^[[:space:]│]+[[:space:]]*\\*?[[:space:]]*[0-9]+\\..*\\[vol:/'; wpctl status | awk '/├─ Filters:/{flag=1} /└─ Streams:/{flag=0} flag && /^[[:space:]│]+[[:space:]]+[0-9]+\\..+\\[Audio\\/Source\\]/')"]
         running: true
         
         stdout: SplitParser {
@@ -56,23 +56,30 @@ Item {
                 let newDevices = [];
                 
                 for (let line of lines) {
-                    // Skip empty lines
                     if (!line.trim()) continue;
                     
-                    // Check if this is the default device (has * before the number)
                     let isDefault = line.includes('*');
                     
-                    // Remove leading pipe and spaces, preserve the rest
                     let cleanLine = line.replace(/^[│\s]+/, '');
-                    // Remove the asterisk if present
                     if (isDefault) {
                         cleanLine = cleanLine.replace(/^\*\s*/, '');
                     }
                     
-                    // Parse the device info: "56. SteelSeries Alias Pro 1 Analog Stereo [vol: 1.00]"
                     let match = cleanLine.match(/^(\d+)\.\s+(.+?)\s+\[vol:\s*([\d.]+)\](?:\s+\[MUTED\])?$/);
                     
-                    if (match) {
+                    if (!match) {
+                        match = cleanLine.match(/^(\d+)\.\s+(.+?)\s+\[Audio\/Source\]$/);
+                        if (match) {
+                            let device = {
+                                id: match[1],
+                                name: match[2].trim(),
+                                volume: 100,
+                                muted: false,
+                                isDefault: false
+                            };
+                            newDevices.push(device);
+                        }
+                    } else {
                         let isMuted = line.includes("[MUTED]");
                         let device = {
                             id: match[1],
@@ -92,6 +99,12 @@ Item {
                         }
                     }
                 }
+                
+                newDevices.sort((a, b) => {
+                    if (a.isDefault && !b.isDefault) return -1;
+                    if (!a.isDefault && b.isDefault) return 1;
+                    return parseInt(a.id) - parseInt(b.id);
+                });
                 
                 devices = newDevices;
             }
@@ -118,7 +131,7 @@ Item {
     }
     
     Timer {
-        interval: 1000
+        interval: 200
         running: true
         repeat: true
         onTriggered: refreshDevices()

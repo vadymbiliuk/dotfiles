@@ -13,8 +13,8 @@
       package = pkgs.gnome-themes-extra;
     };
     iconTheme = {
-      name = "Tela-circle-dracula";
-      package = pkgs.tela-icon-theme;
+      name = "WhiteSur";
+      package = pkgs.whitesur-icon-theme;
     };
     gtk3.extraConfig = { gtk-application-prefer-dark-theme = true; };
     gtk4.extraConfig = { gtk-application-prefer-dark-theme = true; };

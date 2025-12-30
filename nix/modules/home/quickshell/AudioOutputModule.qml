@@ -88,6 +88,12 @@ Item {
                     }
                 }
                 
+                newDevices.sort((a, b) => {
+                    if (a.isDefault && !b.isDefault) return -1;
+                    if (!a.isDefault && b.isDefault) return 1;
+                    return parseInt(a.id) - parseInt(b.id);
+                });
+                
                 devices = newDevices;
             }
         }
@@ -113,7 +119,7 @@ Item {
     }
     
     Timer {
-        interval: 1000
+        interval: 200
         running: true
         repeat: true
         onTriggered: refreshDevices()

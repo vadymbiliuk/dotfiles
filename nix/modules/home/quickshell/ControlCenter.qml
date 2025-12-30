@@ -2580,11 +2580,11 @@ Item {
                                                 model: audioOutputModule.devices
                                                 
                                                 Rectangle {
-                                                    visible: !modelData.isDefault
                                                     width: parent.width
-                                                    height: visible ? 70 : 0
+                                                    height: 70
                                                     radius: Local.Theme.radius.small
-                                                    color: outputDeviceMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2
+                                                    color: modelData.isDefault ? Local.Theme.colors.gray9 : 
+                                                           (outputDeviceMouse.containsMouse ? Local.Theme.colors.gray3 : Local.Theme.colors.gray2)
                                                 
                                                     Row {
                                                         anchors.left: parent.left
@@ -2593,9 +2593,9 @@ Item {
                                                         spacing: Local.Theme.spacing.normal
                                                         
                                                         Local.MaterialSymbol {
-                                                            icon: "volume_up"
+                                                            icon: modelData.isDefault ? "check_circle" : "volume_up"
                                                             iconSize: 28
-                                                            color: Local.Theme.colors.foreground
+                                                            color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                             anchors.verticalCenter: parent.verticalCenter
                                                         }
                                                         
@@ -2607,14 +2607,15 @@ Item {
                                                                 text: modelData.name
                                                                 font.family: Local.Theme.font.family
                                                                 font.pixelSize: Local.Theme.font.normal
-                                                                color: Local.Theme.colors.foreground
+                                                                font.weight: modelData.isDefault ? Font.Bold : Font.Normal
+                                                                color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.foreground
                                                             }
                                                             
                                                             Text {
                                                                 text: "Volume: " + modelData.volume + "%"
                                                                 font.family: Local.Theme.font.family
                                                                 font.pixelSize: Local.Theme.font.small
-                                                                color: Local.Theme.colors.gray7
+                                                                color: modelData.isDefault ? Local.Theme.colors.gray0 : Local.Theme.colors.gray7
                                                             }
                                                         }
                                                     }
@@ -2625,7 +2626,9 @@ Item {
                                                         hoverEnabled: true
                                                         cursorShape: Qt.PointingHandCursor
                                                         onClicked: {
-                                                            audioOutputModule.setDevice(modelData.id);
+                                                            if (!modelData.isDefault) {
+                                                                audioOutputModule.setDevice(modelData.id);
+                                                            }
                                                         }
                                                     }
                                                 }

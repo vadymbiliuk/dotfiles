@@ -179,7 +179,7 @@
         "$mainMod, TAB, hyprexpo:expo, toggle"
         "$mainMod, N, exec, notify-send 'Test' 'Quickshell notification test'"
         "$mainMod, O, exec, echo 'test' > /tmp/quickshell-volume-trigger"
-        "$mainMod, L, exec, hyprlock"
+        "$mainMod, Escape, exec, hyprlock"
       ];
 
       bindd = [

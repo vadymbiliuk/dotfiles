@@ -4,7 +4,10 @@ let
   drataAgent = inputs.drata-agent.packages.${pkgs.system}.drata-agent;
 in
 {
-  environment.systemPackages = [ drataAgent ];
+  environment.systemPackages = [ 
+    drataAgent 
+    pkgs.gnomeExtensions.appindicator
+  ];
 
   systemd.user.services.drata-agent = {
     description = "Drata Compliance Agent";

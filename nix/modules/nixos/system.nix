@@ -32,6 +32,40 @@
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
+  
+  security.sudo = {
+    wheelNeedsPassword = true;
+    execWheelOnly = true;
+    extraConfig = ''
+      Defaults        timestamp_timeout=5
+      Defaults        passwd_tries=3
+    '';
+  };
+
+  system.autoUpgrade = {
+    enable = true;
+    dates = "daily";
+    allowReboot = false;
+    flake = "/home/minazuki/.config/nix#minazuki";
+  };
+
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchDocked = "suspend";
+    lidSwitchExternalPower = "suspend";
+    extraConfig = ''
+      HandlePowerKey=suspend
+      HandleSuspendKey=suspend
+      HandleHibernateKey=hibernate
+      HandleLidSwitch=suspend
+      HandleLidSwitchDocked=suspend
+      IdleAction=lock
+      IdleActionSec=10min
+      RemoveIPC=yes
+      KillUserProcesses=no
+      InhibitDelayMaxSec=30
+    '';
+  };
 
   system.stateVersion = "24.11";
 }
