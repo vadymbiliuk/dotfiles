@@ -47,4 +47,10 @@
   };
 
   environment.systemPackages = with pkgs; [ greetd.tuigreet ];
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_17;
+    extraPlugins = [ pkgs.postgresql_17.pkgs.pgvector ];
+  };
 }
