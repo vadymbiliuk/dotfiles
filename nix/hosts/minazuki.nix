@@ -148,13 +148,12 @@ in {
     blueman
     playerctl
 
-    protonvpn-gui
-
     sbctl
     niv
     ghostty
     libnotify
     clamav
+    unstable.claude-code
   ];
 
   services.nordvpn.enable = true;

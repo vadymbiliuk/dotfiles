@@ -65,7 +65,6 @@ let
     go
     poetry
     nodejs_22
-    claude-code
     bundler
   ];
 
