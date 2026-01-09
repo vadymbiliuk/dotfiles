@@ -7,6 +7,16 @@ import "." as Local
 QtObject {
     property list<QtObject> notifications: []
     property list<QtObject> notificationHistory: []
+    property list<QtObject> activePopups: {
+        let popups = [];
+        for (let i = 0; i < notifications.length; i++) {
+            if (notifications[i].popup) {
+                popups.push(notifications[i]);
+            }
+        }
+        return popups;
+    }
+    property bool hasActivePopups: activePopups.length > 0
 
     property NotificationServer server: NotificationServer {
         keepOnReload: false

@@ -8,27 +8,26 @@ PanelWindow {
     id: notificationArea
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+    WlrLayershell.exclusiveZone: 0
     anchors {
         right: true
         top: true
     }
-    implicitWidth: hasNotifications ? 400 : 1
-    implicitHeight: hasNotifications ? 600 : 1
+    implicitWidth: 400
+    implicitHeight: 600
     margins {
-        right: hasNotifications ? 12 : 0
-        top: hasNotifications ? 12 : 0
+        right: 12
+        top: 12
     }
     color: "transparent"
-    visible: hasNotifications
-    
-    property bool hasNotifications: Local.NotificationService.notifications.length > 0 && !Local.DNDState.enabled
+    visible: true
 
     Column {
         anchors.fill: parent
         spacing: Local.Theme.spacing.small
 
         Repeater {
-            model: Local.NotificationService.notifications
+            model: Local.NotificationService.activePopups
 
             Rectangle {
                 required property var modelData
@@ -40,7 +39,7 @@ PanelWindow {
                 radius: Local.Theme.radius.normal
                 border.width: Local.Theme.border.thick
                 border.color: Local.Theme.border.color
-                visible: modelData.popup
+                visible: true
 
                 Column {
                     id: notifContent

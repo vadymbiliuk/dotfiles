@@ -13,7 +13,12 @@ ShellRoot {
         onToggleControlCenter: shellRoot.toggleControlCenter()
         onOpenControlCenterWithView: view => shellRoot.openControlCenterWithView(view)
     }
-    Local.NotificationArea {}
+    
+    Loader {
+        active: Local.NotificationService.hasActivePopups && !Local.DNDState.enabled
+        sourceComponent: Local.NotificationArea {}
+    }
+    
     Local.ControlCenter {
         id: controlCenter
         
