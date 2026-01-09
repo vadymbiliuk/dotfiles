@@ -8,36 +8,6 @@ end
 
 return {
   {
-    "mrcjkb/haskell-tools.nvim",
-    version = "^6",
-    lazy = false,
-    ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      vim.g.haskell_tools = {
-        hls = {
-          on_attach = function(client, bufnr)
-            local function buf_set_keymap(...)
-              vim.api.nvim_buf_set_keymap(bufnr, ...)
-            end
-            local opts = { noremap = true, silent = true }
-            buf_set_keymap("n", "g]", "<cmd>:Lspsaga diagnostic_jump_next<CR>", opts)
-            buf_set_keymap("n", "g[", "<cmd>:Lspsaga diagnostic_jump_prev<CR>", opts)
-            buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
-            buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
-
-            -- Haskell-specific keymaps
-            buf_set_keymap("n", "<leader>hs", "<cmd>Hls start<CR>", opts)
-            buf_set_keymap("n", "<leader>hS", "<cmd>Hls stop<CR>", opts)
-            buf_set_keymap("n", "<leader>hr", "<cmd>Hls restart<CR>", opts)
-          end,
-        },
-      }
-    end,
-  },
-  {
     "nvimdev/lspsaga.nvim",
     config = function()
       require("lspsaga").setup {
@@ -108,6 +78,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "yioneko/nvim-vtsls" },
+      { "mrcjkb/haskell-tools.nvim", version = "^6", dependencies = { "nvim-lua/plenary.nvim" } },
     },
     config = function()
       local lsp_util = require "lspconfig.util"
@@ -315,7 +286,6 @@ return {
         },
       }
 
-      -- on attach function
       local on_attach = function(client, bufnr)
         local function buf_set_keymap(...)
           vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -326,9 +296,16 @@ return {
         buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
         buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
         buf_set_keymap("n", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
+        
+        if vim.bo.filetype == "haskell" or vim.bo.filetype == "lhaskell" then
+          buf_set_keymap("n", "<leader>hs", "<cmd>Hls start<CR>", opts)
+          buf_set_keymap("n", "<leader>hS", "<cmd>Hls stop<CR>", opts)
+          buf_set_keymap("n", "<leader>hr", "<cmd>Hls restart<CR>", opts)
+        end
       end
+      
+      _G.lsp_on_attach = on_attach
 
-      -- LSP settings (for overriding per client)
       local handlers = {
         ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
           border = {
@@ -355,6 +332,8 @@ return {
           },
         }),
       }
+      
+      _G.lsp_handlers = handlers
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.foldingRange = {
@@ -365,8 +344,9 @@ return {
       capabilities.general = capabilities.general or {}
       capabilities.general.positionEncodings = { "utf-16" }
 
-      -- optimizes cpu usage source https://github.com/neovim/neovim/issues/23291
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+      
+      _G.lsp_capabilities = vim.deepcopy(capabilities)
 
       local defaults = {
         on_attach = function(client, bufnr)
@@ -463,6 +443,13 @@ return {
       end, {
         desc = "Re-enable autoformat-on-save",
       })
+      
+      vim.g.haskell_tools = {
+        hls = {
+          on_attach = _G.lsp_on_attach,
+          capabilities = require("blink.cmp").get_lsp_capabilities(_G.lsp_capabilities),
+        },
+      }
     end,
   },
 }
