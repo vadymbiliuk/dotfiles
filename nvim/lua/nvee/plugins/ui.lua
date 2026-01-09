@@ -449,7 +449,7 @@ return {
       workspaces = {
         {
           name = "personal",
-          path = "~/Documents/Vadym",
+          path = "~/notes",
         },
       },
     },

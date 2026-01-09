@@ -20,6 +20,7 @@ return {
         pick = nil,
         keys = {
           { icon = " ", key = "f", desc = "Find File", action = ":lua require('fff').find_files()" },
+          { icon = "󱞁 ", key = "n", desc = "Notes", action = ":cd ~/notes | :e ." },
           { icon = " ", key = "s", desc = "Restore Session", section = "session", action = "" },
           { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
           { icon = " ", key = "q", desc = "Quit", action = ":qa" },
