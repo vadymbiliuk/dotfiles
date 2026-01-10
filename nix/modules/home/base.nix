@@ -2,11 +2,12 @@
 
 {
   home.enableNixpkgsReleaseCheck = false;
-  
+
   home.sessionVariables = {
-    QML2_IMPORT_PATH = "/run/current-system/sw/lib/qt-6/qml:/run/current-system/sw/lib/qt-5.15.17/qml:$QML2_IMPORT_PATH";
+    QML2_IMPORT_PATH =
+      "/run/current-system/sw/lib/qt-6/qml:/run/current-system/sw/lib/qt-5.15.17/qml:$QML2_IMPORT_PATH";
   };
-  
+
   home.packages = with pkgs;
     [
       unzip
@@ -62,8 +63,9 @@
       za = "zoxide add";
       zq = "zoxide query";
       zr = "zoxide remove";
-      
-      quickshell = "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell";
+
+      quickshell =
+        "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell";
     };
 
     initExtra = ''
@@ -137,6 +139,7 @@
     defaultEditor = true;
     vimAlias = true;
     viAlias = true;
+    vimdiffAlias = true;
   };
 
   programs.ghostty = {
