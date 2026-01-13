@@ -2,7 +2,7 @@
 
 let
   unstable = import inputs.nixpkgs-unstable {
-    system = pkgs.system;
+    system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
 in {
@@ -25,6 +25,7 @@ in {
   fonts.packages = with pkgs; [ material-symbols ];
 
   environment.systemPackages = with pkgs; [
+    wl-clipboard
     unstable.quickshell
     qt6.qt5compat
     qt5.qtgraphicaleffects

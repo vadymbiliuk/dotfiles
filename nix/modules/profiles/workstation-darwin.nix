@@ -1,6 +1,11 @@
 { config, pkgs, lib, inputs, ... }:
 
-{
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [ ./base.nix (import ../system/overlays.nix { inherit inputs; }) ];
 
   system.defaults = {
@@ -107,6 +112,8 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [ unstable.claude-code ];
+
   homebrew = {
     enable = true;
     brews = [
@@ -134,6 +141,7 @@
       "mkcert"
       "nss"
       "libiconv"
+      "pgvector"
     ];
     casks = [
       "1password"

@@ -34,7 +34,7 @@ let
     "browser.toolbars.bookmarks.visibility" = "newtab";
     "browser.tabs.warnOnClose" = false;
     
-    "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":[],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":20,"newElementCount":0}'';
+    "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":[],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":20,"newElementCount":0}'';
     "browser.tabs.inTitlebar" = 1;
 
     "browser.urlbar.suggest.searches" = true;
@@ -49,26 +49,13 @@ let
 
   baseSearch = {
     force = true;
-    default = "DuckDuckGo";
+    default = "ddg";
     engines = {
-      "DuckDuckGo" = {
-        urls = [{
-          template = "https://duckduckgo.com/";
-          params = [{
-            name = "q";
-            value = "{searchTerms}";
-          }];
-        }];
-        iconUpdateURL = "https://duckduckgo.com/favicon.ico";
-        updateInterval = 24 * 60 * 60 * 1000;
-        definedAliases = [ "@ddg" ];
-      };
-
-      "Google".metaData.hidden = true;
-      "Amazon.com".metaData.hidden = true;
-      "Bing".metaData.hidden = true;
-      "eBay".metaData.hidden = true;
-      "Wikipedia (en)".metaData.alias = "@wiki";
+      "google".metaData.hidden = true;
+      "amazondotcom-us".metaData.hidden = true;
+      "bing".metaData.hidden = true;
+      "ebay".metaData.hidden = true;
+      "wikipedia".metaData.alias = "@wiki";
     };
   };
 in {
@@ -82,25 +69,36 @@ in {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
           installation_mode = "force_installed";
-          pinned = true;
+        };
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url =
+            "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          installation_mode = "force_installed";
         };
         "addon@darkreader.org" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
           installation_mode = "force_installed";
-          pinned = true;
         };
         "@react-devtools" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/react-devtools/latest.xpi";
           installation_mode = "force_installed";
-          pinned = true;
         };
         "extension@redux.devtools" = {
           install_url =
             "https://addons.mozilla.org/firefox/downloads/latest/reduxdevtools/latest.xpi";
           installation_mode = "force_installed";
-          pinned = true;
+        };
+        "adguardadblocker@adguard.com" = {
+          install_url =
+            "https://addons.mozilla.org/firefox/downloads/latest/adguard-adblocker/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}" = {
+          install_url =
+            "https://addons.mozilla.org/firefox/downloads/latest/repeek/latest.xpi";
+          installation_mode = "force_installed";
         };
       };
     };

@@ -1,10 +1,14 @@
 { config, pkgs, lib, inputs, ... }:
 
-{
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [ ../modules/profiles/workstation-darwin.nix ];
 
   system.stateVersion = 5;
-  system.primaryUser = "vadymbiliuk";
 
   users.users."vadymbiliuk" = {
     name = "vadymbiliuk";
@@ -34,6 +38,8 @@
       ../modules/home/packages.nix
       ../modules/home/work.nix
     ];
+
+    programs.neovim.package = unstable.neovim-unwrapped;
 
     home.stateVersion = "24.05";
   };

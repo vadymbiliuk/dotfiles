@@ -2,9 +2,9 @@
   description = "Flake configuration for NixOS and Darwin";
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nix-darwin = {
-      url = "https://flakehub.com/f/nix-darwin/nix-darwin/0";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     determinate = {

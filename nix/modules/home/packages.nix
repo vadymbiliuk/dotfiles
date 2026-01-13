@@ -4,61 +4,61 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-  developmentPackages = with pkgs; [
-    gcc
-    lldb
-    cmake
-    gettext
-    ffmpeg
-    qemu
-    postgresql_16
-    redis
-    postman
-  ];
+  developmentPackages = with pkgs;
+    [
+      gcc
+      lldb
+      cmake
+      gettext
+      ffmpeg
+      postgresql_16
+      redis
+      postman
+    ] ++ lib.optionals isLinux [ qemu ];
 
-  lspPackages = with pkgs; [
-    vtsls
-    black
-    prettierd
-    nixfmt-classic
-    ruff
-    vscode-langservers-extracted
-    haskellPackages.fourmolu
-    stylish-haskell
-    haskellPackages.hoogle
-    ocamlPackages.ocaml-lsp
-    ocamlPackages.ocamlformat
-    emacsPackages.lsp-grammarly
-    haskellPackages.cabal-fmt
-    clang-tools
-    rustfmt
-    stylua
-    bash-language-server
-    pyright
-    vim-language-server
-    yaml-language-server
-    yamlfmt
-    vue-language-server
-    svelte-language-server
-    rust-analyzer
-    eslint_d
-    nil
-    biome
-    csslint
-    lua-language-server
-    hpack
-    stylelint-lsp
-    pre-commit
-    solargraph
-    rubocop
-    rubyPackages.standard
-    rubyPackages.ruby-lsp
-    nodePackages.fixjson
-    typos
-  ];
+  lspPackages = with pkgs;
+    [
+      vtsls
+      black
+      prettierd
+      nixfmt-classic
+      ruff
+      vscode-langservers-extracted
+      haskellPackages.fourmolu
+      stylish-haskell
+      haskellPackages.hoogle
+      ocamlPackages.ocaml-lsp
+      ocamlPackages.ocamlformat
+      emacsPackages.lsp-grammarly
+      haskellPackages.cabal-fmt
+      rustfmt
+      stylua
+      bash-language-server
+      pyright
+      vim-language-server
+      yaml-language-server
+      yamlfmt
+      vue-language-server
+      svelte-language-server
+      rust-analyzer
+      eslint_d
+      nil
+      biome
+      lua-language-server
+      hpack
+      stylelint-lsp
+      pre-commit
+      solargraph
+      rubocop
+      rubyPackages.standard
+      rubyPackages.ruby-lsp
+      nodePackages.fixjson
+      typos
+      clang-tools
+    ];
 
   programmingPackages = with pkgs; [
-    jdk23
+    jdk21
     luajitPackages.luarocks
     lua51Packages.lua
     cargo
@@ -70,9 +70,6 @@ let
 
   utilityPackages = with pkgs;
     [
-      jujutsu
-      pamixer
-      brightnessctl
       tree-sitter
       (tree-sitter.withPlugins (p:
         with p; [
@@ -98,7 +95,7 @@ let
           tree-sitter-yaml
         ]))
     ] ++ lib.optionals isDarwin [ mkalias ]
-    ++ lib.optionals isLinux [ noisetorch woeusb ];
+    ++ lib.optionals isLinux [ pamixer brightnessctl noisetorch woeusb ];
 in {
   home.packages = developmentPackages ++ lspPackages ++ programmingPackages
     ++ utilityPackages;

@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-  drataAgent = inputs.drata-agent.packages.${pkgs.system}.drata-agent;
+  drataAgent = inputs.drata-agent.packages.${pkgs.stdenv.hostPlatform.system}.drata-agent;
 in
 {
   environment.systemPackages = [ 

@@ -87,6 +87,8 @@
 
       ${lib.optionalString pkgs.stdenv.isDarwin ''
         export PATH="/opt/homebrew/bin:$PATH"
+        export CC="gcc"
+        export CXX="g++"
         if command -v pyenv >/dev/null 2>&1; then
           export PYENV_ROOT="$HOME/.pyenv"
           export PATH="$PYENV_ROOT/bin:$PATH"
@@ -115,7 +117,6 @@
     lfs.enable = true;
     userName = "Vadym Biliuk";
     userEmail = "vadym.biliuk@gmail.com";
-
     extraConfig = {
       core.excludesFile = "~/.config/git/ignore";
       pull.rebase = true;

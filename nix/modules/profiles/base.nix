@@ -8,5 +8,5 @@
     auto-optimise-store = true;
   };
 
-  environment.systemPackages = with pkgs; [ git vim wget curl wl-clipboard ];
+  environment.systemPackages = with pkgs; [ git vim wget curl ];
 }
