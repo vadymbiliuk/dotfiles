@@ -76,22 +76,19 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       { "yioneko/nvim-vtsls" },
       { "mrcjkb/haskell-tools.nvim", version = "^6", dependencies = { "nvim-lua/plenary.nvim" } },
     },
     config = function()
-      local lsp_util = require "lspconfig.util"
-
       local lsp_servers = {
         "vtsls",
         "bashls",
-        -- "dockerls",
         "pyright",
         "ruff",
         "vimls",
         "yamlls",
-        "vuels",
         "svelte",
         "graphql",
         "rust_analyzer",
@@ -110,17 +107,9 @@ return {
 
       local lsp_servers_custom = {
         ruby_lsp = {
-          cmd = { "ruby-lsp" },
+          cmd = { "/Users/vadymbiliuk/.rbenv/versions/3.4.7/bin/ruby-lsp" },
           filetypes = { "ruby", "eruby", "haml", "slim" },
-          root_dir = lsp_util.root_pattern("Gemfile", ".git"),
-          on_new_config = function(config, root_dir)
-            config.cmd_env = {
-              BUNDLE_GEMFILE = root_dir .. "/Gemfile",
-              BUNDLE_PATH = vim.fn.expand "~/.local/share/ruby-lsp/bundle",
-              BUNDLE_USER_CACHE = vim.fn.expand "~/.cache/ruby-lsp/bundle",
-              BUNDLE_USER_CONFIG = vim.fn.expand "~/.config/ruby-lsp/bundle",
-            }
-          end,
+          root_markers = { "Gemfile", ".git" },
           init_options = {
             enabledFeatures = {
               codeActions = true,
@@ -158,7 +147,7 @@ return {
         solargraph = {
           cmd = { "solargraph", "stdio" },
           filetypes = { "ruby" },
-          root_dir = lsp_util.root_pattern("Gemfile", ".git"),
+          root_markers = { "Gemfile", ".git" },
           settings = {
             solargraph = {
               diagnostics = false,
@@ -173,7 +162,7 @@ return {
         },
         stylelint_lsp = {
           filetypes = { "css", "scss" },
-          root_dir = lsp_util.root_pattern("package.json", ".git"),
+          root_markers = { "package.json", ".git" },
           settings = {
             stylelintplus = {},
           },
@@ -182,19 +171,13 @@ return {
           end,
         },
         tailwindcss = {
-          root_dir = function(fname)
-            return lsp_util.root_pattern("tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs")(fname)
-          end,
+          root_markers = { "tailwind.config.js", "tailwind.config.cjs", "tailwind.config.mjs" },
           settings = {
             tailwindCSS = {
               experimental = {
                 classRegex = {
-                  -- clsx, cn
-                  -- https://github.com/tailwindlabs/tailwindcss-intellisense/issues/682#issuecomment-1364585313
                   { [[clsx\(([^)]*)\)]], [["([^"]*)"]] },
                   { [[cn\(([^)]*)\)]], [["([^"]*)"]] },
-                  -- Tailwind Variants
-                  -- https://www.tailwind-variants.org/docs/getting-started#intellisense-setup-optional
                   { [[tv\(([^)]*)\)]], [==[["'`]([^"'`]*).*?["'`]]==] },
                 },
               },
@@ -204,12 +187,10 @@ return {
         pyright = {
           settings = {
             pyright = {
-              -- Using Ruff's import organizer
               disableOrganizeImports = true,
             },
             python = {
               analysis = {
-                -- Ignore all files for analysis to exclusively use Ruff for linting
                 ignore = { "*" },
               },
             },
@@ -296,14 +277,14 @@ return {
         buf_set_keymap("n", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
         buf_set_keymap("v", "<leader>ga", "<cmd>:Lspsaga code_action<CR>", opts)
         buf_set_keymap("n", "K", "<cmd>:Lspsaga hover_doc<CR>", opts)
-        
+
         if vim.bo.filetype == "haskell" or vim.bo.filetype == "lhaskell" then
           buf_set_keymap("n", "<leader>hs", "<cmd>Hls start<CR>", opts)
           buf_set_keymap("n", "<leader>hS", "<cmd>Hls stop<CR>", opts)
           buf_set_keymap("n", "<leader>hr", "<cmd>Hls restart<CR>", opts)
         end
       end
-      
+
       _G.lsp_on_attach = on_attach
 
       local handlers = {
@@ -332,7 +313,7 @@ return {
           },
         }),
       }
-      
+
       _G.lsp_handlers = handlers
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -345,31 +326,35 @@ return {
       capabilities.general.positionEncodings = { "utf-16" }
 
       capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
-      
+
       _G.lsp_capabilities = vim.deepcopy(capabilities)
 
       local defaults = {
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-        end,
+        on_attach = on_attach,
         capabilities = capabilities,
         handlers = handlers,
       }
 
-      local opts = {}
-      local capabilities
-
-      for _, server in pairs(lsp_servers) do
-        opts = defaults
-        server = vim.split(server, "@")[1]
+      for _, server in ipairs(lsp_servers) do
+        local server_opts = vim.deepcopy(defaults)
 
         if lsp_servers_custom[server] then
-          opts = vim.tbl_extend("force", opts, lsp_servers_custom[server])
+          server_opts = vim.tbl_deep_extend("force", server_opts, lsp_servers_custom[server])
         end
 
-        opts.capabilities = require("blink.cmp").get_lsp_capabilities(opts.capabilities)
-        vim.lsp.config[server] = opts
-        ::continue::
+        server_opts.capabilities = require("blink.cmp").get_lsp_capabilities(server_opts.capabilities)
+        vim.lsp.config[server] = server_opts
+      end
+
+      vim.lsp.enable(lsp_servers)
+
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) then
+          local ft = vim.bo[buf].filetype
+          if ft and ft ~= "" then
+            vim.api.nvim_exec_autocmds("FileType", { buffer = buf })
+          end
+        end
       end
 
       local signs = {

@@ -135,7 +135,7 @@ in {
       "rbenv"
       "ruby-build"
       "libpq"
-      "postgresql@16"
+      "postgresql@17"
       "imagemagick"
       "vips"
       "mkcert"
@@ -170,6 +170,7 @@ in {
       "docker-desktop"
       "google-chrome"
       "slack"
+      "microsoft-word"
     ];
     masApps = { "MeetingBar" = 1532419400; };
     onActivation.cleanup = "zap";
