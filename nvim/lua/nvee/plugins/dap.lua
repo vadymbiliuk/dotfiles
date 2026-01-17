@@ -73,7 +73,7 @@ return {
     end)
     vim.keymap.set("n", "<leader>b", function()
       dap.toggle_breakpoint()
-    end)
+    end, { desc = "Toggle Breakpoint" })
     vim.keymap.set("n", "<F10>", function()
       dap.terminate()
     end)
@@ -82,6 +82,22 @@ return {
       type = "executable",
       command = "haskell-debug-adapter",
       args = { "--hackage-version=0.0.33.0" },
+    }
+
+    dap.adapters.ruby_attach = {
+      type = "server",
+      host = "127.0.0.1",
+      port = 38698,
+    }
+
+    dap.configurations.ruby = {
+      {
+        type = "ruby_attach",
+        name = "Attach to rdbg (start rdbg manually first)",
+        request = "attach",
+        localfs = true,
+        port = 38698,
+      },
     }
 
     dap.configurations.haskell = {
@@ -102,16 +118,9 @@ return {
     }
 
     vim.keymap.set("n", "<F5>", function()
-      setup_default_configurations()
-      -- when debug is called firstly try to read and/or update launch.json configuration
-      -- from the local project which will override all the default configurations
       if vim.fn.filereadable ".vscode/launch.json" then
         require("dap.ext.vscode").load_launchjs(nil, { lldb = { "rust", "c", "cpp" } })
-      else
-        -- If not possible stick to the default prebuilt configurations
-        setup_default_configurations()
       end
-
       require("dap").continue()
     end)
   end,

@@ -41,6 +41,8 @@ in {
 
     programs.neovim.package = unstable.neovim-unwrapped;
 
+    home.packages = [ unstable.opencode ];
+
     home.stateVersion = "24.05";
   };
 }

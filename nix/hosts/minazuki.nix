@@ -1,6 +1,11 @@
 { config, pkgs, lib, inputs, ... }:
 
-{
+let
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [
     ./hardware-configuration.nix
     ../modules/nixos/lanzaboote.nix
@@ -84,6 +89,8 @@
         cellpadding_y = 0;
       };
     };
+
+    home.packages = [ unstable.opencode ];
 
     home.enableNixpkgsReleaseCheck = false;
     home.stateVersion = "25.05";
