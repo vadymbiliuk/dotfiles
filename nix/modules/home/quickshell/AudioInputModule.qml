@@ -45,41 +45,29 @@ Item {
     
     Process {
         id: devicesProcess
-        command: ["bash", "-c", "(wpctl status | awk '/├─ Sources:/{flag=1} /├─ Filters:/{flag=0} flag && /^[[:space:]│]+[[:space:]]*\\*?[[:space:]]*[0-9]+\\..*\\[vol:/'; wpctl status | awk '/├─ Filters:/{flag=1} /└─ Streams:/{flag=0} flag && /^[[:space:]│]+[[:space:]]+[0-9]+\\..+\\[Audio\\/Source\\]/')"]
+        command: ["bash", "-c", "wpctl status | awk '/├─ Sources:/{flag=1} /├─ Filters:/{flag=0} flag && /^[[:space:]│]+[[:space:]]*\\*?[[:space:]]*[0-9]+\\..*\\[vol:/'"]
         running: true
-        
+
         stdout: SplitParser {
             onRead: data => {
                 if (!data || data.trim() === "") return;
-                
+
                 let lines = data.trim().split('\n');
                 let newDevices = [];
-                
+
                 for (let line of lines) {
                     if (!line.trim()) continue;
-                    
+
                     let isDefault = line.includes('*');
-                    
+
                     let cleanLine = line.replace(/^[│\s]+/, '');
                     if (isDefault) {
                         cleanLine = cleanLine.replace(/^\*\s*/, '');
                     }
-                    
+
                     let match = cleanLine.match(/^(\d+)\.\s+(.+?)\s+\[vol:\s*([\d.]+)\](?:\s+\[MUTED\])?$/);
-                    
-                    if (!match) {
-                        match = cleanLine.match(/^(\d+)\.\s+(.+?)\s+\[Audio\/Source\]$/);
-                        if (match) {
-                            let device = {
-                                id: match[1],
-                                name: match[2].trim(),
-                                volume: 100,
-                                muted: false,
-                                isDefault: false
-                            };
-                            newDevices.push(device);
-                        }
-                    } else {
+
+                    if (match) {
                         let isMuted = line.includes("[MUTED]");
                         let device = {
                             id: match[1],
@@ -88,9 +76,9 @@ Item {
                             muted: isMuted,
                             isDefault: isDefault
                         };
-                        
+
                         newDevices.push(device);
-                        
+
                         if (isDefault) {
                             currentDevice = device.name;
                             currentDeviceId = device.id;
@@ -99,13 +87,13 @@ Item {
                         }
                     }
                 }
-                
+
                 newDevices.sort((a, b) => {
                     if (a.isDefault && !b.isDefault) return -1;
                     if (!a.isDefault && b.isDefault) return 1;
                     return parseInt(a.id) - parseInt(b.id);
                 });
-                
+
                 devices = newDevices;
             }
         }

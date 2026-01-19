@@ -12,27 +12,50 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     drata-agent.url = "path:./drata-agent";
   };
 
-  outputs = { self, nixpkgs, nix-darwin, determinate, home-manager, lanzaboote
-    , ... }@inputs: {
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nix-darwin,
+      determinate,
+      home-manager,
+      lanzaboote,
+      sops-nix,
+      ...
+    }@inputs:
+    {
       nixosConfigurations = {
-        minazuki = nixpkgs.lib.nixosSystem {
+        zooki = inputs.nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             determinate.nixosModules.default
             home-manager.nixosModules.home-manager
             lanzaboote.nixosModules.lanzaboote
-            ./hosts/minazuki.nix
+            ./hosts/zooki.nix
+          ];
+          specialArgs = { inherit inputs; };
+        };
+
+        vault = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            sops-nix.nixosModules.sops
+            ./hosts/vault.nix
           ];
           specialArgs = { inherit inputs; };
         };
@@ -49,6 +72,9 @@
           specialArgs = { inherit inputs; };
         };
       };
+
+      packages.x86_64-linux = {
+        vault-vm = self.nixosConfigurations.vault.config.system.build.vm;
+      };
     };
 }
-

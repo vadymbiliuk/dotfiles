@@ -1,7 +1,11 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [ hyprlandPlugins.hyprexpo ];
 
   services.mako.enable = false;
 
@@ -9,7 +13,23 @@
     enable = true;
     plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
     settings = {
-      monitor = "DP-2,2560x1440@359.98,0x0,1";
+      monitor = [
+        "DP-2,2560x1440@359.98,0x0,1,transform,1"
+        "DP-1,2560x1440@500,1440x730,1"
+      ];
+
+      workspace = [
+        "1, monitor:DP-1, default:true"
+        "2, monitor:DP-1"
+        "3, monitor:DP-1"
+        "4, monitor:DP-1"
+        "5, monitor:DP-1"
+        "6, monitor:DP-2"
+        "7, monitor:DP-2"
+        "8, monitor:DP-2"
+        "9, monitor:DP-2"
+        "10, monitor:DP-2"
+      ];
 
       "$terminal" = "ghostty";
       "$fileManager" = "dolphin";
@@ -91,11 +111,13 @@
         preserve_split = true;
       };
 
-      master = { new_status = "master"; };
+      master = {
+        new_status = "master";
+      };
 
       misc = {
-        force_default_wallpaper = -1;
-        disable_hyprland_logo = false;
+        force_default_wallpaper = 0;
+        disable_hyprland_logo = true;
         disable_autoreload = false;
         layers_hog_keyboard_focus = false;
       };
@@ -109,7 +131,9 @@
         repeat_rate = 67;
         repeat_delay = 150;
 
-        touchpad = { natural_scroll = false; };
+        touchpad = {
+          natural_scroll = false;
+        };
       };
 
       device = {
@@ -122,14 +146,15 @@
 
       exec-once = [
         "quickshell"
-        "hyprpaper"
+        "swww-daemon"
+        "swww img ~/.config/wallpapers/current"
         "hypridle"
         "hyprctl setcursor Bibata-Modern-Classic 24"
-        "1password --silent-launch --ozone-platform-hint=x11"
         "nm-applet --indicator"
+        "bitwarden"
         "[workspace 1 silent] MOZ_ENABLE_WAYLAND=1 firefox"
         "[workspace 2 silent] ghostty"
-        "[workspace 3 silent] telegram-desktop"
+        "[workspace 6 silent] telegram-desktop"
       ];
 
       bind = [
@@ -172,6 +197,12 @@
         "$mainMod SHIFT, l, movewindow, r"
         "$mainMod SHIFT, k, movewindow, u"
         "$mainMod SHIFT, j, movewindow, d"
+        "$mainMod, comma, focusmonitor, l"
+        "$mainMod, period, focusmonitor, r"
+        "$mainMod SHIFT, comma, movewindow, mon:l"
+        "$mainMod SHIFT, period, movewindow, mon:r"
+        "$mainMod CTRL, comma, movecurrentworkspacetomonitor, l"
+        "$mainMod CTRL, period, movecurrentworkspacetomonitor, r"
         "$mainMod, S, togglespecialworkspace, magic"
         "$mainMod SHIFT, S, movetoworkspace, special:magic"
         "$mainMod, mouse_down, workspace, e+1"
@@ -211,32 +242,27 @@
         "$mainMod, mouse:273, resizewindow"
       ];
 
-      windowrule = [
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-      ];
-
       layerrule = [
-        "blur, rofi"
-        "ignorealpha 0.2, rofi"
-        "blur, quickshell"
-        "ignorealpha 0.1, quickshell"
-        "blur, notifications"
-        "ignorealpha 0.2, notifications"
-        "blur, osd"
-        "ignorealpha 0.2, osd"
+        "blur 1, match:namespace rofi"
+        "ignore_alpha 0.2, match:namespace rofi"
+        "blur 1, match:namespace quickshell"
+        "ignore_alpha 0.1, match:namespace quickshell"
+        "blur 1, match:namespace notifications"
+        "ignore_alpha 0.2, match:namespace notifications"
+        "blur 1, match:namespace osd"
+        "ignore_alpha 0.2, match:namespace osd"
       ];
 
-      windowrulev2 = [
-        "workspace 1,class:^(firefox)$"
-        "workspace 2,class:^(ghostty)$"
-        "workspace 3,class:^(org.telegram.desktop)$"
-        "float,class:^(1Password)$"
-        "size 700 500,class:^(1Password)$"
-        "center,class:^(1Password)$"
-        "pin,class:^(1Password)$"
-        "noanim,class:^(1Password)$"
-        "opacity 0.95 0.9,class:^(firefox)$"
+      windowrule = [
+        "float on, match:class Bitwarden"
+        "pin on, match:class Bitwarden"
+        "size 900 700, match:class Bitwarden"
+        "center 1, match:class Bitwarden"
+        "workspace 1, match:class firefox"
+        "workspace 2, match:class ghostty"
+        "workspace 6, match:class telegram"
+        "suppress_event maximize, match:class .*"
+        "no_focus 1, match:class ^$, match:title ^$, match:xwayland 1"
       ];
 
       plugin = {

@@ -1,12 +1,24 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import "." as Local
 
 PanelWindow {
     id: bar
-    
+
+    property string hostname: ""
+
+    Process {
+        id: hostnameProcess
+        command: ["hostname"]
+        running: true
+        stdout: SplitParser {
+            onRead: data => bar.hostname = data.trim()
+        }
+    }
+
     signal toggleControlCenter()
     signal openControlCenterWithView(string view)
     WlrLayershell.layer: WlrLayer.Bottom
@@ -57,7 +69,7 @@ PanelWindow {
                     }
 
                     Text {
-                        text: "minazuki@nixos"
+                        text: Quickshell.env("USER") + "@" + bar.hostname
                         font.family: Local.Theme.font.family
                         font.pixelSize: Local.Theme.font.large
                         color: Local.Theme.colors.foreground

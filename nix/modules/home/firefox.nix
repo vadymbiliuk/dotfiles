@@ -64,40 +64,50 @@ in {
     package = if pkgs.stdenv.isLinux then pkgs.firefox else null;
 
     policies = {
+      Extensions = {
+        Locked = [
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}"
+          "addon@darkreader.org"
+          "@react-devtools"
+          "extension@redux.devtools"
+          "adguardadblocker@adguard.com"
+          "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}"
+          "{41bb7295-c2bd-4e13-885f-dc67cb983c17}"
+        ];
+      };
       ExtensionSettings = {
-        "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/1password-x-password-manager/latest.xpi";
-          installation_mode = "force_installed";
-        };
         "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "addon@darkreader.org" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "@react-devtools" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/react-devtools/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/react-devtools/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "extension@redux.devtools" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/reduxdevtools/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/reduxdevtools/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "adguardadblocker@adguard.com" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/adguard-adblocker/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/adguard-adblocker/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}" = {
-          install_url =
-            "https://addons.mozilla.org/firefox/downloads/latest/repeek/latest.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/repeek/latest.xpi";
+          installation_mode = "force_installed";
+          default_area = "navbar";
+        };
+        "{41bb7295-c2bd-4e13-885f-dc67cb983c17}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/2black/latest.xpi";
           installation_mode = "force_installed";
         };
       };

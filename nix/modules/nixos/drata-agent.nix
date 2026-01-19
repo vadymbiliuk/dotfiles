@@ -1,11 +1,17 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   drataAgent = inputs.drata-agent.packages.${pkgs.stdenv.hostPlatform.system}.drata-agent;
 in
 {
-  environment.systemPackages = [ 
-    drataAgent 
+  environment.systemPackages = [
+    drataAgent
     pkgs.gnomeExtensions.appindicator
   ];
 
@@ -14,7 +20,7 @@ in
     wantedBy = [ "graphical-session.target" ];
     partOf = [ "graphical-session.target" ];
     after = [ "graphical-session-pre.target" ];
-    
+
     serviceConfig = {
       Type = "simple";
       ExecStart = "${drataAgent}/bin/drata-agent";
@@ -28,5 +34,5 @@ in
     };
   };
 
-  users.users.minazuki.packages = [ drataAgent ];
+  users.users.zooki.packages = [ drataAgent ];
 }

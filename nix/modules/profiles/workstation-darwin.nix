@@ -144,7 +144,7 @@ in {
       "pgvector"
     ];
     casks = [
-      "1password"
+      "bitwarden"
       "the-unarchiver"
       "firefox"
       "discord"

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   time.timeZone = "Europe/Kyiv";
@@ -12,7 +17,7 @@
 
   fonts = {
     packages = with pkgs; [
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
 
     fontconfig = {
@@ -32,7 +37,7 @@
 
   security.rtkit.enable = true;
   security.polkit.enable = true;
-  
+
   security.sudo = {
     wheelNeedsPassword = true;
     execWheelOnly = true;
@@ -46,25 +51,21 @@
     enable = true;
     dates = "daily";
     allowReboot = false;
-    flake = "/home/minazuki/.config/nix#minazuki";
+    flake = "/home/zooki/.config/nix#zooki";
   };
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "suspend";
-    lidSwitchExternalPower = "suspend";
-    extraConfig = ''
-      HandlePowerKey=suspend
-      HandleSuspendKey=suspend
-      HandleHibernateKey=hibernate
-      HandleLidSwitch=suspend
-      HandleLidSwitchDocked=suspend
-      IdleAction=lock
-      IdleActionSec=10min
-      RemoveIPC=yes
-      KillUserProcesses=no
-      InhibitDelayMaxSec=30
-    '';
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchDocked = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
+    HandlePowerKey = "suspend";
+    HandleSuspendKey = "suspend";
+    HandleHibernateKey = "hibernate";
+    IdleAction = "lock";
+    IdleActionSec = "10min";
+    RemoveIPC = "yes";
+    KillUserProcesses = false;
+    InhibitDelayMaxSec = "30";
   };
 
   system.stateVersion = "24.11";
