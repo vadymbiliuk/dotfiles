@@ -21,7 +21,7 @@ let
       vtsls
       black
       prettierd
-      nixfmt-classic
+      nixfmt
       ruff
       vscode-langservers-extracted
       haskellPackages.fourmolu

@@ -1,8 +1,31 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  nordVpnPkg = pkgs.callPackage ({ autoPatchelfHook, buildFHSEnvChroot, dpkg
-    , fetchurl, lib, stdenv, sysctl, iptables, iproute2, procps, cacert, libnl
-    , libcap_ng, sqlite, libxml2, libidn2, zlib, wireguard-tools, }:
+  nordVpnPkg = pkgs.callPackage (
+    {
+      autoPatchelfHook,
+      buildFHSEnvChroot,
+      dpkg,
+      fetchurl,
+      lib,
+      stdenv,
+      sysctl,
+      iptables,
+      iproute2,
+      procps,
+      cacert,
+      libnl,
+      libcap_ng,
+      sqlite,
+      libxml2,
+      libidn2,
+      zlib,
+      wireguard-tools,
+    }:
     let
       pname = "nordvpn";
       version = "4.2.3";
@@ -11,13 +34,22 @@ let
         inherit pname version;
 
         src = fetchurl {
-          url =
-            "https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/n/nordvpn/nordvpn_${version}_amd64.deb";
+          url = "https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/n/nordvpn/nordvpn_${version}_amd64.deb";
           hash = "sha256-LcTQEqaP1+UeBxi+gqQAuQKKzVgzMWSb7rMEB6qc6hk=";
         };
 
-        buildInputs = [ libxml2 libidn2 libnl sqlite libcap_ng ];
-        nativeBuildInputs = [ dpkg autoPatchelfHook stdenv.cc.cc.lib ];
+        buildInputs = [
+          libxml2
+          libidn2
+          libnl
+          sqlite
+          libcap_ng
+        ];
+        nativeBuildInputs = [
+          dpkg
+          autoPatchelfHook
+          stdenv.cc.cc.lib
+        ];
 
         dontConfigure = true;
         dontBuild = true;
@@ -59,7 +91,8 @@ let
           wireguard-tools
         ];
       };
-    in stdenv.mkDerivation {
+    in
+    stdenv.mkDerivation {
       inherit pname version;
 
       dontUnpack = true;
@@ -83,8 +116,11 @@ let
         maintainers = with maintainers; [ dr460nf1r3 ];
         platforms = [ "x86_64-linux" ];
       };
-    }) { };
-in with lib; {
+    }
+  ) { };
+in
+with lib;
+{
   options.services.nordvpn.enable = mkOption {
     type = types.bool;
     default = false;
@@ -102,7 +138,7 @@ in with lib; {
     environment.systemPackages = [ nordVpnPkg ];
 
     users.groups.nordvpn = { };
-    users.groups.nordvpn.members = [ "minazuki" ];
+    users.groups.nordvpn.members = [ "zooki" ];
     systemd = {
       services.nordvpn = {
         description = "NordVPN daemon.";

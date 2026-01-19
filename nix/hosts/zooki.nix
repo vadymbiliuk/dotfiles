@@ -1,11 +1,18 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   unstable = import inputs.nixpkgs-unstable {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ../modules/nixos/lanzaboote.nix
@@ -15,8 +22,9 @@ in {
 
   networking.hostName = "nixos";
 
-  users.users.minazuki = {
+  users.users.zooki = {
     isNormalUser = true;
+    uid = 1000;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -29,7 +37,7 @@ in {
     shell = pkgs.zsh;
   };
 
-  home-manager.users.minazuki = {
+  home-manager.users.zooki = {
     imports = [
       ../modules/home/base.nix
       ../modules/home/wallpaper.nix

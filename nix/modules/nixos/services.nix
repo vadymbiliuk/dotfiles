@@ -30,7 +30,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
         user = "greeter";
       };
     };
@@ -46,11 +46,11 @@
     TTYVTDisallocate = true;
   };
 
-  environment.systemPackages = with pkgs; [ greetd.tuigreet ];
+  environment.systemPackages = with pkgs; [ tuigreet ];
 
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_17;
-    extraPlugins = [ pkgs.postgresql_17.pkgs.pgvector ];
+    extensions = [ pkgs.postgresql_17.pkgs.pgvector ];
   };
 }

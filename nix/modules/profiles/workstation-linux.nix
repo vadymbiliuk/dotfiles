@@ -1,11 +1,18 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   unstable = import inputs.nixpkgs-unstable {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
-in {
+in
+{
   imports = [
     ./base.nix
     ../nixos/nix.nix
@@ -16,7 +23,7 @@ in {
     ../nixos/services.nix
     ../nixos/system.nix
     ../nixos/hyprland.nix
-    ../nixos/1password.nix
+    ../nixos/bitwarden.nix
     ../nixos/nordvpn.nix
   ];
 
@@ -28,24 +35,22 @@ in {
     wl-clipboard
     unstable.quickshell
     qt6.qt5compat
-    qt5.qtgraphicaleffects
     qt6.qtbase
     qt6.qtdeclarative
     qt6.qtquickeffectmaker
     kdePackages.qt5compat
-    hyprpaper
     kdePackages.dolphin
+    hyprpaper
     grim
     slurp
     gnome-calendar
     networkmanagerapplet
     telegram-desktop
-    discord
-    teamspeak3
+    unstable.discord
     thunderbird
-    slack
+    unstable.slack
     obs-studio
-    obsidian
+    unstable.obsidian
     pavucontrol
     blueman
     playerctl

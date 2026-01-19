@@ -4,7 +4,7 @@ let isLinux = pkgs.stdenv.isLinux;
 in {
   programs.rofi = lib.mkIf isLinux {
     enable = true;
-    package = pkgs.rofi-wayland;
+    package = pkgs.rofi;
     theme = builtins.toFile "custom-theme.rasi" ''
       * {
           y-offset: -400;

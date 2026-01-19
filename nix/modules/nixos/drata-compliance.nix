@@ -1,18 +1,26 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   system.autoUpgrade = {
     enable = true;
     dates = "daily";
     allowReboot = false;
-    flake = "/home/minazuki/.config/nix#minazuki";
+    flake = "/home/zooki/.config/nix#zooki";
   };
 
   services.fail2ban = {
     enable = true;
     maxretry = 5;
     bantime = "30m";
-    ignoreIP = [ "127.0.0.1/8" "::1" ];
+    ignoreIP = [
+      "127.0.0.1/8"
+      "::1"
+    ];
     jails.sshd.settings = {
       enabled = true;
       port = 22;

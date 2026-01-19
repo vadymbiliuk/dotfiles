@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [ ./bitwarden.nix ];
+
   home.enableNixpkgsReleaseCheck = false;
 
   home.sessionVariables = {
@@ -68,7 +70,7 @@
         "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell";
     };
 
-    initExtra = ''
+    initContent = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
       export XDG_CONFIG_HOME="$HOME/.config"
@@ -84,6 +86,8 @@
       if command -v direnv >/dev/null 2>&1; then
         eval "$(direnv hook zsh)"
       fi
+
+      export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
 
       ${lib.optionalString pkgs.stdenv.isDarwin ''
         export PATH="/opt/homebrew/bin:$PATH"
@@ -115,9 +119,9 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "Vadym Biliuk";
-    userEmail = "vadym.biliuk@gmail.com";
-    extraConfig = {
+    settings = {
+      user.name = "Vadym Biliuk";
+      user.email = "vadym.biliuk@gmail.com";
       core.excludesFile = "~/.config/git/ignore";
       pull.rebase = true;
       init.defaultBranch = "main";
@@ -222,21 +226,6 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
-  };
-
-  programs.ssh = {
-    enable = true;
-    matchBlocks = {
-      "*" = {
-        extraOptions = {
-          IdentityAgent = if pkgs.stdenv.isDarwin then
-            ''
-              "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"''
-          else
-            "~/.1password/agent.sock";
-        };
-      };
-    };
   };
 
 }
