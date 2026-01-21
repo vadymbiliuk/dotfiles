@@ -35,9 +35,12 @@ let
     fi
   '';
 in {
+  services.gnome-keyring = lib.mkIf isLinux {
+    enable = true;
+    components = [ "secrets" ];
+  };
+
   home.packages = with pkgs; lib.optionals isLinux [
-    bitwarden-desktop
-    bitwarden-cli
   ];
 
   home.activation.configureBitwarden = lib.mkIf isLinux (
