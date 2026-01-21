@@ -145,6 +145,7 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
+        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "quickshell"
         "swww-daemon"
         "swww img ~/.config/wallpapers/current"

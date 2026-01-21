@@ -95,7 +95,7 @@ let
           tree-sitter-yaml
         ]))
     ] ++ lib.optionals isDarwin [ mkalias ]
-    ++ lib.optionals isLinux [ pamixer brightnessctl noisetorch woeusb ];
+    ++ lib.optionals isLinux [ pamixer brightnessctl woeusb ];
 in {
   home.packages = developmentPackages ++ lspPackages ++ programmingPackages
     ++ utilityPackages;

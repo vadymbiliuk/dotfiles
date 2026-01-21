@@ -50,7 +50,7 @@ in
       ../modules/home/quickshell.nix
       ../modules/home/theme.nix
       ../modules/home/cursor.nix
-      ../modules/home/noisetorch.nix
+      ../modules/home/easyeffects.nix
       ../modules/home/auto-english.nix
     ];
 
