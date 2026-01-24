@@ -55,7 +55,7 @@ Singleton {
     }
     
     function updateNotificationSounds() {
-        soundToggleProcess.command = ["/home/minazuki/.config/nix/modules/home/quickshell/toggle-notification-sounds.sh", 
+        soundToggleProcess.command = ["/home/zooki/.config/nix/modules/home/quickshell/toggle-notification-sounds.sh", 
                                        configAdapter.dndEnabled ? "off" : "on",
                                        configAdapter.dndProfile];
         soundToggleProcess.running = true;
@@ -68,7 +68,7 @@ Singleton {
     
     property Process audioMonitorProcess: Process {
         id: audioMonitorProcess
-        command: ["/home/minazuki/.config/nix/modules/home/quickshell/dnd-audio-monitor.sh"]
+        command: ["/home/zooki/.config/nix/modules/home/quickshell/dnd-audio-monitor.sh"]
         running: true
     }
 }
