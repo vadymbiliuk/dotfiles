@@ -95,7 +95,7 @@ let
           tree-sitter-yaml
         ]))
     ] ++ lib.optionals isDarwin [ mkalias ]
-    ++ lib.optionals isLinux [ pamixer brightnessctl woeusb ];
+    ++ lib.optionals isLinux [ pamixer brightnessctl woeusb sops age ssh-to-age foliate glib ];
 in {
   home.packages = developmentPackages ++ lspPackages ++ programmingPackages
     ++ utilityPackages;

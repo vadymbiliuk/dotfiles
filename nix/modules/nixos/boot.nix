@@ -1,10 +1,23 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  environment.systemPackages = with pkgs; [ tpm2-tools tpm2-tss os-prober ];
+  environment.systemPackages = with pkgs; [
+    tpm2-tools
+    tpm2-tss
+    os-prober
+  ];
   boot = {
     kernelPackages = pkgs.linuxPackages;
-    kernelParams = [ "nvidia-drm.modeset=1" "video=DP-1:2560x1440@500" "video=DP-2:2560x1440@360,rotate=90" ];
+    kernelParams = [
+      "nvidia-drm.modeset=1"
+      "video=DP-1:2560x1440@500"
+      "video=DP-2:2560x1440@360,rotate=90"
+    ];
     supportedFilesystems = [ "ntfs" ];
     tmp.cleanOnBoot = true;
 

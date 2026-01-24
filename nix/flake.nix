@@ -50,11 +50,12 @@
           specialArgs = { inherit inputs; };
         };
 
-        vault = nixpkgs.lib.nixosSystem {
+        hashira = inputs.nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             sops-nix.nixosModules.sops
-            ./hosts/vault.nix
+            lanzaboote.nixosModules.lanzaboote
+            ./hosts/hashira.nix
           ];
           specialArgs = { inherit inputs; };
         };
@@ -73,7 +74,7 @@
       };
 
       packages.x86_64-linux = {
-        vault-vm = self.nixosConfigurations.vault.config.system.build.vm;
+        hashira-vm = self.nixosConfigurations.hashira.config.system.build.vm;
       };
     };
 }
