@@ -62,5 +62,6 @@ in {
 
   home.sessionVariables = {
     SSH_AUTH_SOCK = "\${HOME}/.bitwarden-ssh-agent.sock";
+    SOPS_AGE_KEY_CMD = "\${HOME}/.local/bin/sops-age-key";
   };
 }

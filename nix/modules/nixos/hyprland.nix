@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  programs.dconf.enable = true;
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -13,6 +15,10 @@
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
     ];
+    config.common = {
+      default = [ "hyprland" "gtk" ];
+      "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+    };
   };
 
   environment.systemPackages = with pkgs; [

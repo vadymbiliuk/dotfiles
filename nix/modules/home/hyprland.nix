@@ -39,6 +39,7 @@
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
         "XCURSOR_THEME,Bibata-Modern-Classic"
+        "GTK_THEME,Adwaita:dark"
       ];
 
       general = {
@@ -145,6 +146,7 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
+        "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "quickshell"
         "swww-daemon"
