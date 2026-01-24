@@ -37,4 +37,9 @@
   };
 
   environment.systemPackages = [ pkgs.headscale ];
+
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
 }
