@@ -8,6 +8,7 @@
 
 {
   imports = [
+    ./hashira-hardware.nix
     ../modules/profiles/server-base.nix
     ../modules/nixos/homelab/vaultwarden.nix
     ../modules/nixos/homelab/syncthing.nix
