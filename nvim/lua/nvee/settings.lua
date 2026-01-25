@@ -55,7 +55,7 @@ function M.setup(path)
       smartcase = true,
       softtabstop = 4,
       splitright = true,
-      swapfile = false,
+      swapfile = true,
       tabstop = 4,
       termguicolors = true,
       textwidth = 0,
