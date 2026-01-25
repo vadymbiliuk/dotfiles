@@ -3,7 +3,7 @@
 {
   services.headscale = {
     enable = true;
-    address = "127.0.0.1";
+    address = "0.0.0.0";
     port = 8080;
     settings = {
       server_url = "https://vpn.zxxki.com";
