@@ -41,6 +41,27 @@ in {
   services.aerospace = {
     enable = true;
     settings = {
+      on-window-detected = [
+        {
+          "if" = { app-id = "com.bitwarden.desktop"; };
+          run = "layout floating";
+          check-further-callbacks = false;
+        }
+      ];
+
+      workspace-to-monitor-force-assignment = {
+        "1" = "main";
+        "2" = "main";
+        "3" = "main";
+        "4" = "main";
+        "5" = "main";
+        "6" = [ "secondary" "^XG27ACDNG.*" "2" ];
+        "7" = [ "secondary" "^XG27ACDNG.*" "2" ];
+        "8" = [ "secondary" "^XG27ACDNG.*" "2" ];
+        "9" = [ "secondary" "^XG27ACDNG.*" "2" ];
+        "10" = [ "secondary" "^XG27ACDNG.*" "2" ];
+      };
+
       gaps = {
         inner.horizontal = 8;
         inner.vertical = 8;
@@ -89,7 +110,7 @@ in {
         alt-tab = "workspace-back-and-forth";
         alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
 
-        alt-shift-space = "layout tiles horizontal vertical";
+        alt-b = "layout tiles horizontal vertical";
         alt-shift-comma = "layout accordion horizontal vertical";
 
         alt-shift-f = "fullscreen";
@@ -171,6 +192,7 @@ in {
       "google-chrome"
       "slack"
       "microsoft-word"
+      "bitwarden"
     ];
     masApps = { "MeetingBar" = 1532419400; };
     onActivation.cleanup = "zap";

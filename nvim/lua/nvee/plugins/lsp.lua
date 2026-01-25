@@ -28,10 +28,16 @@ return {
     config = function()
       require("conform").setup {
         notify_on_error = true,
-        format_on_save = {
-          timeout_ms = 500,
-          lsp_format = "fallback",
-        },
+        format_on_save = function(bufnr)
+          local timeout = 500
+          if vim.bo[bufnr].filetype == "eruby" then
+            timeout = 5000
+          end
+          return {
+            timeout_ms = timeout,
+            lsp_format = "fallback",
+          }
+        end,
         formatters = {
           standardrb = {
             command = "/etc/profiles/per-user/vadymbiliuk/bin/standardrb",
@@ -51,7 +57,7 @@ return {
           cpp = { "clang-format" },
           python = { "ruff format" },
           ruby = { "rubocop", "trim_whitespace" },
-          eruby = { "erb_lint", "trim_whitespace" },
+          eruby = { "erb_format", "trim_whitespace" },
           markdown = { "prettierd", "prettier" },
           javascript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           javascriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
