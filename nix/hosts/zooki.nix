@@ -22,6 +22,8 @@ in
 
   networking.hostName = "nixos";
 
+  services.tailscale.enable = true;
+
   users.users.zooki = {
     isNormalUser = true;
     uid = 1000;
