@@ -51,6 +51,7 @@ let
       solargraph
       rubocop
       rubyPackages.standard
+      rubyPackages.erb-formatter
       nodePackages.fixjson
       typos
       clang-tools

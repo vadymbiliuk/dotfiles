@@ -399,20 +399,22 @@ return {
     end,
   },
   {
-    "kdheepak/lazygit.nvim",
-    lazy = true,
-    cmd = {
-      "LazyGit",
-      "LazyGitConfig",
-      "LazyGitCurrentFile",
-      "LazyGitFilter",
-      "LazyGitFilterCurrentFile",
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
+    "sindrets/diffview.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
     keys = {
-      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+      { "<leader>gD", "<cmd>DiffviewOpen<cr>", desc = "Diffview Open" },
+      { "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File History" },
+      { "<leader>gH", "<cmd>DiffviewFileHistory<cr>", desc = "Branch History" },
+      { "<leader>gx", "<cmd>DiffviewClose<cr>", desc = "Diffview Close" },
+    },
+    opts = {
+      enhanced_diff_hl = true,
+      view = {
+        merge_tool = {
+          layout = "diff3_mixed",
+        },
+      },
     },
   },
   { "akinsho/toggleterm.nvim", version = "*", opts = { size = 10, open_mapping = [[<c-\>]] } },

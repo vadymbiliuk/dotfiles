@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     lanzaboote = {
@@ -24,7 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    drata-agent.url = "path:./drata-agent";
   };
 
   outputs =
