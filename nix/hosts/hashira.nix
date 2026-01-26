@@ -23,6 +23,10 @@
 
   networking.hostName = "hashira";
 
+  networking.hosts = {
+    "127.0.0.1" = [ "vpn.zxxki.com" ];
+  };
+
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
