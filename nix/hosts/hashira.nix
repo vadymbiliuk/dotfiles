@@ -41,6 +41,7 @@
   networking.firewall = {
     allowedTCPPorts = [ 80 443 53 8080 ];
     allowedUDPPorts = [ 53 ];
+    trustedInterfaces = [ "tailscale0" ];
   };
 
   system.stateVersion = "24.11";
