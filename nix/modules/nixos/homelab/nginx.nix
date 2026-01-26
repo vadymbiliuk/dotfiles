@@ -1,20 +1,5 @@
 { config, pkgs, lib, ... }:
 
-let
-  headscale-ui = pkgs.stdenv.mkDerivation rec {
-    pname = "headscale-ui";
-    version = "2025.01.20";
-    src = pkgs.fetchzip {
-      url = "https://github.com/gurucomputing/headscale-ui/releases/download/${version}/headscale-ui.zip";
-      hash = "sha256-eMT3/UsTYkiJFzoWlNPOM6hgbyGoBbPi3cs/u71KJ0c=";
-      stripRoot = false;
-    };
-    installPhase = ''
-      mkdir -p $out/share/headscale-ui
-      cp -r * $out/share/headscale-ui/
-    '';
-  };
-in
 {
   security.acme = {
     acceptTerms = true;
@@ -85,14 +70,6 @@ in
         };
       };
 
-      "hs.zxxki.com" = {
-        useACMEHost = "zxxki.com";
-        forceSSL = true;
-        root = "${headscale-ui}/share/headscale-ui";
-        locations."/" = {
-          tryFiles = "$uri $uri/ /index.html";
-        };
-      };
     };
   };
 }
