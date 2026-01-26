@@ -41,6 +41,14 @@ in
     recommendedTlsSettings = true;
 
     virtualHosts = {
+      "_" = {
+        default = true;
+        rejectSSL = true;
+        locations."/" = {
+          return = "444";
+        };
+      };
+
       "vault.zxxki.com" = {
         useACMEHost = "zxxki.com";
         forceSSL = true;
