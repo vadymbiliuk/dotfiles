@@ -14,6 +14,7 @@
     ../modules/nixos/homelab/syncthing.nix
     ../modules/nixos/homelab/adguard.nix
     ../modules/nixos/homelab/headscale.nix
+    ../modules/nixos/homelab/cloudflared.nix
     ../modules/nixos/homelab/nginx.nix
     ../modules/nixos/homelab/postgresql.nix
     ../modules/nixos/homelab/neo4j.nix
@@ -22,10 +23,6 @@
   ];
 
   networking.hostName = "hashira";
-
-  networking.hosts = {
-    "127.0.0.1" = [ "vpn.zxxki.com" ];
-  };
 
   sops.defaultSopsFile = ../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -43,7 +40,7 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 80 443 53 8080 ];
+    allowedTCPPorts = [ 80 443 53 ];
     allowedUDPPorts = [ 53 ];
     trustedInterfaces = [ "tailscale0" ];
   };
