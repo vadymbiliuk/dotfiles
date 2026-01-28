@@ -106,7 +106,15 @@
       ''}
 
       if command -v pokemonsay >/dev/null 2>&1; then
-        pokemonthink --pokemon Gengar -N "Hello!"
+        hour=$(date +%H)
+        if [ $hour -ge 5 ] && [ $hour -lt 12 ]; then
+          greeting="おはよう"
+        elif [ $hour -ge 12 ] && [ $hour -lt 18 ]; then
+          greeting="こんにちは"
+        else
+          greeting="こんばんは"
+        fi
+        pokemonthink --pokemon Gengar -N "$greeting"
       fi
     '';
 
