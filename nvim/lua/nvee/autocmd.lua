@@ -52,6 +52,11 @@ function M.setup()
       vim.notify("File changed on disk. Buffer reloaded.", vim.log.levels.WARN)
     end,
   })
+
+  local obsidian_templates = vim.fn.expand("~/notes/Templates/obsidian-nvim-templates.lua")
+  if vim.fn.filereadable(obsidian_templates) == 1 then
+    dofile(obsidian_templates)
+  end
 end
 
 return M

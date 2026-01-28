@@ -24,6 +24,17 @@ in
 
   services.tailscale.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    user = "zooki";
+    group = "users";
+    dataDir = "/home/zooki";
+    configDir = "/home/zooki/.config/syncthing";
+    openDefaultPorts = true;
+    overrideDevices = false;
+    overrideFolders = false;
+  };
+
   users.users.zooki = {
     isNormalUser = true;
     uid = 1000;
