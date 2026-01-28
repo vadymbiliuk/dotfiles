@@ -49,14 +49,14 @@ let
 
   baseSearch = {
     force = true;
-    default = "DuckDuckGo";
-    privateDefault = "DuckDuckGo";
+    default = "ddg";
+    privateDefault = "ddg";
     engines = {
-      "Google".metaData.hidden = true;
-      "Amazon.com".metaData.hidden = true;
-      "Bing".metaData.hidden = true;
-      "eBay".metaData.hidden = true;
-      "Wikipedia (en)".metaData.alias = "@wiki";
+      "google".metaData.hidden = true;
+      "amazondotcom-us".metaData.hidden = true;
+      "bing".metaData.hidden = true;
+      "ebay".metaData.hidden = true;
+      "wikipedia".metaData.alias = "@wiki";
     };
   };
 in {

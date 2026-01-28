@@ -20,7 +20,7 @@ let
   else [];
 in {
 
-  programs.zsh.initExtra = lib.mkAfter ''
+  programs.zsh.initContent = lib.mkAfter ''
     ${lib.optionalString isDarwin ''
       if command -v gcloud >/dev/null 2>&1; then
         google_cloud_sdk_path=$(nix-store --query --requisites $(which gcloud) 2>/dev/null | grep google-cloud-sdk | head -n 1 || echo "")

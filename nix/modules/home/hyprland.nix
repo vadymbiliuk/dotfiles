@@ -14,21 +14,21 @@
     plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
     settings = {
       monitor = [
-        "DP-2,2560x1440@359.98,0x0,1,transform,1"
-        "DP-1,2560x1440@500,1440x730,1"
+        "DP-5,2560x1440@500,1440x730,1"
+        "DP-4,2560x1440@359.98,0x0,1,transform,1"
       ];
 
       workspace = [
-        "1, monitor:DP-1, default:true"
-        "2, monitor:DP-1"
-        "3, monitor:DP-1"
-        "4, monitor:DP-1"
-        "5, monitor:DP-1"
-        "6, monitor:DP-2"
-        "7, monitor:DP-2"
-        "8, monitor:DP-2"
-        "9, monitor:DP-2"
-        "10, monitor:DP-2"
+        "1, monitor:DP-5, default:true"
+        "2, monitor:DP-5"
+        "3, monitor:DP-5"
+        "4, monitor:DP-5"
+        "5, monitor:DP-5"
+        "6, monitor:DP-4, layoutopt:orientation:top"
+        "7, monitor:DP-4, layoutopt:orientation:top"
+        "8, monitor:DP-4, layoutopt:orientation:top"
+        "9, monitor:DP-4, layoutopt:orientation:top"
+        "10, monitor:DP-4, layoutopt:orientation:top"
       ];
 
       "$terminal" = "ghostty";
@@ -211,7 +211,6 @@
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
         "$mainMod, TAB, hyprexpo:expo, toggle"
-        "$mainMod, N, exec, notify-send 'Test' 'Quickshell notification test'"
         "$mainMod, O, exec, echo 'test' > /tmp/quickshell-volume-trigger"
         "$mainMod, Escape, exec, hyprlock"
       ];

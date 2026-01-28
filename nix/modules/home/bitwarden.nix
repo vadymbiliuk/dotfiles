@@ -54,7 +54,7 @@ in {
       key = sshKey;
       signByDefault = true;
     };
-    extraConfig = {
+    settings = {
       gpg.format = "ssh";
       gpg.ssh.allowedSignersFile = "${allowedSignersFile}";
     };

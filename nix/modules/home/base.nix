@@ -70,7 +70,7 @@
         "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell";
     };
 
-    initExtra = ''
+    initContent = ''
       ZSH_DISABLE_COMPFIX=true
       export EDITOR=nvim
       export XDG_CONFIG_HOME="$HOME/.config"
@@ -119,12 +119,13 @@
   programs.git = {
     enable = true;
     lfs.enable = true;
-    userName = "Vadym Biliuk";
-    userEmail = "vadym.biliuk@gmail.com";
-    extraConfig = {
+    settings = {
+      user.name = "Vadym Biliuk";
+      user.email = "vadym.biliuk@gmail.com";
       core.excludesFile = "~/.config/git/ignore";
       pull.rebase = true;
       init.defaultBranch = "main";
+      rerere.enabled = true;
     };
   };
 
