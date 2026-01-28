@@ -49,13 +49,14 @@ let
 
   baseSearch = {
     force = true;
-    default = "ddg";
+    default = "DuckDuckGo";
+    privateDefault = "DuckDuckGo";
     engines = {
-      "google".metaData.hidden = true;
-      "amazondotcom-us".metaData.hidden = true;
-      "bing".metaData.hidden = true;
-      "ebay".metaData.hidden = true;
-      "wikipedia".metaData.alias = "@wiki";
+      "Google".metaData.hidden = true;
+      "Amazon.com".metaData.hidden = true;
+      "Bing".metaData.hidden = true;
+      "eBay".metaData.hidden = true;
+      "Wikipedia (en)".metaData.alias = "@wiki";
     };
   };
 in {
@@ -64,6 +65,11 @@ in {
     package = if pkgs.stdenv.isLinux then pkgs.firefox else null;
 
     policies = {
+      DisplayBookmarksToolbar = "newtab";
+      SearchEngines = {
+        Default = "DuckDuckGo";
+        Remove = [ "Google" "Bing" "Amazon.com" "eBay" ];
+      };
       Extensions = {
         Locked = [
           "{446900e4-71c2-419f-a6a7-df9c091e268b}"
