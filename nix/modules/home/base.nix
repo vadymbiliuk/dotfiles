@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ./bitwarden.nix ];
+  imports = [ ./bitwarden.nix ./ghostty-themes.nix ];
 
   home.enableNixpkgsReleaseCheck = false;
 
@@ -132,6 +132,26 @@
     enable = true;
     settings = {
       add_newline = false;
+      palette = "monochrome";
+      palettes.monochrome = {
+        # Remap all standard colors to grayscale
+        black = "#1c1e23";
+        red = "#b0b0b0";
+        green = "#d6d6d6";
+        yellow = "#b0b0b0";
+        blue = "#888888";
+        purple = "#999999";
+        cyan = "#a2a2a2";
+        white = "#d6d6d6";
+        bright-black = "#555555";
+        bright-red = "#b5b5b5";
+        bright-green = "#deeeed";
+        bright-yellow = "#b5b5b5";
+        bright-blue = "#ababab";
+        bright-purple = "#b0b0b0";
+        bright-cyan = "#b5b5b5";
+        bright-white = "#deeeed";
+      };
       character = {
         success_symbol = "[->](bold white)";
         error_symbol = "[->](bold red)";
@@ -159,6 +179,8 @@
       pkgs.ghostty;
 
     settings = {
+      theme = "lucklaster";
+
       font-family = "BerkeleyMonoMinazuki Nerd Font Mono";
       font-size = if pkgs.stdenv.isDarwin then 22 else 18;
       font-feature = [ "+liga" "+calt" "+dlig" ];
@@ -194,31 +216,6 @@
         "shift+insert=paste_from_clipboard"
         "control+insert=copy_to_clipboard"
       ];
-
-      palette = [
-        "0=#080808"
-        "1=#d70000"
-        "2=#789978"
-        "3=#ffaa88"
-        "4=#7788aa"
-        "5=#d7007d"
-        "6=#708090"
-        "7=#deeeed"
-        "8=#444444"
-        "9=#d70000"
-        "10=#789978"
-        "11=#ffaa88"
-        "12=#7788aa"
-        "13=#d7007d"
-        "14=#708090"
-        "15=#deeeed"
-      ];
-      background = "0a0a0a";
-      foreground = "deeeed";
-      cursor-color = "deeeed";
-      cursor-text = "0a0a0a";
-      selection-background = "7a7a7a";
-      selection-foreground = "0a0a0a";
     };
   };
 
