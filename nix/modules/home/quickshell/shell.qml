@@ -9,9 +9,15 @@ ShellRoot {
     signal openControlCenterWithView(string view)
     
     Local.VolumeOsd {}
-    Local.TopBar {
-        onToggleControlCenter: shellRoot.toggleControlCenter()
-        onOpenControlCenterWithView: view => shellRoot.openControlCenterWithView(view)
+    Variants {
+        model: Quickshell.screens
+
+        Local.TopBar {
+            required property var modelData
+            screen: modelData
+            onToggleControlCenter: shellRoot.toggleControlCenter()
+            onOpenControlCenterWithView: view => shellRoot.openControlCenterWithView(view)
+        }
     }
     
     Loader {

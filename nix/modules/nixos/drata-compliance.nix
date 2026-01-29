@@ -10,7 +10,7 @@
     enable = true;
     dates = "daily";
     allowReboot = false;
-    flake = "/home/zooki/.config/nix#zooki";
+    flake = "/home/zooki/.config/nix#shinzou";
   };
 
   services.fail2ban = {

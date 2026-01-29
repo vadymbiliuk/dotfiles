@@ -14,7 +14,6 @@
     ../modules/nixos/homelab/syncthing.nix
     ../modules/nixos/homelab/adguard.nix
     ../modules/nixos/homelab/headscale.nix
-    ../modules/nixos/homelab/cloudflared.nix
     ../modules/nixos/homelab/nginx.nix
     ../modules/nixos/homelab/postgresql.nix
     ../modules/nixos/homelab/neo4j.nix

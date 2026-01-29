@@ -20,7 +20,7 @@ in
     ../modules/profiles/gaming.nix
   ];
 
-  networking.hostName = "nixos";
+  networking.hostName = "shinzou";
 
   services.tailscale.enable = true;
 

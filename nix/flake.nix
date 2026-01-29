@@ -39,13 +39,13 @@
     }@inputs:
     {
       nixosConfigurations = {
-        zooki = inputs.nixpkgs-unstable.lib.nixosSystem {
+        shinzou = inputs.nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             determinate.nixosModules.default
             home-manager.nixosModules.home-manager
             lanzaboote.nixosModules.lanzaboote
-            ./hosts/zooki.nix
+            ./hosts/shinzou.nix
           ];
           specialArgs = { inherit inputs; };
         };
