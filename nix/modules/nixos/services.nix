@@ -26,27 +26,34 @@
 
   services.blueman.enable = true;
 
-  services.greetd = {
+  services.displayManager.sddm = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
-        user = "greeter";
+    theme = "sugar-dark";
+  };
+
+  environment.systemPackages =
+    let
+      sddm-sugar-dark = pkgs.stdenv.mkDerivation {
+        name = "sddm-sugar-dark";
+        src = pkgs.fetchFromGitHub {
+          owner = "MarianArlt";
+          repo = "sddm-sugar-dark";
+          rev = "ceb2c455663429be03ba62d9f898c571650ef7fe";
+          hash = "sha256-flOspjpYezPvGZ6b4R/Mr18N7N3JdytCSwwu6mf4owQ=";
+        };
+        installPhase = ''
+          mkdir -p $out/share/sddm/themes/sugar-dark
+          cp -R ./* $out/share/sddm/themes/sugar-dark/
+          rm $out/share/sddm/themes/sugar-dark/Background.jpg
+          cp ${../../wallpapers/wallpaper.jpg} $out/share/sddm/themes/sugar-dark/Background.jpg
+        '';
       };
-    };
-  };
-
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal";
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
-  };
-
-  environment.systemPackages = with pkgs; [ tuigreet ];
+    in
+    [
+      sddm-sugar-dark
+      pkgs.libsForQt5.qt5.qtquickcontrols2
+      pkgs.libsForQt5.qt5.qtgraphicaleffects
+    ];
 
   services.postgresql = {
     enable = true;

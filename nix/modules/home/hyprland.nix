@@ -14,21 +14,21 @@
     plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
     settings = {
       monitor = [
-        "DP-5,2560x1440@500,1440x730,1"
-        "DP-4,2560x1440@359.98,0x0,1,transform,1"
+        "desc:ASUSTek COMPUTER INC XG27AQDPG,2560x1440@500,1440x730,1"
+        "desc:ASUSTek COMPUTER INC XG27ACDNG,2560x1440@359.98,0x0,1,transform,1"
       ];
 
       workspace = [
-        "1, monitor:DP-5, default:true"
-        "2, monitor:DP-5"
-        "3, monitor:DP-5"
-        "4, monitor:DP-5"
-        "5, monitor:DP-5"
-        "6, monitor:DP-4, layoutopt:orientation:top"
-        "7, monitor:DP-4, layoutopt:orientation:top"
-        "8, monitor:DP-4, layoutopt:orientation:top"
-        "9, monitor:DP-4, layoutopt:orientation:top"
-        "10, monitor:DP-4, layoutopt:orientation:top"
+        "1, monitor:desc:ASUSTek COMPUTER INC XG27AQDPG, default:true"
+        "2, monitor:desc:ASUSTek COMPUTER INC XG27AQDPG"
+        "3, monitor:desc:ASUSTek COMPUTER INC XG27AQDPG"
+        "4, monitor:desc:ASUSTek COMPUTER INC XG27AQDPG"
+        "5, monitor:desc:ASUSTek COMPUTER INC XG27AQDPG"
+        "6, monitor:desc:ASUSTek COMPUTER INC XG27ACDNG, layoutopt:orientation:top"
+        "7, monitor:desc:ASUSTek COMPUTER INC XG27ACDNG, layoutopt:orientation:top"
+        "8, monitor:desc:ASUSTek COMPUTER INC XG27ACDNG, layoutopt:orientation:top"
+        "9, monitor:desc:ASUSTek COMPUTER INC XG27ACDNG, layoutopt:orientation:top"
+        "10, monitor:desc:ASUSTek COMPUTER INC XG27ACDNG, layoutopt:orientation:top"
       ];
 
       "$terminal" = "ghostty";
@@ -39,7 +39,7 @@
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
         "XCURSOR_THEME,Bibata-Modern-Classic"
-        "GTK_THEME,Adwaita:dark"
+        "GTK_THEME,MonoThemeDark"
       ];
 
       general = {
@@ -146,7 +146,7 @@
       "$mainMod" = "SUPER";
 
       exec-once = [
-        "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'"
+        "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'MonoThemeDark'"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
         "quickshell"
         "swww-daemon"
