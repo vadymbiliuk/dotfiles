@@ -47,13 +47,10 @@ in
       ../modules/home/firefox.nix
       ../modules/home/packages.nix
       ../modules/home/hyprland.nix
-      ../modules/home/hyprlock.nix
-      ../modules/home/hypridle.nix
-      ../modules/home/quickshell.nix
       ../modules/home/theme.nix
       ../modules/home/cursor.nix
-      ../modules/home/easyeffects.nix
       ../modules/home/auto-english.nix
+      ../modules/home/noctalia.nix
     ];
 
     programs.mangohud = {

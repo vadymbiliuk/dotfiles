@@ -15,4 +15,7 @@
   };
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }

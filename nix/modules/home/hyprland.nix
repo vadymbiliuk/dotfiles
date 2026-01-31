@@ -1,17 +1,32 @@
 {
-  config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 
-{
+let
+  inherit (lib) getExe;
 
+  mod = "SUPER";
+
+  toWSNumber = n:
+    toString (
+      if n == 0
+      then 10
+      else n
+    );
+
+  workspaces = map (n: "${mod}, ${toString n}, workspace, ${toWSNumber n}") [1 2 3 4 5 6 7 8 9 0];
+  moveToWorkspaces = map (n: "${mod} SHIFT, ${toString n}, movetoworkspace, ${toWSNumber n}") [1 2 3 4 5 6 7 8 9 0];
+in
+{
   services.mako.enable = false;
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [ pkgs.hyprlandPlugins.hyprexpo ];
+    systemd.enable = false;
+    plugins = [ inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprscrolling ];
     settings = {
       monitor = [
         "desc:ASUSTek COMPUTER INC XG27AQDPG,2560x1440@500,1440x730,1"
@@ -32,15 +47,34 @@
       ];
 
       "$terminal" = "ghostty";
-      "$fileManager" = "dolphin";
-      "$menu" = "rofi -show drun";
+      "$fileManager" = "pcmanfm";
+      "$menu" = "noctalia-shell ipc call launcher toggle";
 
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
         "XCURSOR_THEME,Bibata-Modern-Classic"
-        "GTK_THEME,MonoThemeDark"
       ];
+
+      input = {
+        kb_layout = "us,ru,ua";
+        kb_options = "grp:ctrl_space_toggle";
+        follow_mouse = 2;
+        sensitivity = -0.8;
+        accel_profile = "flat";
+        repeat_rate = 67;
+        repeat_delay = 150;
+
+        touchpad = {
+          natural_scroll = false;
+        };
+      };
+
+      device = {
+        name = "wl-wlmouse-beast-max-8k-receiver-1";
+        sensitivity = -0.6;
+        accel_profile = "flat";
+      };
 
       general = {
         gaps_in = 8;
@@ -50,7 +84,7 @@
         "col.inactive_border" = "rgba(2a2a2a73)";
         resize_on_border = true;
         allow_tearing = false;
-        layout = "dwindle";
+        layout = "scrolling";
       };
 
       decoration = {
@@ -123,35 +157,12 @@
         layers_hog_keyboard_focus = false;
       };
 
-      input = {
-        kb_layout = "us,ru,ua";
-        kb_options = "grp:ctrl_space_toggle";
-        follow_mouse = 2;
-        sensitivity = -0.8;
-        accel_profile = "flat";
-        repeat_rate = 67;
-        repeat_delay = 150;
-
-        touchpad = {
-          natural_scroll = false;
-        };
-      };
-
-      device = {
-        name = "wl-wlmouse-beast-max-8k-receiver-1";
-        sensitivity = -0.6;
-        accel_profile = "flat";
-      };
-
-      "$mainMod" = "SUPER";
-
       exec-once = [
-        "${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' && ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme 'MonoThemeDark'"
-        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-        "quickshell"
-        "swww-daemon"
-        "swww img ~/.config/wallpapers/current"
-        "hypridle"
+        "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
+        "noctalia-shell"
+        "${pkgs.swww}/bin/swww-daemon &"
+        "${pkgs.swww}/bin/swww img ~/.config/wallpapers/wallpaper.jpg"
+        # "hypridle"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet --indicator"
         "bitwarden"
@@ -160,74 +171,55 @@
         "[workspace 6 silent] telegram-desktop"
       ];
 
-      bind = [
-        "$mainMod, T, exec, $terminal"
-        "$mainMod, Q, killactive,"
-        "$mainMod, M, exit,"
-        "$mainMod, E, exec, $fileManager"
-        "$mainMod, F, togglefloating,"
-        "ALT, Space, exec, $menu"
-        "ALT, Tab, focuscurrentorlast,"
-        "$mainMod, P, pseudo,"
-        "$mainMod, B, togglesplit,"
-        '', Print, exec, grim -g "$(slurp)" - | wl-copy''
-        "SHIFT, Print, exec, grim - | wl-copy"
-        "$mainMod, h, movefocus, l"
-        "$mainMod, l, movefocus, r"
-        "$mainMod, k, movefocus, u"
-        "$mainMod, j, movefocus, d"
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
-        "$mainMod SHIFT, h, movewindow, l"
-        "$mainMod SHIFT, l, movewindow, r"
-        "$mainMod SHIFT, k, movewindow, u"
-        "$mainMod SHIFT, j, movewindow, d"
-        "$mainMod, comma, focusmonitor, l"
-        "$mainMod, period, focusmonitor, r"
-        "$mainMod SHIFT, comma, movewindow, mon:l"
-        "$mainMod SHIFT, period, movewindow, mon:r"
-        "$mainMod CTRL, comma, movecurrentworkspacetomonitor, l"
-        "$mainMod CTRL, period, movecurrentworkspacetomonitor, r"
-        "$mainMod, S, togglespecialworkspace, magic"
-        "$mainMod SHIFT, S, movetoworkspace, special:magic"
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
-        "$mainMod, TAB, hyprexpo:expo, toggle"
-        "$mainMod, O, exec, echo 'test' > /tmp/quickshell-volume-trigger"
-        "$mainMod, Escape, exec, hyprlock"
-      ];
+      bind =
+        [
+          "${mod}, T, exec, $terminal"
+          "${mod}, Q, killactive,"
+          "${mod}, M, exit,"
+          "${mod}, E, exec, $fileManager"
+          "${mod}, F, togglefloating,"
+          "ALT, Space, exec, $menu"
+          "ALT, Tab, focuscurrentorlast,"
+          "${mod}, P, pseudo,"
+          "${mod}, B, togglesplit,"
 
-      bindd = [
-        "$mainMod, C, Copy, sendshortcut, CTRL, Insert,"
-        "$mainMod, V, Paste, sendshortcut, SHIFT, Insert,"
-        "$mainMod, X, Cut, sendshortcut, CTRL, X,"
-      ];
+          '', Print, exec, grim -g "$(slurp)" - | wl-copy''
+          "SHIFT, Print, exec, grim - | wl-copy"
+
+          "${mod}, h, movefocus, l"
+          "${mod}, l, movefocus, r"
+          "${mod}, k, movefocus, u"
+          "${mod}, j, movefocus, d"
+
+          "${mod} SHIFT, h, movewindow, l"
+          "${mod} SHIFT, l, movewindow, r"
+          "${mod} SHIFT, k, movewindow, u"
+          "${mod} SHIFT, j, movewindow, d"
+
+          "${mod}, comma, focusmonitor, l"
+          "${mod}, period, focusmonitor, r"
+          "${mod} SHIFT, comma, movewindow, mon:l"
+          "${mod} SHIFT, period, movewindow, mon:r"
+          "${mod} CTRL, comma, movecurrentworkspacetomonitor, l"
+          "${mod} CTRL, period, movecurrentworkspacetomonitor, r"
+
+          "${mod}, S, togglespecialworkspace, magic"
+          "${mod} SHIFT, S, movetoworkspace, special:magic"
+
+          "${mod}, mouse_down, workspace, e+1"
+          "${mod}, mouse_up, workspace, e-1"
+          "${mod}, Escape, exec, hyprlock"
+        ]
+        ++ workspaces
+        ++ moveToWorkspaces;
 
       bindel = [
-        ",XF86AudioRaiseVolume, exec, pamixer -i 5 && touch /tmp/quickshell-volume-trigger"
-        ",XF86AudioLowerVolume, exec, pamixer -d 5 && touch /tmp/quickshell-volume-trigger"
-        ",XF86AudioMute, exec, pamixer -t && touch /tmp/quickshell-volume-trigger"
+        ",XF86AudioRaiseVolume, exec, pamixer -i 5"
+        ",XF86AudioLowerVolume, exec, pamixer -d 5"
+        ",XF86AudioMute, exec, pamixer -t"
         ",XF86AudioMicMute, exec, pamixer --default-source -t"
-        ",XF86MonBrightnessUp, exec, brightnessctl set +5% && touch /tmp/quickshell-brightness-trigger"
-        ",XF86MonBrightnessDown, exec, brightnessctl set 5%- && touch /tmp/quickshell-brightness-trigger"
+        ",XF86MonBrightnessUp, exec, brightnessctl set +5%"
+        ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
       ];
 
       bindl = [
@@ -237,23 +229,27 @@
         ", XF86AudioPrev, exec, playerctl previous"
       ];
 
-      bindr = [ ", Caps_Lock, exec, ~/.config/scripts/caps-lock-notify.sh" ];
 
       bindm = [
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
+        "${mod}, mouse:272, movewindow"
+        "${mod}, mouse:273, resizewindow"
       ];
 
       layerrule = [
         "blur 1, match:namespace rofi"
         "ignore_alpha 0.2, match:namespace rofi"
-        "blur 1, match:namespace quickshell"
-        "ignore_alpha 0.1, match:namespace quickshell"
-        "blur 1, match:namespace notifications"
-        "ignore_alpha 0.2, match:namespace notifications"
-        "blur 1, match:namespace osd"
-        "ignore_alpha 0.2, match:namespace osd"
+        "blur 1, match:namespace ^noctalia-background-.*$"
+        "ignore_alpha 0.5, match:namespace ^noctalia-background-.*$"
       ];
+
+      plugin = {
+        hyprscrolling = {
+          column_width = 0.5;
+          fullscreen_on_one_column = false;
+          focus_fit_method = 0;
+          follow_focus = true;
+        };
+      };
 
       windowrule = [
         "float on, match:class Bitwarden"
@@ -267,24 +263,6 @@
         "no_focus 1, match:class ^$, match:title ^$, match:xwayland 1"
       ];
 
-      plugin = {
-        hyprexpo = {
-          columns = 3;
-          gap_size = 10;
-          bg_col = "rgb(080808)";
-          workspace_method = "center current";
-
-          enable_gesture = true;
-          gesture_fingers = 3;
-          gesture_distance = 300;
-          gesture_positive = true;
-
-          enable_on_activity = false;
-          switch_on_close = true;
-          exit_on_click = true;
-          exit_on_escape = true;
-        };
-      };
     };
   };
 }

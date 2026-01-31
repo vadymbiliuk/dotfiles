@@ -23,8 +23,10 @@ in
     ../nixos/services.nix
     ../nixos/system.nix
     ../nixos/hyprland.nix
+    ../nixos/greetd.nix
     ../nixos/bitwarden.nix
     ../nixos/nordvpn.nix
+    ../nixos/noctalia.nix
   ];
 
   programs.zsh.enable = true;
@@ -33,13 +35,7 @@ in
 
   environment.systemPackages = with pkgs; [
     wl-clipboard
-    unstable.quickshell
-    qt6.qt5compat
-    qt6.qtbase
-    qt6.qtdeclarative
-    qt6.qtquickeffectmaker
-    kdePackages.qt5compat
-    kdePackages.dolphin
+    pcmanfm
     hyprpaper
     grim
     slurp
@@ -66,6 +62,7 @@ in
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
+    extraSpecialArgs = { inherit inputs; };
   };
 
   services.nordvpn.enable = true;

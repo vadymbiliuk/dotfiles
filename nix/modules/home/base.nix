@@ -66,9 +66,7 @@
       zq = "zoxide query";
       zr = "zoxide remove";
 
-      quickshell =
-        "QML2_IMPORT_PATH=/run/current-system/sw/lib/qt-6/qml:$QML2_IMPORT_PATH quickshell";
-    };
+};
 
     initContent = ''
       ZSH_DISABLE_COMPFIX=true

@@ -1,38 +1,32 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  programs.gamemode.enable = true;
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    gamescopeSession.enable = true;
-    extraCompatPackages = with pkgs; [ proton-ge-bin ];
-  };
-
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "\\\${HOME}/.steam/root/compatibilitytools.d";
-    __GL_SHADER_DISK_CACHE = "1";
-    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
-    RADV_PERFTEST = "gpl";
-    DXVK_ASYNC = "1";
-    PROTON_ENABLE_NVAPI = "1";
+  programs = {
+    gamemode.enable = true;
+    gamescope.enable = true;
+    steam = {
+      enable = true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+      ];
+      extraPackages = with pkgs; [
+        SDL2
+        gamescope
+      ];
+      protontricks.enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
     lutris
-    heroic
+    steam-run
+    dxvk
+    gamescope
     mangohud
-    gamemode
+    r2modman
+    heroic
     bottles
-    wine
-    winetricks
-    protontricks
-    protonup-ng
+    steamtinkerlaunch
+    prismlauncher
   ];
-
-  boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
-
-  services.thermald.enable = true;
 }

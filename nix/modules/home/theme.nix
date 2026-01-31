@@ -56,12 +56,12 @@ in
 
   qt = {
     enable = true;
-    platformTheme.name = "gtk3";
+    platformTheme.name = "kvantum";
+    style.name = "kvantum";
   };
 
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-    };
-  };
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = ''
+    [General]
+    theme=KvDark
+  '';
 }

@@ -25,7 +25,6 @@
   };
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
     ADW_DEBUG_COLOR_SCHEME = "prefer-dark";
   };
