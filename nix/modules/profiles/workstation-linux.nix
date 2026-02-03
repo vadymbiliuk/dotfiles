@@ -54,7 +54,6 @@ in
     niv
     ghostty
     libnotify
-    clamav
     unstable.claude-code
   ];
 
@@ -66,6 +65,4 @@ in
   };
 
   services.nordvpn.enable = true;
-  services.clamav.daemon.enable = true;
-  services.clamav.updater.enable = true;
 }

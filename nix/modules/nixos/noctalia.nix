@@ -13,7 +13,7 @@ let
     bar = {
       barType = "floating";
       position = "top";
-      monitors = [ "DP-3" ];
+      monitors = [ ];
       density = "comfortable";
       showOutline = false;
       showCapsule = false;
@@ -157,17 +157,7 @@ let
           }
         ];
       };
-      screenOverrides = [
-        {
-          enabled = false;
-          name = "DP-3";
-        }
-        {
-          enabled = true;
-          name = "DP-2";
-          position = "left";
-        }
-      ];
+      screenOverrides = [ ];
     };
     general = {
       avatarImage = "/home/zooki/.face";
@@ -214,7 +204,7 @@ let
       boxBorderEnabled = true;
     };
     location = {
-      name = "Tokyo";
+      name = "Kyiv";
       weatherEnabled = true;
       weatherShowEffects = true;
       useFahrenheit = false;
