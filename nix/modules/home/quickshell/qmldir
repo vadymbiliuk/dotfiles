@@ -1,0 +1,14 @@
+singleton NotificationService 1.0 NotificationService.qml
+singleton OsdService 1.0 OsdService.qml
+singleton Theme 1.0 Theme.qml
+singleton DNDState 1.0 DNDState.qml
+singleton BluetoothState 1.0 BluetoothState.qml
+singleton VPNState 1.0 VPNState.qml
+singleton AntivirusState 1.0 AntivirusState.qml
+VolumeOsd 1.0 VolumeOsd.qml
+TopBar 1.0 TopBar.qml
+NotificationArea 1.0 NotificationArea.qml
+MaterialSymbol 1.0 MaterialSymbol.qml
+LanguageSwitcher 1.0 LanguageSwitcher.qml
+Protection 1.0 Protection.qml
+AntivirusModule 1.0 AntivirusModule.qml

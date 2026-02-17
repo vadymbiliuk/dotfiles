@@ -1,0 +1,10 @@
+keys:
+  - &zooki age1ljtdtsgrk4jq52n99tc52u6xgercmh233luv9nz6xzh76dme7yns8ryzey
+  - &hashira age1jqcds5mu525mj88xmejfyakrmpspdxa98kmk0zdxf5jpc7hg83gs4ptkpu
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *zooki
+          - *hashira

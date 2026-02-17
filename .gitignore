@@ -1,0 +1,11 @@
+# Ignore everything first
+*
+
+# Then include these directories and their contents
+!.github/
+!.github/**
+!nix/
+!nix/**
+!nvim/
+!nvim/**
+!.gitignore

@@ -1,0 +1,49 @@
+name: Build Configurations
+
+on:
+  push:
+    branches: [main, homelab]
+    paths:
+      - 'nix/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'nix/**'
+
+jobs:
+  build-nixos:
+    strategy:
+      fail-fast: false
+      matrix:
+        config: [shinzou, hashira]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Build ${{ matrix.config }}
+        working-directory: ./nix
+        run: nix build .#nixosConfigurations.${{ matrix.config }}.config.system.build.toplevel --no-link --print-build-logs
+
+  build-darwin:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Build vadymbiliuk
+        working-directory: ./nix
+        run: nix build .#darwinConfigurations.vadymbiliuk.config.system.build.toplevel --no-link --print-build-logs
