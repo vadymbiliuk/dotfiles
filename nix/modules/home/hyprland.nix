@@ -199,6 +199,7 @@ in
         # "hypridle"
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet --indicator"
+        "nordvpn connect Germany"
         "bitwarden"
         "[workspace 1 silent] MOZ_ENABLE_WAYLAND=1 firefox"
         "[workspace 2 silent] ghostty"
