@@ -81,6 +81,7 @@ in
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
         "XCURSOR_THEME,Bibata-Modern-Classic"
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
       ];
 
       input = {
@@ -200,7 +201,7 @@ in
         "hyprctl setcursor Bibata-Modern-Classic 24"
         "nm-applet --indicator"
         "nordvpn connect Germany"
-        "bitwarden"
+        "bitwarden --ozone-platform=wayland --enable-features=WaylandWindowDecorations"
         "[workspace 1 silent] MOZ_ENABLE_WAYLAND=1 firefox"
         "[workspace 2 silent] ghostty"
         "[workspace 6 silent] telegram-desktop"
