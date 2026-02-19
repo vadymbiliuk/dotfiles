@@ -91,6 +91,7 @@ return {
       local lsp_servers = {
         "vtsls",
         "bashls",
+        "clangd",
         "pyright",
         "ruff",
         "vimls",
