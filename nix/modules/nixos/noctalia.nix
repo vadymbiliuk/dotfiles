@@ -63,6 +63,13 @@ let
         ];
         right = [
           {
+            defaultSettings = {
+              hideInactive = true;
+              removeMargins = false;
+            };
+            id = "plugin:privacy-indicator";
+          }
+          {
             blacklist = [
               "nm-applet"
               "bluetooth*"
@@ -539,7 +546,19 @@ let
 
   settingsFile = pkgs.writeText "noctalia-config.json" (builtins.toJSON settings);
 
-  noctalia-shell = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  quickshell = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+    withPolkit = true;
+  };
+
+  pkgsWithQuickshell = pkgs.extend (
+    final: prev: {
+      inherit quickshell;
+    }
+  );
+
+  noctalia-shell = pkgsWithQuickshell.callPackage "${inputs.noctalia}/nix/package.nix" {
+    version = inputs.noctalia.shortRev or "dev";
+  };
 
   noctalia-wrapped = pkgs.symlinkJoin {
     name = "noctalia-shell-wrapped";

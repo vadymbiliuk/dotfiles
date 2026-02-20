@@ -781,16 +781,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1769799276,
-        "narHash": "sha256-6iTvXAsHhqAZAz1ZcpUpPPrsavGC2W4+oWxMRI2y9E4=",
+        "lastModified": 1771609315,
+        "narHash": "sha256-p5LXHaCQZKSiGzDgWjj8v280juAaTg0vgzT2C90RVxM=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "e36a6789adcc51882ba124d2ab00c7d7c185f9ae",
+        "rev": "c6f4a6bc161323ec630cc0bd1bbd3812259b5a5a",
         "type": "github"
       },
       "original": {
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
+    "noctalia-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771597854,
+        "narHash": "sha256-zSGcDx3aOJmKmUux69gYr83Al5xnqsC08vFwr37MXuo=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-plugins",
+        "rev": "1793dd6f49046f1cbff71ecad82f0c8d48d02279",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-plugins",
         "type": "github"
       }
     },
@@ -840,6 +856,26 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1770693276,
+        "narHash": "sha256-ngXnN5YXu+f45+QGYNN/VEBMQmcBCYGRCqwaK8cxY1s=",
+        "ref": "refs/heads/master",
+        "rev": "dacfa9de829ac7cb173825f593236bf2c21f637e",
+        "revCount": 735,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
+      }
+    },
     "root": {
       "inputs": {
         "determinate": "determinate",
@@ -851,6 +887,8 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "noctalia": "noctalia",
+        "noctalia-plugins": "noctalia-plugins",
+        "quickshell": "quickshell",
         "sops-nix": "sops-nix"
       }
     },

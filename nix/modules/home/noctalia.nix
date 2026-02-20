@@ -1,12 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
-  noctalia-plugins = pkgs.fetchFromGitHub {
-    owner = "noctalia-dev";
-    repo = "noctalia-plugins";
-    rev = "main";
-    sha256 = "sha256-rbd+D2i75Ylc4LvK/rfzRw02v2Kf1uLyMU3WPM/7EOM=";
-  };
+  noctalia-plugins = inputs.noctalia-plugins;
 
   colorScheme = builtins.toJSON {
     dark = {
@@ -103,6 +98,10 @@ let
     };
   };
 
+  privacyIndicatorSettings = builtins.toJSON {
+    activeIconColor = "#deeeed";
+  };
+
   pluginsJson = pkgs.writeText "plugins.json" (builtins.toJSON {
     version = 1;
     sources = [
@@ -125,6 +124,14 @@ let
         enabled = true;
         sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
       };
+      privacy-indicator = {
+        enabled = true;
+        sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+      };
+      polkit-agent = {
+        enabled = true;
+        sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+      };
     };
   });
 in
@@ -142,6 +149,15 @@ in
     };
     ".config/noctalia/plugins/tailscale" = {
       source = "${noctalia-plugins}/tailscale";
+      recursive = true;
+    };
+    ".config/noctalia/plugins/privacy-indicator" = {
+      source = "${noctalia-plugins}/privacy-indicator";
+      recursive = true;
+    };
+    ".config/noctalia/plugins/privacy-indicator/settings.json".text = privacyIndicatorSettings;
+    ".config/noctalia/plugins/polkit-agent" = {
+      source = "${noctalia-plugins}/polkit-agent";
       recursive = true;
     };
   };
