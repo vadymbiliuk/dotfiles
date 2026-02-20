@@ -37,15 +37,32 @@ let
       | while read -r line; do handle "$line"; done
   '';
 
-  toWSNumber = n:
-    toString (
-      if n == 0
-      then 10
-      else n
-    );
+  toWSNumber = n: toString (if n == 0 then 10 else n);
 
-  workspaces = map (n: "${mod}, ${toString n}, workspace, ${toWSNumber n}") [1 2 3 4 5 6 7 8 9 0];
-  moveToWorkspaces = map (n: "${mod} SHIFT, ${toString n}, movetoworkspace, ${toWSNumber n}") [1 2 3 4 5 6 7 8 9 0];
+  workspaces = map (n: "${mod}, ${toString n}, workspace, ${toWSNumber n}") [
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    0
+  ];
+  moveToWorkspaces = map (n: "${mod} SHIFT, ${toString n}, movetoworkspace, ${toWSNumber n}") [
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    0
+  ];
 in
 {
   services.mako.enable = false;
@@ -53,7 +70,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
-    plugins = [ inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprscrolling ];
+    plugins = [ ];
     settings = {
       monitor = [
         "desc:ASUSTek COMPUTER INC XG27AQDPG,2560x1440@500,1440x730,1"
@@ -118,7 +135,7 @@ in
         "col.inactive_border" = "rgba(2a2a2a73)";
         resize_on_border = true;
         allow_tearing = false;
-        layout = "scrolling";
+        layout = "dwindle";
       };
 
       decoration = {
@@ -192,7 +209,6 @@ in
       };
 
       exec-once = [
-        "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
         "noctalia-shell"
         "${bitwardenPopupHandler}"
         "${pkgs.swww}/bin/swww-daemon &"
@@ -207,47 +223,46 @@ in
         "[workspace 6 silent] telegram-desktop"
       ];
 
-      bind =
-        [
-          "${mod}, T, exec, $terminal"
-          "${mod}, Q, killactive,"
-          "${mod}, M, exit,"
-          "${mod}, E, exec, $fileManager"
-          "${mod}, F, togglefloating,"
-          "ALT, Space, exec, $menu"
-          "ALT, Tab, focuscurrentorlast,"
-          "${mod}, P, pseudo,"
-          "${mod}, B, togglesplit,"
+      bind = [
+        "${mod}, T, exec, $terminal"
+        "${mod}, Q, killactive,"
+        "${mod}, M, exit,"
+        "${mod}, E, exec, $fileManager"
+        "${mod}, F, togglefloating,"
+        "ALT, Space, exec, $menu"
+        "ALT, Tab, focuscurrentorlast,"
+        "${mod}, P, pseudo,"
+        "${mod}, B, togglesplit,"
 
-          '', Print, exec, grim -g "$(slurp)" - | wl-copy''
-          "SHIFT, Print, exec, grim - | wl-copy"
+        '', Print, exec, grim -g "$(slurp)" - | wl-copy''
+        "SHIFT, Print, exec, grim - | wl-copy"
 
-          "${mod}, h, movefocus, l"
-          "${mod}, l, movefocus, r"
-          "${mod}, k, movefocus, u"
-          "${mod}, j, movefocus, d"
+        "${mod}, h, movefocus, l"
+        "${mod}, l, movefocus, r"
+        "${mod}, k, movefocus, u"
+        "${mod}, j, movefocus, d"
 
-          "${mod} SHIFT, h, movewindow, l"
-          "${mod} SHIFT, l, movewindow, r"
-          "${mod} SHIFT, k, movewindow, u"
-          "${mod} SHIFT, j, movewindow, d"
+        "${mod} SHIFT, h, movewindow, l"
+        "${mod} SHIFT, l, movewindow, r"
+        "${mod} SHIFT, k, movewindow, u"
+        "${mod} SHIFT, j, movewindow, d"
 
-          "${mod}, comma, focusmonitor, l"
-          "${mod}, period, focusmonitor, r"
-          "${mod} SHIFT, comma, movewindow, mon:l"
-          "${mod} SHIFT, period, movewindow, mon:r"
-          "${mod} CTRL, comma, movecurrentworkspacetomonitor, l"
-          "${mod} CTRL, period, movecurrentworkspacetomonitor, r"
+        "${mod}, comma, focusmonitor, l"
+        "${mod}, period, focusmonitor, r"
+        "${mod} SHIFT, comma, movewindow, mon:l"
+        "${mod} SHIFT, period, movewindow, mon:r"
+        "${mod} CTRL, comma, movecurrentworkspacetomonitor, l"
+        "${mod} CTRL, period, movecurrentworkspacetomonitor, r"
 
-          "${mod}, S, togglespecialworkspace, magic"
-          "${mod} SHIFT, S, movetoworkspace, special:magic"
+        "${mod}, S, togglespecialworkspace, magic"
+        "${mod} SHIFT, S, movetoworkspace, special:magic"
 
-          "${mod}, mouse_down, workspace, e+1"
-          "${mod}, mouse_up, workspace, e-1"
-          "${mod}, Escape, exec, hyprlock"
-        ]
-        ++ workspaces
-        ++ moveToWorkspaces;
+        "${mod}, mouse_down, workspace, e+1"
+        "${mod}, mouse_up, workspace, e-1"
+        "${mod}, Escape, exec, hyprlock"
+      ]
+      ++ workspaces
+      ++ moveToWorkspaces;
 
       bindel = [
         ",XF86AudioRaiseVolume, exec, pamixer -i 5"
@@ -265,7 +280,6 @@ in
         ", XF86AudioPrev, exec, playerctl previous"
       ];
 
-
       bindm = [
         "${mod}, mouse:272, movewindow"
         "${mod}, mouse:273, resizewindow"
@@ -277,15 +291,6 @@ in
         "blur 1, match:namespace ^noctalia-background-.*$"
         "ignore_alpha 0.5, match:namespace ^noctalia-background-.*$"
       ];
-
-      plugin = {
-        hyprscrolling = {
-          column_width = 0.5;
-          fullscreen_on_one_column = false;
-          focus_fit_method = 0;
-          follow_focus = true;
-        };
-      };
 
       windowrule = [
         "render_unfocused on, match:class .*"
