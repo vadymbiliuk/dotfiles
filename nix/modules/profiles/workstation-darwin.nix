@@ -41,13 +41,11 @@ in {
   services.aerospace = {
     enable = true;
     settings = {
-      on-window-detected = [
-        {
-          "if" = { app-id = "com.bitwarden.desktop"; };
-          run = "layout floating";
-          check-further-callbacks = false;
-        }
-      ];
+      on-window-detected = [{
+        "if" = { app-id = "com.bitwarden.desktop"; };
+        run = "layout floating";
+        check-further-callbacks = false;
+      }];
 
       workspace-to-monitor-force-assignment = {
         "1" = "main";
@@ -193,6 +191,7 @@ in {
       "slack"
       "microsoft-word"
       "bitwarden"
+      "tailscale"
     ];
     masApps = { "MeetingBar" = 1532419400; };
     onActivation.cleanup = "zap";

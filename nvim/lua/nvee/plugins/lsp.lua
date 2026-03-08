@@ -57,7 +57,7 @@ return {
           cpp = { "clang-format" },
           python = { "ruff format" },
           ruby = { "rubocop", "trim_whitespace" },
-          eruby = { "erb_format", "trim_whitespace" },
+          eruby = { "trim_whitespace" },
           markdown = { "prettierd", "prettier" },
           javascript = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },
           javascriptreact = has_biome_config() and { "biome" } or { "prettierd", "eslint_d" },

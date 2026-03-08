@@ -9,6 +9,7 @@ in {
   imports = [ ../modules/profiles/workstation-darwin.nix ];
 
   system.stateVersion = 5;
+  system.primaryUser = "vadymbiliuk";
 
   users.users."vadymbiliuk" = {
     name = "vadymbiliuk";

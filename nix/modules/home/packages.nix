@@ -14,6 +14,7 @@ let
       postgresql_16
       redis
       bruno
+      heroku
     ] ++ lib.optionals isLinux [ qemu ];
 
   lspPackages = with pkgs;

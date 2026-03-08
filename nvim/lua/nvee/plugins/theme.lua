@@ -146,6 +146,24 @@ return {
     end,
   },
   -- {
+  --   "idr4n/github-monochrome.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --   },
+  --   init = function()
+  --     vim.cmd.colorscheme("github-monochrome-dark")
+  --     vim.schedule(function()
+  --       vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+  --       vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+  --       vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+  --       vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
+  --       vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE" })
+  --     end)
+  --   end
+  -- }
+  -- {
   --   "amedoeyes/eyes.nvim",
   --   lazy = false,
   --   priority = 1000,
