@@ -64,7 +64,7 @@ function M.setup(path)
       undofile = true,
       virtualedit = "block,insert",
       wrap = false,
-      winborder = "rounded",
+winborder = "rounded",
       autoread = true,
     },
     wo = {

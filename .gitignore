@@ -9,3 +9,5 @@
 !nvim/
 !nvim/**
 !.gitignore
+
+.DS_Store
