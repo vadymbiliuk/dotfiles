@@ -28,7 +28,6 @@ let
       haskellPackages.fourmolu
       stylish-haskell
       haskellPackages.hoogle
-      ocamlPackages.ocaml-lsp
       ocamlPackages.ocamlformat
       emacsPackages.lsp-grammarly
       haskellPackages.cabal-fmt

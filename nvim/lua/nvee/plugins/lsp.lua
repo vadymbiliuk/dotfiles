@@ -104,10 +104,10 @@ return {
         "nil_ls",
         "biome",
         "tailwindcss",
-        "ocamllsp",
         "eslint",
         "cssls",
         "ruby_lsp",
+        "ocamllsp",
       }
 
       require("vtsls").config {}
@@ -209,6 +209,9 @@ return {
               args = {},
             },
           },
+        },
+        ocamllsp = {
+          root_markers = { "dune-project", "dune-workspace", ".git" },
         },
         lua_ls = {
           single_file_support = true,
