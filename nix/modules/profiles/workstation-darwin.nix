@@ -1,22 +1,29 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   unstable = import inputs.nixpkgs-unstable {
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
-in {
-  imports = [ ./base.nix (import ../system/overlays.nix { inherit inputs; }) ];
+in
+{
+  imports = [
+    ./base.nix
+    (import ../system/overlays.nix { inherit inputs; })
+  ];
 
   system.defaults = {
     dock = {
       "persistent-apps" = [
         "/Applications/Firefox.app"
         "/Applications/Telegram.app"
-        "/Applications/Ghostty.app"
-        "/Applications/Obsidian.app"
-        "/System/Applications/Calendar.app"
-        "/System/Applications/Mail.app"
+        "/Applications/Kitty.app"
       ];
       "show-recents" = false;
       "static-only" = false;
@@ -28,7 +35,9 @@ in {
       AppleShowAllFiles = true;
     };
 
-    loginwindow = { GuestEnabled = false; };
+    loginwindow = {
+      GuestEnabled = false;
+    };
 
     NSGlobalDomain = {
       AppleICUForce24HourTime = true;
@@ -41,11 +50,15 @@ in {
   services.aerospace = {
     enable = true;
     settings = {
-      on-window-detected = [{
-        "if" = { app-id = "com.bitwarden.desktop"; };
-        run = "layout floating";
-        check-further-callbacks = false;
-      }];
+      on-window-detected = [
+        {
+          "if" = {
+            app-id = "com.bitwarden.desktop";
+          };
+          run = "layout floating";
+          check-further-callbacks = false;
+        }
+      ];
 
       workspace-to-monitor-force-assignment = {
         "1" = "main";
@@ -53,11 +66,31 @@ in {
         "3" = "main";
         "4" = "main";
         "5" = "main";
-        "6" = [ "secondary" "^XG27ACDNG.*" "2" ];
-        "7" = [ "secondary" "^XG27ACDNG.*" "2" ];
-        "8" = [ "secondary" "^XG27ACDNG.*" "2" ];
-        "9" = [ "secondary" "^XG27ACDNG.*" "2" ];
-        "10" = [ "secondary" "^XG27ACDNG.*" "2" ];
+        "6" = [
+          "secondary"
+          "^XG27ACDNG.*"
+          "2"
+        ];
+        "7" = [
+          "secondary"
+          "^XG27ACDNG.*"
+          "2"
+        ];
+        "8" = [
+          "secondary"
+          "^XG27ACDNG.*"
+          "2"
+        ];
+        "9" = [
+          "secondary"
+          "^XG27ACDNG.*"
+          "2"
+        ];
+        "10" = [
+          "secondary"
+          "^XG27ACDNG.*"
+          "2"
+        ];
       };
 
       gaps = {
@@ -117,14 +150,35 @@ in {
       };
 
       mode.service.binding = {
-        r = [ "flatten-workspace-tree" "mode main" ];
-        f = [ "layout floating tiling" "mode main" ];
-        backspace = [ "close-all-windows-but-current" "mode main" ];
+        r = [
+          "flatten-workspace-tree"
+          "mode main"
+        ];
+        f = [
+          "layout floating tiling"
+          "mode main"
+        ];
+        backspace = [
+          "close-all-windows-but-current"
+          "mode main"
+        ];
 
-        alt-shift-h = [ "join-with left" "mode main" ];
-        alt-shift-j = [ "join-with down" "mode main" ];
-        alt-shift-k = [ "join-with up" "mode main" ];
-        alt-shift-l = [ "join-with right" "mode main" ];
+        alt-shift-h = [
+          "join-with left"
+          "mode main"
+        ];
+        alt-shift-j = [
+          "join-with down"
+          "mode main"
+        ];
+        alt-shift-k = [
+          "join-with up"
+          "mode main"
+        ];
+        alt-shift-l = [
+          "join-with right"
+          "mode main"
+        ];
 
         esc = "mode main";
       };
@@ -132,6 +186,11 @@ in {
   };
 
   environment.systemPackages = with pkgs; [ unstable.claude-code ];
+
+  environment.variables = {
+    CC = "/usr/bin/clang";
+    CXX = "/usr/bin/clang++";
+  };
 
   homebrew = {
     enable = true;
@@ -161,6 +220,7 @@ in {
       "nss"
       "libiconv"
       "pgvector"
+      "re2"
     ];
     casks = [
       "bitwarden"
@@ -193,7 +253,9 @@ in {
       "bitwarden"
       "tailscale"
     ];
-    masApps = { "MeetingBar" = 1532419400; };
+    masApps = {
+      "MeetingBar" = 1532419400;
+    };
     onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
@@ -208,7 +270,11 @@ in {
 
   determinate-nix.customSettings = {
     eval-cores = 0;
-    extra-experimental-features =
-      [ "nix-command" "flakes" "build-time-fetch-tree" "parallel-eval" ];
+    extra-experimental-features = [
+      "nix-command"
+      "flakes"
+      "build-time-fetch-tree"
+      "parallel-eval"
+    ];
   };
 }
