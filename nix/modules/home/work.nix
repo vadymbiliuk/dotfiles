@@ -20,19 +20,19 @@ let
   else [];
 in {
 
-  programs.zsh.initContent = lib.mkAfter ''
+  programs.fish.interactiveShellInit = lib.mkAfter ''
     ${lib.optionalString isDarwin ''
-      if command -v gcloud >/dev/null 2>&1; then
-        google_cloud_sdk_path=$(nix-store --query --requisites $(which gcloud) 2>/dev/null | grep google-cloud-sdk | head -n 1 || echo "")
+      if type -q gcloud
+        set -l google_cloud_sdk_path (nix-store --query --requisites (which gcloud) 2>/dev/null | grep google-cloud-sdk | head -n 1)
 
-        if [ -n "$google_cloud_sdk_path" ]; then
-          export PATH="$google_cloud_sdk_path/bin:$PATH"
+        if test -n "$google_cloud_sdk_path"
+          fish_add_path --prepend $google_cloud_sdk_path/bin
 
-          if [ -f "$google_cloud_sdk_path/google-cloud-sdk/path.zsh.inc" ]; then
-            source "$google_cloud_sdk_path/google-cloud-sdk/path.zsh.inc"
-          fi
-        fi
-      fi
+          if test -f "$google_cloud_sdk_path/google-cloud-sdk/path.fish.inc"
+            source "$google_cloud_sdk_path/google-cloud-sdk/path.fish.inc"
+          end
+        end
+      end
     ''}
   '';
 

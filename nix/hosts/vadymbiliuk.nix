@@ -11,9 +11,13 @@ in {
   system.stateVersion = 5;
   system.primaryUser = "vadymbiliuk";
 
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+
   users.users."vadymbiliuk" = {
     name = "vadymbiliuk";
     home = "/Users/vadymbiliuk";
+    shell = pkgs.fish;
   };
 
   nix.settings.trusted-users = [ "root" "vadymbiliuk" ];
@@ -36,11 +40,13 @@ in {
     imports = [
       ../modules/home/base.nix
       ../modules/home/firefox.nix
+      ../modules/home/kitty.nix
       ../modules/home/packages.nix
       ../modules/home/work.nix
     ];
 
     programs.neovim.package = unstable.neovim-unwrapped;
+    programs.kitty.package = unstable.kitty;
 
     home.packages = [ unstable.opencode ];
 

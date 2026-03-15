@@ -24,6 +24,9 @@ in
 
   services.tailscale.enable = true;
 
+  programs.fish.enable = true;
+  environment.shells = [ pkgs.fish ];
+
   users.users.zooki = {
     isNormalUser = true;
     uid = 1000;
@@ -36,7 +39,7 @@ in
       "libvirtd"
       "nordvpn"
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
   home-manager.users.zooki = {

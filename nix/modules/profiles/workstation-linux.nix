@@ -29,8 +29,6 @@ in
     ../nixos/noctalia.nix
   ];
 
-  programs.zsh.enable = true;
-
   fonts.packages = with pkgs; [ material-symbols ];
 
   environment.systemPackages = with pkgs; [
