@@ -1,0 +1,8 @@
+require("nvee.plugins.theme")
+require("nvee.plugins.typing")
+require("nvee.plugins.keymaps")
+require("nvee.plugins.lsp")
+require("nvee.plugins.snacks")
+require("nvee.plugins.ui")
+require("nvee.plugins.navigation")
+require("nvee.plugins.dap")

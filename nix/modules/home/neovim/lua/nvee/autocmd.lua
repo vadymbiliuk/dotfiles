@@ -31,7 +31,6 @@ function M.setup()
 
   vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
-  -- Auto-reload files when changed outside vim
   local autoread = vim.api.nvim_create_augroup("AutoRead", {})
   vim.api.nvim_clear_autocmds { group = autoread }
 

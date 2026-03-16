@@ -31,11 +31,11 @@ function M.setup(path)
       backup = false,
       colorcolumn = "80",
       compatible = false,
-      cpoptions = "aABceFs", -- make `cw` compatible with other `w` operations
+      cpoptions = "aABceFs",
       diffopt = "internal,filler,closeoff,linematch:60",
       encoding = "utf-8",
       expandtab = true,
-      fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]],
+      fillchars = [[eob: ,fold: ,foldopen:▾,foldsep: ,foldclose:▸]],
       foldcolumn = "1",
       foldenable = true,
       foldlevel = 99,
@@ -64,7 +64,7 @@ function M.setup(path)
       undofile = true,
       virtualedit = "block,insert",
       wrap = false,
-winborder = "rounded",
+      winborder = "rounded",
       autoread = true,
     },
     wo = {

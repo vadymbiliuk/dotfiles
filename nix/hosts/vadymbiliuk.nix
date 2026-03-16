@@ -42,6 +42,7 @@ in {
       ../modules/home/firefox.nix
       ../modules/home/kitty.nix
       ../modules/home/claude-code.nix
+      ../modules/home/neovim
       ../modules/home/packages.nix
       ../modules/home/work.nix
     ];

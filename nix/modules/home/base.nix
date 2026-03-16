@@ -81,14 +81,6 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-    viAlias = true;
-    vimdiffAlias = true;
-  };
-
   programs.ghostty = {
     enable = true;
     package = if pkgs.stdenv.isDarwin then

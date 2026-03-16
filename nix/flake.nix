@@ -41,6 +41,7 @@
       url = "github:noctalia-dev/noctalia-plugins";
       flake = false;
     };
+    fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
   };
 
   outputs =

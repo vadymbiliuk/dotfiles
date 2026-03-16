@@ -1,3 +1,1 @@
-require("nvee.settings").setup()
-require("nvee.lazy").setup "nvee.plugins"
-require("nvee.autocmd").setup()
+/nix/store/bxrc265f0bngdn66vdyy901zi06hlq4z-home-manager-files/.config/nvim/init.lua
