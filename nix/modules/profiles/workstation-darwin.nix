@@ -23,7 +23,7 @@ in
       "persistent-apps" = [
         "/Applications/Firefox.app"
         "/Applications/Telegram.app"
-        "/Applications/Kitty.app"
+        "/Users/vadymbiliuk/Applications/Home Manager Apps/kitty.app"
       ];
       "show-recents" = false;
       "static-only" = false;
@@ -241,7 +241,6 @@ in
       "bruno"
       "hstracker"
       "obsidian"
-      "kitty"
       "ghostty"
       "teamspeak-client"
       "epic-games"
