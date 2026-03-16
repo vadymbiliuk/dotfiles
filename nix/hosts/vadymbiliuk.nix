@@ -41,6 +41,7 @@ in {
       ../modules/home/base.nix
       ../modules/home/firefox.nix
       ../modules/home/kitty.nix
+      ../modules/home/claude-code.nix
       ../modules/home/packages.nix
       ../modules/home/work.nix
     ];
