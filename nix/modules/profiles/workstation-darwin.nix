@@ -251,6 +251,7 @@ in
       "microsoft-word"
       "bitwarden"
       "tailscale"
+      "libreoffice"
     ];
     masApps = {
       "MeetingBar" = 1532419400;

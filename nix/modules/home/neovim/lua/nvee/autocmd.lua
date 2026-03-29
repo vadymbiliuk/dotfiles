@@ -16,6 +16,12 @@ function M.setup()
     end,
   })
 
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+      pcall(vim.treesitter.start)
+    end,
+  })
+
   vim.keymap.set("n", "<Esc><Esc>", "<cmd>nohlsearch<CR>", { silent = true, desc = "Clear search highlight" })
 
   function _G.set_terminal_keymaps()

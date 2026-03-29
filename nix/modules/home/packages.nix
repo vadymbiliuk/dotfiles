@@ -41,8 +41,10 @@ let
   utilityPackages = with pkgs;
     [
       just
+      pandoc
+      texliveMedium
     ] ++ lib.optionals isDarwin [ mkalias ]
-    ++ lib.optionals isLinux [ pamixer brightnessctl woeusb sops age ssh-to-age foliate glib ];
+    ++ lib.optionals isLinux [ libreoffice pamixer brightnessctl woeusb sops age ssh-to-age foliate glib ];
 in {
   home.packages = developmentPackages ++ lspPackages ++ programmingPackages
     ++ utilityPackages;

@@ -16,6 +16,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../modules/nixos/lanzaboote.nix
+    ../modules/nixos/vr.nix
     ../modules/profiles/workstation-linux.nix
     ../modules/profiles/gaming.nix
   ];
@@ -98,6 +99,16 @@ in
         height = 100;
         cellpadding_y = 0;
       };
+    };
+
+    xdg.configFile."openxr/1/active_runtime.json".source = "${pkgs.wivrn}/share/openxr/1/openxr_wivrn.json";
+    xdg.configFile."openvr/openvrpaths.vrpath".text = builtins.toJSON {
+      config = [ "/home/zooki/.local/share/Steam/config" ];
+      external_drivers = null;
+      jsonid = "vrpathreg";
+      log = [ "/home/zooki/.local/share/Steam/logs" ];
+      runtime = [ "${pkgs.opencomposite}/lib/opencomposite" ];
+      version = 1;
     };
 
     home.packages = [ unstable.opencode ];

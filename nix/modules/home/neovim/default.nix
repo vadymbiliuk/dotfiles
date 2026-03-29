@@ -1,7 +1,12 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-  plugins = with pkgs.vimPlugins; [
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+
+  plugins = with unstable.vimPlugins; [
     plenary-nvim
     nvim-web-devicons
 
@@ -84,6 +89,7 @@ in
     vimAlias = true;
     viAlias = true;
     vimdiffAlias = true;
+    withRuby = false;
 
     initLua = ''
       ${pluginRtp}
@@ -92,7 +98,7 @@ in
       require("nvee.autocmd").setup()
     '';
 
-    extraPackages = with pkgs; [
+    extraPackages = with unstable; [
       vtsls
       bash-language-server
       pyright
@@ -109,6 +115,7 @@ in
       stylelint-lsp
       solargraph
       elmPackages.elm-language-server
+      emmet-language-server
 
       black
       prettierd

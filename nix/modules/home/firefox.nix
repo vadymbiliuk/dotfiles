@@ -79,6 +79,7 @@ in {
           "adguardadblocker@adguard.com"
           "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}"
           "{41bb7295-c2bd-4e13-885f-dc67cb983c17}"
+          "{d7742d87-e61d-4b78-b8a1-b469842139fa}"
         ];
       };
       ExtensionSettings = {
@@ -114,6 +115,10 @@ in {
         };
         "{41bb7295-c2bd-4e13-885f-dc67cb983c17}" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/2black/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
           installation_mode = "force_installed";
         };
       };

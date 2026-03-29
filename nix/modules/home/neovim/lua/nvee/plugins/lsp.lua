@@ -89,13 +89,14 @@ local lsp_servers = {
   "ruby_lsp",
   "ocamllsp",
   "elmls",
+  "emmet_language_server",
 }
 
 require("vtsls").config {}
 
 local lsp_servers_custom = {
   ruby_lsp = {
-    cmd = { "/Users/vadymbiliuk/.rbenv/versions/3.4.7/bin/ruby-lsp" },
+    cmd = { os.getenv("HOME") .. "/.rbenv/shims/ruby-lsp" },
     filetypes = { "ruby", "eruby", "haml", "slim" },
     root_markers = { "Gemfile", ".git" },
     init_options = {
@@ -190,6 +191,9 @@ local lsp_servers_custom = {
         args = {},
       },
     },
+  },
+  emmet_language_server = {
+    filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact", "svelte", "eruby" },
   },
   ocamllsp = {
     root_markers = { "dune-project", "dune-workspace", ".git" },
