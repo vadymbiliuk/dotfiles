@@ -22,7 +22,7 @@ in
     ../nixos/networking.nix
     ../nixos/services.nix
     ../nixos/system.nix
-    ../nixos/hyprland.nix
+    ../nixos/niri.nix
     ../nixos/greetd.nix
     ../nixos/bitwarden.nix
     ../nixos/nordvpn.nix
@@ -34,7 +34,7 @@ in
   environment.systemPackages = with pkgs; [
     wl-clipboard
     pcmanfm
-    hyprpaper
+    xwayland-satellite
     grim
     slurp
     gnome-calendar
@@ -50,7 +50,7 @@ in
     playerctl
     sbctl
     niv
-    ghostty
+    kitty
     libnotify
     unstable.claude-code
     teamspeak6-client

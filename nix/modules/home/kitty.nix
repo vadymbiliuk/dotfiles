@@ -157,7 +157,7 @@
       "ctrl+super+," = "load_config_file";
 
       # Splits
-      "kitty_mod+v" = "launch --location=vsplit --cwd=current";
+      "kitty_mod+backslash" = "launch --location=vsplit --cwd=current";
       "kitty_mod+s" = "launch --location=hsplit --cwd=current";
 
       # Navigate splits

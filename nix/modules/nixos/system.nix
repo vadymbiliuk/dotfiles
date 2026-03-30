@@ -33,7 +33,7 @@
   environment.variables = {
     EDITOR = "nvim";
     BROWSER = "firefox";
-    TERMINAL = "ghostty";
+    TERMINAL = "kitty";
   };
 
   security.rtkit.enable = true;

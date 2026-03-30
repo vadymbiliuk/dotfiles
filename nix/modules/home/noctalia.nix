@@ -116,10 +116,6 @@ let
         enabled = true;
         sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
       };
-      hyprland-steam-overlay = {
-        enabled = true;
-        sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-      };
       tailscale = {
         enabled = true;
         sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
@@ -141,10 +137,6 @@ in
     ".config/noctalia/plugins.json".source = pluginsJson;
     ".config/noctalia/plugins/weather-indicator" = {
       source = "${noctalia-plugins}/weather-indicator";
-      recursive = true;
-    };
-    ".config/noctalia/plugins/hyprland-steam-overlay" = {
-      source = "${noctalia-plugins}/hyprland-steam-overlay";
       recursive = true;
     };
     ".config/noctalia/plugins/tailscale" = {

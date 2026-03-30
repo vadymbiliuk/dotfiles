@@ -13,11 +13,7 @@ let
   '';
 in
 {
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
+  programs.niri.enable = true;
 
   environment.etc = {
     "xdg/gtk-3.0/settings.ini".text = gtksettings;
@@ -48,13 +44,12 @@ in
 
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gnome
       xdg-desktop-portal-gtk
     ];
     config.common = {
-      default = [ "hyprland" "gtk" ];
+      default = [ "gnome" "gtk" ];
       "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
     };
   };
@@ -62,21 +57,18 @@ in
   environment.systemPackages = with pkgs; [
     gtk3
     gtk4
-    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-gnome
     xdg-desktop-portal-gtk
     wayland
     wayland-protocols
     wayland-utils
-    wlroots
+    xwayland-satellite
     grim
     slurp
     wl-clipboard
     swww
-    hyprlock
-    hypridle
+    swaylock-effects
   ];
 
-  security.pam.services.hyprlock.text = ''
-    auth include login
-  '';
+  security.pam.services.swaylock = {};
 }

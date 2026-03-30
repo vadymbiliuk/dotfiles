@@ -282,7 +282,7 @@ let
       pinnedApps = [ ];
       useApp2Unit = false;
       sortByMostUsed = true;
-      terminalCommand = "ghostty -e";
+      terminalCommand = "kitty -e";
       customLaunchPrefixEnabled = false;
       customLaunchPrefix = "";
       viewMode = "list";

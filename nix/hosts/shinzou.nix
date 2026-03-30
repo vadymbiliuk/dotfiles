@@ -46,11 +46,14 @@ in
   home-manager.users.zooki = {
     imports = [
       ../modules/home/base.nix
+      ../modules/home/neovim
+      ../modules/home/kitty.nix
       ../modules/home/wallpaper.nix
-      ../modules/home/rofi.nix
       ../modules/home/firefox.nix
       ../modules/home/packages.nix
-      ../modules/home/hyprland.nix
+      ../modules/home/niri.nix
+      ../modules/home/swaylock.nix
+      ../modules/home/swayidle.nix
       ../modules/home/theme.nix
       ../modules/home/cursor.nix
       ../modules/home/auto-english.nix

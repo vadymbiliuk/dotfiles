@@ -17,6 +17,6 @@ in {
 
   services.gnome.gnome-keyring.enable = true;
 
-  security.pam.services.hyprlock = { };
+  security.pam.services.swaylock = { };
   security.pam.services.sddm.enableGnomeKeyring = true;
 }

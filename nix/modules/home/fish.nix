@@ -79,6 +79,7 @@ in {
       fish_add_path --prepend --move ~/.nix-profile/bin
       fish_add_path --prepend --move /nix/var/nix/profiles/default/bin
       fish_add_path --prepend --move /run/current-system/sw/bin
+      fish_add_path --prepend --move /run/wrappers/bin
       fish_add_path --prepend --move /etc/profiles/per-user/$USER/bin
 
       ${lib.optionalString isDarwin ''
