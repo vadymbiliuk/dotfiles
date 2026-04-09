@@ -103,15 +103,26 @@ in {
 
         fish_add_path --prepend --move /opt/homebrew/bin
 
-        if type -q pyenv
+        # Lazy pyenv: defer `pyenv init` until first use
+        if test -d "$HOME/.pyenv/bin"
           set -gx PYENV_ROOT "$HOME/.pyenv"
-          fish_add_path --prepend $PYENV_ROOT/bin
-          pyenv init - | source
+          fish_add_path --prepend $PYENV_ROOT/bin $PYENV_ROOT/shims
+          function pyenv
+            functions --erase pyenv
+            command pyenv init - | source
+            pyenv $argv
+          end
         end
 
-        if type -q rbenv
+        # Lazy rbenv: defer `rbenv init` until first use
+        if test -d "$HOME/.rbenv/bin"
           set -gx RBENV_ROOT "$HOME/.rbenv"
-          rbenv init - fish | source
+          fish_add_path --prepend $RBENV_ROOT/bin $RBENV_ROOT/shims
+          function rbenv
+            functions --erase rbenv
+            command rbenv init - fish | source
+            rbenv $argv
+          end
         end
       ''}
 
@@ -165,9 +176,16 @@ in {
 
   programs.direnv = {
     enable = true;
-    enableFishIntegration = lib.mkForce true;
+    enableFishIntegration = lib.mkForce false;
     nix-direnv.enable = true;
   };
+
+  # Pre-generate the direnv fish hook at build time so shell startup
+  # doesn't have to fork `direnv hook fish` on every launch.
+  xdg.configFile."fish/conf.d/direnv-hook.fish".source =
+    pkgs.runCommand "direnv-hook.fish" { } ''
+      ${pkgs.direnv}/bin/direnv hook fish > $out
+    '';
 
   programs.eza = {
     enable = true;

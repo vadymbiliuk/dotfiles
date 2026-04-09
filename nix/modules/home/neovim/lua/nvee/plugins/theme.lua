@@ -113,25 +113,12 @@ vim.schedule(function()
   vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = lackluster.color.gray6, fg = lackluster.color.black })
   vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = lackluster.color.gray6, fg = lackluster.color.black })
 
-  -- Diff highlights (for diffview.nvim)
+  -- Diff highlights
   vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2a3a2a", fg = lackluster.color.gray9 })
   vim.api.nvim_set_hl(0, "DiffChange", { bg = "#2a2a3a", fg = lackluster.color.gray9 })
   vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3a2a2a", fg = lackluster.color.gray5 })
   vim.api.nvim_set_hl(0, "DiffText", { bg = "#3a3a5a", fg = lackluster.color.gray9, bold = true })
 
-  -- Diffview specific highlights
-  vim.api.nvim_set_hl(0, "DiffviewDiffAdd", { link = "DiffAdd" })
-  vim.api.nvim_set_hl(0, "DiffviewDiffChange", { link = "DiffChange" })
-  vim.api.nvim_set_hl(0, "DiffviewDiffDelete", { link = "DiffDelete" })
-  vim.api.nvim_set_hl(0, "DiffviewDiffAddAsDelete", { link = "DiffDelete" })
-  vim.api.nvim_set_hl(0, "DiffviewDiffText", { link = "DiffText" })
-  vim.api.nvim_set_hl(0, "DiffviewFilePanelTitle", { fg = lackluster.color.gray9, bold = true })
-  vim.api.nvim_set_hl(0, "DiffviewFilePanelCounter", { fg = lackluster.color.gray6 })
-  vim.api.nvim_set_hl(0, "DiffviewStatusAdded", { fg = "#7a9a7a" })
-  vim.api.nvim_set_hl(0, "DiffviewStatusModified", { fg = "#7a7a9a" })
-  vim.api.nvim_set_hl(0, "DiffviewStatusDeleted", { fg = "#9a7a7a" })
-  vim.api.nvim_set_hl(0, "DiffviewStatusRenamed", { fg = lackluster.color.gray7 })
-  vim.api.nvim_set_hl(0, "DiffviewStatusUntracked", { fg = lackluster.color.gray5 })
 
   vim.opt.termguicolors = true
   vim.opt.guicursor =

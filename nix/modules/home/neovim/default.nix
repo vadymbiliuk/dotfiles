@@ -7,6 +7,8 @@ let
   };
 
   plugins = with unstable.vimPlugins; [
+    claudecode-nvim
+    copilot-vim
     plenary-nvim
     nvim-web-devicons
 
@@ -51,7 +53,6 @@ let
     edgy-nvim
     trouble-nvim
     mini-diff
-    diffview-nvim
     actions-preview-nvim
     snacks-nvim
     sidekick-nvim

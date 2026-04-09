@@ -80,6 +80,26 @@ require("gitsigns").setup {
   preview_config = {
     border = "rounded",
   },
+  on_attach = function(bufnr)
+    local gitsigns = require "gitsigns"
+    local function gsmap(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
+
+    gsmap("n", "[<Home>", function()
+      gitsigns.nav_hunk "prev"
+    end, { remap = true, desc = "[G]o to [P]revious Hunk" })
+    gsmap("n", "]<End>", function()
+      gitsigns.nav_hunk "next"
+    end, { remap = true, desc = "[G]it go to [N]ext Hunk" })
+    gsmap("n", "<leader>gd", gitsigns.preview_hunk, { desc = "[G]it [D]iff Hunk" })
+    gsmap("n", "<leader>gr", gitsigns.reset_hunk, { desc = "[G]it [R]eset hunk" })
+    gsmap("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "[G]it [U]nstage hunk" })
+    gsmap("n", "<leader>gs", gitsigns.stage_hunk, { desc = "[G]it [S]tage hunk" })
+    gsmap("n", "<leader>gl", gitsigns.toggle_current_line_blame, { desc = "[G]it [B]lame" })
+  end,
 }
 
 local builtin = require "statuscol.builtin"
@@ -227,19 +247,6 @@ local diff = require "mini.diff"
 diff.setup {
   source = diff.gen_source.none(),
 }
-
-require("diffview").setup {
-  enhanced_diff_hl = true,
-  view = {
-    merge_tool = {
-      layout = "diff3_mixed",
-    },
-  },
-}
-vim.keymap.set("n", "<leader>gD", "<cmd>DiffviewOpen<cr>", { desc = "Diffview Open" })
-vim.keymap.set("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "File History" })
-vim.keymap.set("n", "<leader>gH", "<cmd>DiffviewFileHistory<cr>", { desc = "Branch History" })
-vim.keymap.set("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "Diffview Close" })
 
 require("toggleterm").setup { size = 10, open_mapping = [[<c-\>]] }
 
