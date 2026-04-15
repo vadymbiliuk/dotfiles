@@ -121,10 +121,8 @@ in
 
     window-rule {
         match app-id="Bitwarden"
-        open-on-workspace "10"
         open-maximized false
         open-floating true
-        default-floating-position x=830 y=370
         default-column-width { fixed 900; }
         default-window-height { fixed 700; }
     }
@@ -172,7 +170,6 @@ in
     spawn-at-startup "sh" "-c" "sleep 2 && ${swww} img ${config.home.homeDirectory}/.config/wallpapers/wallpaper.jpg"
     spawn-at-startup "nm-applet" "--indicator"
     spawn-at-startup "nordvpn" "connect" "Germany"
-    spawn-at-startup "sh" "-c" "sleep 3 && bitwarden"
     spawn-at-startup "firefox"
     spawn-at-startup "kitty"
     spawn-at-startup "telegram-desktop"

@@ -150,6 +150,12 @@ with lib;
               cp -r ${nordVpnPkg}/var/lib/nordvpn/* /var/lib/nordvpn;
             fi
           '';
+          ExecStartPost = pkgs.writeShellScript "nordvpn-whitelist" ''
+            sleep 3
+            ${nordVpnPkg}/bin/nordvpn whitelist add subnet 100.64.0.0/10 || true
+            ${nordVpnPkg}/bin/nordvpn whitelist add subnet 192.168.0.0/24 || true
+            ${nordVpnPkg}/bin/nordvpn whitelist add subnet fd7a:115c:a1e0::/48 || true
+          '';
           NonBlocking = true;
           KillMode = "process";
           Restart = "on-failure";
