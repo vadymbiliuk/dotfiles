@@ -66,7 +66,7 @@ in
     grim
     slurp
     wl-clipboard
-    swww
+    awww
     swaylock-effects
   ];
 

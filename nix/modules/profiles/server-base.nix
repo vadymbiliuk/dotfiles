@@ -11,6 +11,13 @@
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
+      MaxAuthTries = 3;
+      LoginGraceTime = 30;
+      ClientAliveInterval = 300;
+      ClientAliveCountMax = 2;
+      X11Forwarding = false;
+      AllowAgentForwarding = false;
+      AllowTcpForwarding = false;
     };
   };
 
@@ -22,13 +29,37 @@
 
   services.fail2ban = {
     enable = true;
-    maxretry = 5;
-    bantime = "1h";
+    maxretry = 3;
+    bantime = "24h";
+    bantime-increment = {
+      enable = true;
+      maxtime = "168h";
+      factor = "4";
+    };
+    jails = {
+      nginx-botsearch = {
+        settings = {
+          enabled = true;
+          filter = "nginx-botsearch";
+          logpath = "/var/log/nginx/access.log";
+          maxretry = 2;
+        };
+      };
+      nginx-bad-request = {
+        settings = {
+          enabled = true;
+          filter = "nginx-bad-request";
+          logpath = "/var/log/nginx/access.log";
+          maxretry = 2;
+        };
+      };
+    };
   };
 
   system.autoUpgrade = {
     enable = true;
-    dates = "weekly";
+    dates = "daily";
     allowReboot = false;
+    operation = "boot";
   };
 }

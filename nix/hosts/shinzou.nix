@@ -58,6 +58,7 @@ in
       ../modules/home/cursor.nix
       ../modules/home/auto-english.nix
       ../modules/home/noctalia.nix
+      ../modules/home/claude-code.nix
     ];
 
     programs.mangohud = {
@@ -113,6 +114,8 @@ in
       runtime = [ "${pkgs.opencomposite}/lib/opencomposite" ];
       version = 1;
     };
+
+    programs.neovim.package = unstable.neovim-unwrapped;
 
     home.packages = [ unstable.opencode ];
 

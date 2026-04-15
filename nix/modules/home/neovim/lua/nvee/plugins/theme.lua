@@ -113,7 +113,6 @@ vim.schedule(function()
   vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = lackluster.color.gray6, fg = lackluster.color.black })
   vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = lackluster.color.gray6, fg = lackluster.color.black })
 
-  -- Diff highlights
   vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2a3a2a", fg = lackluster.color.gray9 })
   vim.api.nvim_set_hl(0, "DiffChange", { bg = "#2a2a3a", fg = lackluster.color.gray9 })
   vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#3a2a2a", fg = lackluster.color.gray5 })

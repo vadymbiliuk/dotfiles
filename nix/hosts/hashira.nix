@@ -9,7 +9,7 @@
 {
   imports = [
     ./hashira-hardware.nix
-    ../modules/profiles/server-base.nix
+    ../modules/profiles/media-server.nix
     ../modules/nixos/homelab/vaultwarden.nix
     ../modules/nixos/homelab/syncthing.nix
     ../modules/nixos/homelab/adguard.nix
@@ -18,6 +18,17 @@
     ../modules/nixos/homelab/postgresql.nix
     ../modules/nixos/homelab/neo4j.nix
     ../modules/nixos/homelab/mongodb.nix
+    ../modules/nixos/homelab/jellyfin.nix
+    ../modules/nixos/homelab/qbittorrent.nix
+    ../modules/nixos/homelab/prowlarr.nix
+    ../modules/nixos/homelab/sonarr.nix
+    ../modules/nixos/homelab/radarr.nix
+    ../modules/nixos/homelab/lidarr.nix
+    ../modules/nixos/homelab/readarr.nix
+    ../modules/nixos/homelab/bazarr.nix
+    ../modules/nixos/homelab/crowdsec.nix
+    ../modules/nixos/homelab/hardening.nix
+    ../modules/nixos/homelab/remote-unlock.nix
     ../modules/nixos/lanzaboote.nix
   ];
 
@@ -39,7 +50,7 @@
   };
 
   networking.firewall = {
-    allowedTCPPorts = [ 80 443 53 ];
+    allowedTCPPorts = [ 22 80 443 53 2222 ];
     allowedUDPPorts = [ 53 ];
     trustedInterfaces = [ "tailscale0" ];
   };

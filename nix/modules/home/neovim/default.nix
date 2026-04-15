@@ -132,7 +132,7 @@ in
       rubocop
       rubyPackages.standard
       rubyPackages.erb-formatter
-      nodePackages.fixjson
+      fixjson
       clang-tools
       elmPackages.elm
       elmPackages.elm-format

@@ -22,6 +22,14 @@
     ];
 
     fontconfig = {
+      antialias = true;
+      hinting = {
+        enable = false;
+      };
+      subpixel = {
+        rgba = "none";
+        lcdfilter = "default";
+      };
       defaultFonts = {
         serif = [ "BerkeleyMonoMinazuki Nerd Font" ];
         sansSerif = [ "BerkeleyMonoMinazuki Nerd Font" ];

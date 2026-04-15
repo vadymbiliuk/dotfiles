@@ -17,8 +17,8 @@ let
   playerctl = getExe pkgs.playerctl;
   brightnessctl = getExe pkgs.brightnessctl;
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-  swww = "${pkgs.swww}/bin/swww";
-  swww-daemon = "${pkgs.swww}/bin/swww-daemon";
+  swww = "${pkgs.awww}/bin/awww";
+  swww-daemon = "${pkgs.awww}/bin/awww-daemon";
 in
 {
   xdg.configFile."niri/config.kdl".text = ''
@@ -84,6 +84,7 @@ in
         XCURSOR_SIZE "24"
         XCURSOR_THEME "Bibata-Modern-Classic"
         ELECTRON_OZONE_PLATFORM_HINT "auto"
+        MOZ_ENABLE_WAYLAND "1"
         DISPLAY ":0"
     }
 
@@ -121,6 +122,7 @@ in
     window-rule {
         match app-id="Bitwarden"
         open-on-workspace "10"
+        open-maximized false
         open-floating true
         default-floating-position x=830 y=370
         default-column-width { fixed 900; }
@@ -130,6 +132,7 @@ in
     window-rule {
         match app-id=r#"^firefox$"#
         open-on-workspace "1"
+        open-maximized false
     }
 
     window-rule {
@@ -154,8 +157,13 @@ in
 
     window-rule {
         match app-id=r#"^steam_app_"#
-        open-on-workspace "4"
+        open-on-workspace "3"
         open-fullscreen true
+    }
+
+    window-rule {
+        match app-id=r#"^thunderbird$"#
+        open-on-workspace "5"
     }
 
     spawn-at-startup "xwayland-satellite"
@@ -164,12 +172,13 @@ in
     spawn-at-startup "sh" "-c" "sleep 2 && ${swww} img ${config.home.homeDirectory}/.config/wallpapers/wallpaper.jpg"
     spawn-at-startup "nm-applet" "--indicator"
     spawn-at-startup "nordvpn" "connect" "Germany"
-    spawn-at-startup "bitwarden" "--ozone-platform=wayland" "--enable-features=WaylandWindowDecorations"
+    spawn-at-startup "sh" "-c" "unset NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT && bitwarden"
     spawn-at-startup "firefox"
     spawn-at-startup "kitty"
     spawn-at-startup "telegram-desktop"
-    spawn-at-startup "steam"
-    spawn-at-startup "discord"
+    spawn-at-startup "sh" "-c" "sleep 1 && steam"
+    spawn-at-startup "sh" "-c" "unset NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT && discord"
+    spawn-at-startup "thunderbird"
 
     animations {
         window-open {

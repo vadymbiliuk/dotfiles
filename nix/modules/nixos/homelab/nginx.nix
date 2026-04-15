@@ -46,17 +46,48 @@ in
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
+    appendHttpConfig = ''
+      limit_req_zone $binary_remote_addr zone=general:10m rate=10r/s;
+      limit_req_zone $binary_remote_addr zone=login:10m rate=3r/m;
+
+      map $http_user_agent $bad_bot {
+        default 0;
+        ~*(?:scrapy|bot|spider|crawl|wget|curl|nikto|sqlmap|nmap|masscan) 1;
+      }
+    '';
+
+    commonHttpConfig = ''
+      add_header X-Frame-Options "SAMEORIGIN" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+      add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+      add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+    '';
+
     virtualHosts = {
       "_" = {
         default = true;
+        extraConfig = ''
+          return 444;
+        '';
       };
 
       "vpn.zxxki.com" = {
         useACMEHost = "zxxki.com";
         forceSSL = true;
+        extraConfig = ''
+          modsecurity on;
+          modsecurity_rules_file ${modsecConfig};
+
+          if ($bad_bot) { return 444; }
+        '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:8080";
           proxyWebsockets = true;
+          extraConfig = ''
+            limit_req zone=general burst=20 nodelay;
+          '';
         };
       };
 
@@ -66,10 +97,21 @@ in
         extraConfig = ''
           modsecurity on;
           modsecurity_rules_file ${modsecConfig};
+
+          if ($bad_bot) { return 444; }
         '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:8222";
           proxyWebsockets = true;
+          extraConfig = ''
+            limit_req zone=general burst=20 nodelay;
+          '';
+        };
+        locations."/api/accounts" = {
+          proxyPass = "http://127.0.0.1:8222";
+          extraConfig = ''
+            limit_req zone=login burst=5 nodelay;
+          '';
         };
       };
     };

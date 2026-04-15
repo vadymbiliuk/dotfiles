@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 let
   claudePlugins = [
@@ -26,8 +26,22 @@ let
       "$claude" plugins install "$plugin" 2>/dev/null || true
     done
   '';
+
+  fff-mcp = inputs.fff-nvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
+  home.packages = [ fff-mcp ];
+
+  home.file.".claude/settings.json".text = builtins.toJSON {
+    mcpServers = {
+      fff = {
+        type = "stdio";
+        command = "${fff-mcp}/bin/fff-mcp";
+        args = [ ];
+      };
+    };
+  };
+
   home.activation.claudePlugins =
     lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       run ${installScript}

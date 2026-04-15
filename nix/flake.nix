@@ -37,6 +37,10 @@
       flake = false;
     };
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -50,6 +54,9 @@
       sops-nix,
       ...
     }@inputs:
+    let
+      deploy-rs = inputs.deploy-rs;
+    in
     {
       nixosConfigurations = {
         shinzou = inputs.nixpkgs-unstable.lib.nixosSystem {
@@ -86,8 +93,21 @@
         };
       };
 
+      deploy.nodes.hashira = {
+        hostname = "hashira";
+        sshUser = "zooki";
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.hashira;
+          autoRollback = true;
+          magicRollback = true;
+        };
+      };
+
       packages.x86_64-linux = {
         hashira-vm = self.nixosConfigurations.hashira.config.system.build.vm;
       };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
