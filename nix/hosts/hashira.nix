@@ -26,6 +26,7 @@
     ../modules/nixos/homelab/lidarr.nix
     ../modules/nixos/homelab/readarr.nix
     ../modules/nixos/homelab/bazarr.nix
+    ../modules/nixos/homelab/flaresolverr.nix
     ../modules/nixos/homelab/crowdsec.nix
     ../modules/nixos/homelab/hardening.nix
     ../modules/nixos/homelab/remote-unlock.nix

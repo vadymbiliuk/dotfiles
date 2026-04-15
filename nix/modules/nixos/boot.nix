@@ -12,7 +12,7 @@
     os-prober
   ];
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages;
     kernelParams = [
       "nvidia-drm.modeset=1"
       "nvidia_drm.fbdev=1"
