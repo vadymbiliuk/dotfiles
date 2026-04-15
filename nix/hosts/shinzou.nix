@@ -25,6 +25,10 @@ in
 
   services.tailscale.enable = true;
 
+  networking.extraHosts = ''
+    100.64.0.2 jellyfin.hashira sonarr.hashira radarr.hashira lidarr.hashira readarr.hashira bazarr.hashira prowlarr.hashira qbit.hashira
+  '';
+
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
 

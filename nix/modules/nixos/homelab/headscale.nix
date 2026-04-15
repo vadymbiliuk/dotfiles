@@ -11,8 +11,8 @@
         base_domain = "tail.zxxki.com";
         magic_dns = true;
         nameservers.global = [
+          "192.168.0.190"
           "1.1.1.1"
-          "8.8.8.8"
         ];
       };
       prefixes = {

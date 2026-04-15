@@ -68,11 +68,6 @@ in
         default-column-width { proportion 1.0; }
     }
 
-    blur {
-        sigma 20
-        noise 0.02
-    }
-
     prefer-no-csd
 
     window-rule {
