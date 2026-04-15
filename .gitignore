@@ -6,8 +6,6 @@
 !.github/**
 !nix/
 !nix/**
-!nvim/
-!nvim/**
 !.gitignore
 
 .DS_Store

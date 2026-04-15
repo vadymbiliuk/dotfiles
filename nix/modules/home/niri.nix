@@ -68,6 +68,11 @@ in
         default-column-width { proportion 1.0; }
     }
 
+    blur {
+        sigma 20
+        noise 0.02
+    }
+
     prefer-no-csd
 
     window-rule {
@@ -172,12 +177,12 @@ in
     spawn-at-startup "sh" "-c" "sleep 2 && ${swww} img ${config.home.homeDirectory}/.config/wallpapers/wallpaper.jpg"
     spawn-at-startup "nm-applet" "--indicator"
     spawn-at-startup "nordvpn" "connect" "Germany"
-    spawn-at-startup "sh" "-c" "unset NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT && bitwarden"
+    spawn-at-startup "sh" "-c" "sleep 3 && bitwarden"
     spawn-at-startup "firefox"
     spawn-at-startup "kitty"
     spawn-at-startup "telegram-desktop"
     spawn-at-startup "sh" "-c" "sleep 1 && steam"
-    spawn-at-startup "sh" "-c" "unset NIXOS_OZONE_WL ELECTRON_OZONE_PLATFORM_HINT && discord"
+    spawn-at-startup "discord"
     spawn-at-startup "thunderbird"
 
     animations {

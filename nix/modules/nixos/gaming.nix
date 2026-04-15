@@ -26,6 +26,12 @@
     };
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
+  boot.kernelParams = [
+    "amd_pstate=active"
+  ];
+
   boot.kernel.sysctl = {
     "kernel.sched_cfs_bandwidth_slice_us" = 3000;
     "net.ipv4.tcp_fin_timeout" = 5;

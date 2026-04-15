@@ -21,7 +21,7 @@
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     quickshell = {
