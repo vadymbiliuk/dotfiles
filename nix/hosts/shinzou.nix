@@ -25,8 +25,35 @@ in
 
   services.tailscale.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    user = "zooki";
+    group = "users";
+    dataDir = "/home/zooki";
+    configDir = "/home/zooki/.config/syncthing";
+    openDefaultPorts = true;
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      devices = {
+        hashira = {
+          id = "ZUUCCX3-HHPMMZK-ZZQJFEX-PARRWS5-NYYAWJI-RFKL57Z-LXETQAE-JXCFAQF";
+        };
+      };
+      folders = {
+        "obsidian" = {
+          label = "Obsidian vault";
+          path = "~/notes";
+          devices = [ "hashira" ];
+          rescanIntervalS = 3600;
+          fsWatcherEnabled = true;
+        };
+      };
+    };
+  };
+
   networking.extraHosts = ''
-    100.64.0.2 jellyfin.hashira sonarr.hashira radarr.hashira lidarr.hashira readarr.hashira bazarr.hashira prowlarr.hashira qbit.hashira
+    100.64.0.2 jellyfin.hashira sonarr.hashira radarr.hashira lidarr.hashira readarr.hashira bazarr.hashira prowlarr.hashira qbit.hashira jellyseerr.hashira
   '';
 
   programs.fish.enable = true;

@@ -19,6 +19,7 @@
     ../modules/nixos/homelab/neo4j.nix
     ../modules/nixos/homelab/mongodb.nix
     ../modules/nixos/homelab/jellyfin.nix
+    ../modules/nixos/homelab/jellyseerr.nix
     ../modules/nixos/homelab/qbittorrent.nix
     ../modules/nixos/homelab/prowlarr.nix
     ../modules/nixos/homelab/sonarr.nix
@@ -27,6 +28,7 @@
     ../modules/nixos/homelab/readarr.nix
     ../modules/nixos/homelab/bazarr.nix
     ../modules/nixos/homelab/flaresolverr.nix
+    ../modules/nixos/homelab/media-backup.nix
     ../modules/nixos/homelab/crowdsec.nix
     ../modules/nixos/homelab/hardening.nix
     ../modules/nixos/homelab/remote-unlock.nix

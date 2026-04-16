@@ -120,11 +120,12 @@ in
     }
 
     window-rule {
-        match app-id="Bitwarden"
+        match app-id=r#"(?i)bitwarden"#
+        open-fullscreen false
         open-maximized false
         open-floating true
         default-column-width { fixed 900; }
-        default-window-height { fixed 700; }
+        default-window-height { fixed 900; }
     }
 
     window-rule {

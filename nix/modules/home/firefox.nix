@@ -76,7 +76,6 @@ in {
           "addon@darkreader.org"
           "@react-devtools"
           "extension@redux.devtools"
-          "adguardadblocker@adguard.com"
           "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}"
           "{41bb7295-c2bd-4e13-885f-dc67cb983c17}"
           "{d7742d87-e61d-4b78-b8a1-b469842139fa}"
@@ -100,11 +99,6 @@ in {
         };
         "extension@redux.devtools" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/reduxdevtools/latest.xpi";
-          installation_mode = "force_installed";
-          default_area = "navbar";
-        };
-        "adguardadblocker@adguard.com" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/adguard-adblocker/latest.xpi";
           installation_mode = "force_installed";
           default_area = "navbar";
         };
