@@ -1,8 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  sops.secrets.vaultwarden-admin-token = { };
+
   services.vaultwarden = {
     enable = true;
+    environmentFile = config.sops.secrets.vaultwarden-admin-token.path;
     config = {
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
