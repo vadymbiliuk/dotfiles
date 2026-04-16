@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  services.jellyseerr = {
+  services.seerr = {
     enable = true;
     openFirewall = false;
   };
