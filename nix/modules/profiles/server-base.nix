@@ -25,6 +25,21 @@
 
   networking.firewall.enable = true;
 
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
+
+  services.logind = {
+    lidSwitch = "ignore";
+    extraConfig = ''
+      HandlePowerKey=ignore
+      IdleAction=ignore
+    '';
+  };
+
   environment.systemPackages = with pkgs; [ htop tmux rsync ncdu ];
 
   services.fail2ban = {

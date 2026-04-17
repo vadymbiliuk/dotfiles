@@ -114,6 +114,33 @@ in
           '';
         };
       };
+
+      "jellyfin.zxxki.com" = {
+        useACMEHost = "zxxki.com";
+        forceSSL = true;
+        extraConfig = ''
+          if ($bad_bot) { return 444; }
+        '';
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8096";
+          proxyWebsockets = true;
+          extraConfig = ''
+            client_max_body_size 20M;
+          '';
+        };
+      };
+
+      "requests.zxxki.com" = {
+        useACMEHost = "zxxki.com";
+        forceSSL = true;
+        extraConfig = ''
+          if ($bad_bot) { return 444; }
+        '';
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:5055";
+          proxyWebsockets = true;
+        };
+      };
     };
   };
 }

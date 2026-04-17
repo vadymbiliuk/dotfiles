@@ -10,10 +10,36 @@
       "/run/current-system/sw/lib/qt-6/qml:/run/current-system/sw/lib/qt-5.15.17/qml:$QML2_IMPORT_PATH";
   };
 
+  programs.fastfetch = {
+    enable = true;
+    settings = {
+      modules = [
+        "separator"
+        "os"
+        "kernel"
+        "uptime"
+        "packages"
+        "shell"
+        "display"
+        "wm"
+        "theme"
+        "icons"
+        "cursor"
+        "terminal"
+        "cpu"
+        "gpu"
+        "memory"
+        "swap"
+        "disk"
+        "break"
+        "colors"
+      ];
+    };
+  };
+
   home.packages = with pkgs;
     [
       unzip
-      fastfetch
       btop
       act
       starship

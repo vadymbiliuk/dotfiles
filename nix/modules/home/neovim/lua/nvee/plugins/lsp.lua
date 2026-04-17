@@ -420,7 +420,12 @@ end, {
 
 vim.g.haskell_tools = {
   hls = {
-    on_attach = _G.lsp_on_attach,
+    on_attach = function(client, bufnr)
+      if not vim.api.nvim_buf_is_valid(bufnr) then
+        return
+      end
+      _G.lsp_on_attach(client, bufnr)
+    end,
     capabilities = require("blink.cmp").get_lsp_capabilities(_G.lsp_capabilities),
   },
 }

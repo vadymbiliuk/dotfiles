@@ -147,6 +147,16 @@ in
       source = "${noctalia-plugins}/privacy-indicator";
       recursive = true;
     };
+    ".config/noctalia/plugins/tailscale/settings.json".text = builtins.toJSON {
+      refreshInterval = 5000;
+      compactMode = true;
+      showIpAddress = false;
+      showPeerCount = false;
+      hideDisconnected = false;
+      terminalCommand = "kitty";
+      pingCount = 5;
+      defaultPeerAction = "copy-ip";
+    };
     ".config/noctalia/plugins/privacy-indicator/settings.json".text = privacyIndicatorSettings;
     ".config/noctalia/plugins/polkit-agent" = {
       source = "${noctalia-plugins}/polkit-agent";

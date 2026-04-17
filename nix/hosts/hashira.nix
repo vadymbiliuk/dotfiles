@@ -30,6 +30,9 @@
     ../modules/nixos/homelab/flaresolverr.nix
     ../modules/nixos/homelab/media-backup.nix
     ../modules/nixos/homelab/crowdsec.nix
+    ../modules/nixos/homelab/prometheus.nix
+    ../modules/nixos/homelab/grafana.nix
+    ../modules/nixos/homelab/gitea.nix
     ../modules/nixos/homelab/hardening.nix
     ../modules/nixos/homelab/remote-unlock.nix
     ../modules/nixos/lanzaboote.nix
