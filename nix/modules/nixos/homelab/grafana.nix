@@ -41,6 +41,7 @@
       proxyPass = "http://127.0.0.1:3100";
       proxyWebsockets = true;
       extraConfig = ''
+        allow 127.0.0.1;
         allow 100.64.0.0/10;
         deny all;
       '';

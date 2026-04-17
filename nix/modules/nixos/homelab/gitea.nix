@@ -48,6 +48,7 @@
       proxyPass = "http://127.0.0.1:3300";
       proxyWebsockets = true;
       extraConfig = ''
+        allow 127.0.0.1;
         allow 100.64.0.0/10;
         deny all;
         client_max_body_size 512M;
