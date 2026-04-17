@@ -69,7 +69,7 @@ in
       "video"
       "docker"
       "libvirtd"
-      "nordvpn"
+      # "nordvpn"
     ];
     shell = pkgs.fish;
   };

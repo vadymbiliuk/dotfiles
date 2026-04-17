@@ -25,7 +25,7 @@ in
     ../nixos/niri.nix
     ../nixos/greetd.nix
     ../nixos/bitwarden.nix
-    ../nixos/nordvpn.nix
+    # ../nixos/nordvpn.nix
     ../nixos/noctalia.nix
   ];
 
@@ -72,5 +72,5 @@ in
     extraSpecialArgs = { inherit inputs; };
   };
 
-  services.nordvpn.enable = true;
+  # services.nordvpn.enable = true;
 }
