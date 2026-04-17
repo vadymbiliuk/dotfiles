@@ -12,6 +12,7 @@
 
       security = {
         admin_user = "admin";
+        secret_key = "$__file{/run/secrets/grafana-secret-key}";
       };
 
       analytics.reporting_enabled = false;

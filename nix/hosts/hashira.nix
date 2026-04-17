@@ -45,6 +45,9 @@
 
   sops.secrets.vault-user-password = { };
   sops.secrets.cloudflare-api-token = { };
+  sops.secrets.grafana-secret-key = {
+    owner = "grafana";
+  };
 
   users.users.zooki = {
     isNormalUser = true;

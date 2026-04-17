@@ -148,7 +148,7 @@ in
 
     programs.neovim.package = unstable.neovim-unwrapped;
 
-    home.packages = [ unstable.opencode ];
+    home.packages = [ unstable.opencode pkgs.openssl ];
 
     home.enableNixpkgsReleaseCheck = false;
     home.stateVersion = "25.05";

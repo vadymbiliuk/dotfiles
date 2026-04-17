@@ -32,12 +32,10 @@
     hybrid-sleep.enable = false;
   };
 
-  services.logind = {
-    lidSwitch = "ignore";
-    extraConfig = ''
-      HandlePowerKey=ignore
-      IdleAction=ignore
-    '';
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandlePowerKey = "ignore";
+    IdleAction = "ignore";
   };
 
   environment.systemPackages = with pkgs; [ htop tmux rsync ncdu ];
