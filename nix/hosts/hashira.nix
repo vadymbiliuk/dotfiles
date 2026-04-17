@@ -48,6 +48,12 @@
   sops.secrets.grafana-secret-key = {
     owner = "grafana";
   };
+  sops.secrets.grafana-discord-webhook = {
+    owner = "grafana";
+  };
+  sops.secrets.grafana-telegram-token = {
+    owner = "grafana";
+  };
 
   users.users.zooki = {
     isNormalUser = true;
