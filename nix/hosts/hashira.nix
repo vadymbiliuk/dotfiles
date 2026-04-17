@@ -33,6 +33,7 @@
     ../modules/nixos/homelab/prometheus.nix
     ../modules/nixos/homelab/grafana.nix
     ../modules/nixos/homelab/gitea.nix
+    ../modules/nixos/homelab/fail2ban-notify
     ../modules/nixos/homelab/hardening.nix
     ../modules/nixos/homelab/remote-unlock.nix
     ../modules/nixos/lanzaboote.nix

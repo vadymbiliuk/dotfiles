@@ -48,8 +48,11 @@ in
                   type = "discord";
                   settings = {
                     url = readSecret "/run/secrets/grafana-discord-webhook";
-                    title = ''{{ template "default.title" . }}'';
-                    message = ''{{ template "default.message" . }}'';
+                    title = ''[{{ .Status | toUpper }}] {{ .CommonLabels.alertname }}'';
+                    message = ''{{ range .Alerts }}{{ .Labels.alertname }} | {{ .Labels.severity }}
+{{ .Annotations.summary }}
+{{ .Annotations.description }}
+{{ end }}'';
                   };
                 }
               ];
@@ -113,12 +116,23 @@ in
                       };
                     }
                     {
+                      refId = "B";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
                       refId = "C";
                       relativeTimeRange = { from = 600; to = 0; };
                       datasourceUid = "__expr__";
                       model = {
                         type = "threshold";
-                        expression = "A";
+                        expression = "B";
                         conditions = [
                           {
                             evaluator = { type = "gt"; params = [ 90 ]; };
@@ -133,7 +147,7 @@ in
                   labels = { severity = "warning"; };
                   annotations = {
                     summary = "Disk usage is above 90%";
-                    description = "Current disk usage: {{ $values.A }}%";
+                    description = "Current disk usage: {{ $values.B }}%";
                   };
                 }
                 {
@@ -147,8 +161,19 @@ in
                       relativeTimeRange = { from = 300; to = 0; };
                       datasourceUid = "PBFA97CFB590B2093";
                       model = {
-                        expr = ''increase(fail2ban_banned_total{type="total"}[5m])'';
+                        expr = ''sum(increase(fail2ban_banned_total{type="total"}[5m]))'';
                         refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
                       };
                     }
                     {
@@ -157,7 +182,7 @@ in
                       datasourceUid = "__expr__";
                       model = {
                         type = "threshold";
-                        expression = "A";
+                        expression = "B";
                         conditions = [
                           {
                             evaluator = { type = "gt"; params = [ 0 ]; };
