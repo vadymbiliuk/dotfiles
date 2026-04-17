@@ -7,8 +7,8 @@ let
     SecRequestBodyLimit 13107200
     SecRequestBodyNoFilesLimit 131072
     SecResponseBodyAccess Off
-    SecTmpDir /tmp/modsecurity_tmp
-    SecDataDir /tmp/modsecurity_data
+    SecTmpDir /var/lib/modsecurity/tmp
+    SecDataDir /var/lib/modsecurity/data
     SecAuditEngine RelevantOnly
     SecAuditLogRelevantStatus "^(?:5|4(?!04))"
     SecAuditLogType Serial
@@ -35,6 +35,12 @@ in
       extraDomainNames = [ "zxxki.com" ];
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/modsecurity 0750 nginx nginx -"
+    "d /var/lib/modsecurity/tmp 0750 nginx nginx -"
+    "d /var/lib/modsecurity/data 0750 nginx nginx -"
+  ];
 
   users.users.nginx.extraGroups = [ "acme" ];
 
@@ -119,12 +125,16 @@ in
         useACMEHost = "zxxki.com";
         forceSSL = true;
         extraConfig = ''
+          modsecurity on;
+          modsecurity_rules_file ${modsecConfig};
+
           if ($bad_bot) { return 444; }
         '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:8096";
           proxyWebsockets = true;
           extraConfig = ''
+            limit_req zone=general burst=20 nodelay;
             client_max_body_size 20M;
           '';
         };
@@ -134,11 +144,17 @@ in
         useACMEHost = "zxxki.com";
         forceSSL = true;
         extraConfig = ''
+          modsecurity on;
+          modsecurity_rules_file ${modsecConfig};
+
           if ($bad_bot) { return 444; }
         '';
         locations."/" = {
           proxyPass = "http://127.0.0.1:5055";
           proxyWebsockets = true;
+          extraConfig = ''
+            limit_req zone=general burst=20 nodelay;
+          '';
         };
       };
     };

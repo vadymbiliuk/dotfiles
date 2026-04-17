@@ -22,7 +22,7 @@
 
       service = {
         DISABLE_REGISTRATION = true;
-        REQUIRE_SIGNIN_VIEW = false;
+        REQUIRE_SIGNIN_VIEW = true;
       };
 
       session.COOKIE_SECURE = true;

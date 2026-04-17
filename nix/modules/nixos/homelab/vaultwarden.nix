@@ -11,7 +11,7 @@
       ROCKET_PORT = 8222;
       DOMAIN = "https://vault.zxxki.com";
       SIGNUPS_ALLOWED = false;
-      INVITATIONS_ALLOWED = true;
+      INVITATIONS_ALLOWED = false;
       SHOW_PASSWORD_HINT = false;
       WEB_VAULT_ENABLED = true;
     };
