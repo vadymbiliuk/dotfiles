@@ -200,6 +200,307 @@ in
                     description = "fail2ban has banned new IPs in the last 5 minutes";
                   };
                 }
+                {
+                  uid = "postgresql-down";
+                  title = "PostgreSQL is down";
+                  condition = "C";
+                  for = "1m";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = "pg_up";
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "lt"; params = [ 1 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "critical"; };
+                  annotations = {
+                    summary = "PostgreSQL is down";
+                    description = "PostgreSQL exporter reports the database is unreachable";
+                  };
+                }
+                {
+                  uid = "postgresql-connections-high";
+                  title = "PostgreSQL connections > 80%";
+                  condition = "C";
+                  for = "5m";
+                  noDataState = "OK";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = ''(sum(pg_stat_activity_count) / on() pg_settings_max_connections) * 100'';
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "gt"; params = [ 80 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "warning"; };
+                  annotations = {
+                    summary = "PostgreSQL connection usage above 80%";
+                    description = "Current connection usage: {{ $values.B }}%";
+                  };
+                }
+                {
+                  uid = "mongodb-down";
+                  title = "MongoDB is down";
+                  condition = "C";
+                  for = "1m";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = "mongodb_up";
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "lt"; params = [ 1 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "critical"; };
+                  annotations = {
+                    summary = "MongoDB is down";
+                    description = "MongoDB exporter reports the database is unreachable";
+                  };
+                }
+                {
+                  uid = "redis-down";
+                  title = "Redis is down";
+                  condition = "C";
+                  for = "1m";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = "redis_up";
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "lt"; params = [ 1 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "critical"; };
+                  annotations = {
+                    summary = "Redis is down";
+                    description = "Redis exporter reports the instance is unreachable";
+                  };
+                }
+                {
+                  uid = "redis-memory-high";
+                  title = "Redis memory usage > 80%";
+                  condition = "C";
+                  for = "5m";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = ''redis_memory_used_bytes / redis_memory_max_bytes * 100'';
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 600; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "gt"; params = [ 80 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "warning"; };
+                  annotations = {
+                    summary = "Redis memory usage above 80%";
+                    description = "Current Redis memory usage: {{ $values.B }}%";
+                  };
+                }
+                {
+                  uid = "crowdsec-alerts";
+                  title = "CrowdSec new alerts detected";
+                  condition = "C";
+                  for = "0s";
+                  data = [
+                    {
+                      refId = "A";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "PBFA97CFB590B2093";
+                      model = {
+                        expr = ''sum(increase(cs_alerts_total[5m]))'';
+                        refId = "A";
+                      };
+                    }
+                    {
+                      refId = "B";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "reduce";
+                        expression = "A";
+                        reducer = "last";
+                        refId = "B";
+                      };
+                    }
+                    {
+                      refId = "C";
+                      relativeTimeRange = { from = 300; to = 0; };
+                      datasourceUid = "__expr__";
+                      model = {
+                        type = "threshold";
+                        expression = "B";
+                        conditions = [
+                          {
+                            evaluator = { type = "gt"; params = [ 0 ]; };
+                            operator = { type = "and"; };
+                            reducer = { type = "last"; };
+                          }
+                        ];
+                        refId = "C";
+                      };
+                    }
+                  ];
+                  labels = { severity = "warning"; };
+                  annotations = {
+                    summary = "CrowdSec detected new threats";
+                    description = "CrowdSec has generated new alerts in the last 5 minutes";
+                  };
+                }
               ];
             }
           ];

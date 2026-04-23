@@ -13,6 +13,8 @@ let
   };
 in
 {
+  nixpkgs.overlays = [ inputs.niri.overlays.default ];
+
   imports = [
     ./hardware-configuration.nix
     ../modules/nixos/lanzaboote.nix
@@ -53,7 +55,7 @@ in
   };
 
   networking.extraHosts = ''
-    100.64.0.2 jellyfin.hashira sonarr.hashira radarr.hashira lidarr.hashira readarr.hashira bazarr.hashira prowlarr.hashira qbit.hashira jellyseerr.hashira grafana.zxxki.com git.zxxki.com
+    100.64.0.2 watch.zxxki.com read.zxxki.com r-media.zxxki.com r-books.zxxki.com dash.zxxki.com grafana.zxxki.com git.zxxki.com portainer.zxxki.com ha.zxxki.com rabbitmq.zxxki.com matrix.zxxki.com
   '';
 
   programs.fish.enable = true;

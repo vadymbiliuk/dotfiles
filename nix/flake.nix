@@ -36,9 +36,21 @@
       url = "github:noctalia-dev/noctalia-plugins";
       flake = false;
     };
+    niri = {
+      url = "github:YaLTeR/niri";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     fff-nvim.url = "github:dmtrKovalenko/fff.nvim";
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     deploy-rs = {
       url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    hashira-dash = {
+      url = "git+ssh://git@github.com/vadymbiliuk/hashira-dash";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
@@ -75,6 +87,7 @@
           modules = [
             sops-nix.nixosModules.sops
             lanzaboote.nixosModules.lanzaboote
+            inputs.nix-minecraft.nixosModules.minecraft-servers
             ./hosts/hashira.nix
           ];
           specialArgs = { inherit inputs; };

@@ -73,6 +73,12 @@ in
     window-rule {
         geometry-corner-radius 10
         clip-to-geometry true
+
+        background-effect {
+            blur true
+            noise 0.05
+            saturation 1.5
+        }
     }
 
     cursor {

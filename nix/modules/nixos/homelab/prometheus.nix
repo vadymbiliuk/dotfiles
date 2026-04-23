@@ -52,6 +52,18 @@ in
         enable = true;
         port = 9113;
       };
+
+      postgres = {
+        enable = true;
+        port = 9187;
+        runAsLocalSuperUser = true;
+      };
+
+      mongodb = {
+        enable = true;
+        port = 9216;
+        collectAll = true;
+      };
     };
 
     scrapeConfigs = [
@@ -75,6 +87,34 @@ in
           targets = [ "127.0.0.1:9090" ];
         }];
         scrape_interval = "30s";
+      }
+      {
+        job_name = "postgresql";
+        static_configs = [{
+          targets = [ "127.0.0.1:9187" ];
+        }];
+        scrape_interval = "15s";
+      }
+      {
+        job_name = "mongodb";
+        static_configs = [{
+          targets = [ "127.0.0.1:9216" ];
+        }];
+        scrape_interval = "15s";
+      }
+{
+        job_name = "crowdsec";
+        static_configs = [{
+          targets = [ "127.0.0.1:6060" ];
+        }];
+        scrape_interval = "30s";
+      }
+      {
+        job_name = "redis";
+        static_configs = [{
+          targets = [ "127.0.0.1:9121" ];
+        }];
+        scrape_interval = "15s";
       }
     ];
   };

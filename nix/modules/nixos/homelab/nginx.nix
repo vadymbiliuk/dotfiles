@@ -121,7 +121,7 @@ in
         };
       };
 
-      "jellyfin.zxxki.com" = {
+      "watch.zxxki.com" = {
         useACMEHost = "zxxki.com";
         forceSSL = true;
         extraConfig = ''
@@ -140,7 +140,7 @@ in
         };
       };
 
-      "requests.zxxki.com" = {
+      "r-media.zxxki.com" = {
         useACMEHost = "zxxki.com";
         forceSSL = true;
         extraConfig = ''
