@@ -72,7 +72,10 @@ in
     };
   };
 
-  security.pam.services.sshd.text = lib.mkAfter ''
-    session optional pam_exec.so ${sshLoginAlert}
-  '';
+  security.pam.services.sshd.rules.session.ssh-login-alert = {
+    order = 99999;
+    control = "optional";
+    modulePath = "pam_exec.so";
+    args = [ "${sshLoginAlert}" ];
+  };
 }
