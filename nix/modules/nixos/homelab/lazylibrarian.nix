@@ -3,7 +3,7 @@
 {
   virtualisation.oci-containers.containers.lazylibrarian = {
     image = "lscr.io/linuxserver/lazylibrarian:latest";
-    ports = [ "5299:5299" ];
+    extraOptions = [ "--network=host" ];
     environment = {
       PUID = "1000";
       PGID = "1000";
@@ -15,7 +15,6 @@
       "/srv/media/library/manga:/manga"
       "/srv/media/torrents:/downloads"
     ];
-    extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
   };
 
   services.nginx.virtualHosts."r-books.zxxki.com" = {

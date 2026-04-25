@@ -27,13 +27,13 @@
     ../modules/nixos/homelab/gitea.nix
     ../modules/nixos/homelab/minecraft.nix
     ../modules/nixos/homelab/kavita.nix
+    ../modules/nixos/homelab/lazylibrarian.nix
     ../modules/nixos/homelab/portainer.nix
     ../modules/nixos/homelab/home-assistant.nix
     ../modules/nixos/homelab/matrix.nix
     ../modules/nixos/homelab/rabbitmq.nix
     ../modules/nixos/homelab/redis.nix
     ../modules/nixos/homelab/kafka.nix
-    ../modules/nixos/homelab/lazylibrarian.nix
     ../modules/nixos/homelab/dashboard.nix
     ../modules/nixos/homelab/fail2ban-notify
     ../modules/nixos/homelab/hardening.nix

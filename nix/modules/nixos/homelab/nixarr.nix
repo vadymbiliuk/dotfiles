@@ -23,7 +23,7 @@ let
     fi
   '';
 
-  fixJellyseerrSettings = pkgs.writeText "fix-seerr.py" ''
+  fixJellyseerrSettings = pkgs.writeText "fix-jellyseerr.py" ''
     import json, sys
     path = "${stateDir}/jellyseerr/settings.json"
     try:
@@ -57,8 +57,8 @@ in
 {
   systemd.services.nixarr-seed = {
     description = "Seed arr services with Transmission download client";
-    after = [ "sonarr.service" "radarr.service" "lidarr.service" "readarr.service" "seerr.service" ];
-    requires = [ "sonarr.service" "radarr.service" "lidarr.service" "readarr.service" "seerr.service" ];
+    after = [ "sonarr.service" "radarr.service" "lidarr.service" "readarr.service" "jellyseerr.service" ];
+    requires = [ "sonarr.service" "radarr.service" "lidarr.service" "readarr.service" "jellyseerr.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
@@ -81,7 +81,7 @@ in
       openFirewall = false;
     };
 
-    seerr = {
+    jellyseerr = {
       enable = true;
       openFirewall = false;
     };
@@ -90,6 +90,7 @@ in
       enable = true;
       peerPort = 50000;
       openFirewall = false;
+      extraAllowedIps = [ "100.*" ];
     };
 
     sonarr = {
