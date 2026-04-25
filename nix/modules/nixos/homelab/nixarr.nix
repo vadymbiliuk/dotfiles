@@ -90,7 +90,10 @@ in
       enable = true;
       peerPort = 50000;
       openFirewall = false;
-      extraAllowedIps = [ "100.*" ];
+      extraAllowedIps = [ "100.*.*.*" ];
+      extraSettings = {
+        rpc-whitelist-enabled = false;
+      };
     };
 
     sonarr = {
