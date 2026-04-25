@@ -79,7 +79,7 @@
                 "audio.rate" = 48000;
                 "audio.channels" = 2;
                 "audio.position" = "FL,FR";
-                "target.object" = "alsa_input.usb-SteelSeries_SteelSeries_Alias_Pro_1-00.analog-stereo";
+                "target.object" = "alsa_input.usb-Razer_Inc_Razer_Seiren_X_UC2103L02601021-00.analog-stereo";
               };
               "playback.props" = {
                 "node.name" = "rnnoise_source";

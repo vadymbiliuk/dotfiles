@@ -89,8 +89,6 @@ in
     environment {
         XCURSOR_SIZE "24"
         XCURSOR_THEME "Bibata-Modern-Classic"
-        ELECTRON_OZONE_PLATFORM_HINT "auto"
-        MOZ_ENABLE_WAYLAND "1"
         DISPLAY ":0"
     }
 

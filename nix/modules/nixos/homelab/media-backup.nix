@@ -6,16 +6,10 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "media-backup" ''
+        STATE_DIR="/data/.state/nixarr"
         BACKUP_DIR="/srv/backup/media-services"
         mkdir -p "$BACKUP_DIR"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/jellyfin/ "$BACKUP_DIR/jellyfin/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/sonarr/ "$BACKUP_DIR/sonarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/radarr/ "$BACKUP_DIR/radarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/lidarr/ "$BACKUP_DIR/lidarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/readarr/ "$BACKUP_DIR/readarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/bazarr/ "$BACKUP_DIR/bazarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/prowlarr/ "$BACKUP_DIR/prowlarr/"
-        ${pkgs.rsync}/bin/rsync -a --delete /var/lib/qbittorrent/ "$BACKUP_DIR/qbittorrent/"
+        ${pkgs.rsync}/bin/rsync -a --delete "$STATE_DIR/" "$BACKUP_DIR/nixarr/"
       '';
     };
   };
