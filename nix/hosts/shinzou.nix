@@ -92,6 +92,7 @@ in
       ../modules/home/auto-english.nix
       ../modules/home/noctalia.nix
       ../modules/home/claude-code.nix
+      ../modules/home/obs.nix
     ];
 
     programs.mangohud = {

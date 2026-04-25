@@ -19,6 +19,8 @@ let
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   swww = "${pkgs.awww}/bin/awww";
   swww-daemon = "${pkgs.awww}/bin/awww-daemon";
+  obs-cmd = getExe pkgs.obs-cmd;
+  notify-send = getExe pkgs.libnotify;
 in
 {
   xdg.configFile."niri/config.kdl".text = ''
@@ -181,6 +183,7 @@ in
     spawn-at-startup "sh" "-c" "sleep 1 && steam"
     spawn-at-startup "discord"
     spawn-at-startup "thunderbird"
+    spawn-at-startup "obs" "--startreplaybuffer" "--minimize-to-tray"
 
     animations {
         window-open {
@@ -274,6 +277,8 @@ in
         Mod+WheelScrollUp { focus-column-right; }
         Mod+Ctrl+WheelScrollDown { focus-workspace-down; }
         Mod+Ctrl+WheelScrollUp { focus-workspace-up; }
+
+        Alt+Grave { spawn "sh" "-c" "${obs-cmd} replay save && ${notify-send} -t 3000 OBS 'Replay saved'"; }
 
         Print { spawn "sh" "-c" "${grim} -g \"$(${slurp})\" - | ${wl-copy}"; }
         Shift+Print { spawn "sh" "-c" "${grim} - | ${wl-copy}"; }

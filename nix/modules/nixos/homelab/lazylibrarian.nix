@@ -11,10 +11,11 @@
     };
     volumes = [
       "lazylibrarian_config:/config"
-      "/srv/media/books:/books"
-      "/srv/media/downloads:/downloads"
+      "/srv/media/library/books:/books"
+      "/srv/media/library/manga:/manga"
+      "/srv/media/torrents:/downloads"
     ];
-    extraOptions = [ ];
+    extraOptions = [ "--add-host=host.docker.internal:host-gateway" ];
   };
 
   services.nginx.virtualHosts."r-books.zxxki.com" = {

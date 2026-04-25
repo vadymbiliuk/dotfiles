@@ -43,7 +43,6 @@ in
     unstable.discord
     thunderbird
     unstable.slack
-    obs-studio
     unstable.obsidian
     pavucontrol
     blueman
