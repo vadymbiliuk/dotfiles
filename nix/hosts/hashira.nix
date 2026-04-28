@@ -18,8 +18,7 @@
     ../modules/nixos/homelab/postgresql.nix
     ../modules/nixos/homelab/neo4j.nix
     ../modules/nixos/homelab/mongodb.nix
-    ../modules/nixos/homelab/nixarr.nix
-    ../modules/nixos/homelab/flaresolverr.nix
+    ../modules/nixos/homelab/nixflix.nix
     ../modules/nixos/homelab/media-backup.nix
     ../modules/nixos/homelab/crowdsec.nix
     ../modules/nixos/homelab/prometheus.nix

@@ -53,8 +53,8 @@
       url = "git+ssh://git@github.com/vadymbiliuk/hashira-dash";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nixarr = {
-      url = "github:rasmus-kirk/nixarr";
+    nixflix = {
+      url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
@@ -92,7 +92,7 @@
             sops-nix.nixosModules.sops
             lanzaboote.nixosModules.lanzaboote
             inputs.nix-minecraft.nixosModules.minecraft-servers
-            inputs.nixarr.nixosModules.default
+            inputs.nixflix.nixosModules.default
             ./hosts/hashira.nix
           ];
           specialArgs = { inherit inputs; };

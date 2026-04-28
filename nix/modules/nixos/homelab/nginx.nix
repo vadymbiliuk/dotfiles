@@ -53,8 +53,20 @@ in
     recommendedTlsSettings = true;
 
     appendHttpConfig = ''
-      limit_req_zone $binary_remote_addr zone=general:10m rate=10r/s;
-      limit_req_zone $binary_remote_addr zone=login:10m rate=3r/m;
+      geo $is_trusted {
+        default 0;
+        127.0.0.0/8 1;
+        192.168.0.0/16 1;
+        100.64.0.0/10 1;
+      }
+
+      map $is_trusted $limit_key {
+        1 "";
+        0 $binary_remote_addr;
+      }
+
+      limit_req_zone $limit_key zone=general:10m rate=10r/s;
+      limit_req_zone $limit_key zone=login:10m rate=3r/m;
 
       map $http_user_agent $bad_bot {
         default 0;

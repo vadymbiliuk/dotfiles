@@ -33,7 +33,7 @@ let
     { name = "Home Assistant"; description = "Home automation"; icon = "home"; category = "Infrastructure"; port = 8123; subdomain = "ha"; vhost = true; }
     { name = "AdGuard Home"; description = "DNS ad blocking"; icon = "eye-off"; category = "Network"; port = 3000; subdomain = "adguard"; vhost = false; }
     { name = "Syncthing"; description = "File synchronization"; icon = "refresh-cw"; category = "Infrastructure"; port = 8384; subdomain = "syncthing"; vhost = false; }
-    { name = "Transmission"; description = "Torrent client"; icon = "download"; category = "Media"; port = 9091; subdomain = "transmission"; vhost = false; }
+    { name = "qBittorrent"; description = "Torrent client"; icon = "download"; category = "Media"; port = 8112; subdomain = "qbit"; vhost = false; }
     { name = "Sonarr"; description = "TV show management"; icon = "tv"; category = "Media"; port = 8989; subdomain = "sonarr"; vhost = false; }
     { name = "Radarr"; description = "Movie management"; icon = "film"; category = "Media"; port = 7878; subdomain = "radarr"; vhost = false; }
     { name = "Lidarr"; description = "Music management"; icon = "music"; category = "Media"; port = 8686; subdomain = "lidarr"; vhost = false; }
