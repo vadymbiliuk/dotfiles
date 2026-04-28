@@ -93,6 +93,7 @@ in
       extraAllowedIps = [ "100.*.*.*" ];
       extraSettings = {
         rpc-whitelist-enabled = false;
+        rpc-host-whitelist-enabled = false;
       };
     };
 

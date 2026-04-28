@@ -10,7 +10,7 @@ require("nvim-web-devicons").setup {
   },
 }
 
-local accent = "#F3669E"
+local accent = lackluster.color.gray7
 lackluster.setup {
   tweak_syntax = {
     string = lackluster.color.gray9,

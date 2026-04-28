@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
   services.xserver = {
@@ -13,6 +13,9 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
   };
 
   hardware.nvidia = {
@@ -27,5 +30,8 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     ADW_DEBUG_COLOR_SCHEME = "prefer-dark";
+    NVD_BACKEND = "direct";
+    LIBVA_DRIVER_NAME = "nvidia";
+    MOZ_DISABLE_RDD_SANDBOX = "1";
   };
 }

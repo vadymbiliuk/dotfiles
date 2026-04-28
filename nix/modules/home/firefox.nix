@@ -2,7 +2,20 @@
 
 let
   baseSettings = {
+    "media.ffmpeg.vaapi.enabled" = true;
+    "media.hardware-video-decoding.force-enabled" = true;
+    "media.ffvpx.enabled" = false;
+    "media.rdd-ffmpeg.enabled" = true;
+    "media.av1.enabled" = false;
+    "gfx.webrender.all" = true;
+    "mozilla.widget.use-argb-visuals" = true;
+    "widget.wayland.opaque-region.enabled" = false;
+    "layout.css.backdrop-filter.enabled" = true;
+
+    "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
     "browser.profileManager.enabled" = true;
+    "browser.profiles.enabled" = true;
     "sidebar.visibility" = "always-show";
     "sidebar.revamp" = true;
     "sidebar.verticalTabs" = true;
@@ -34,7 +47,7 @@ let
     "browser.toolbars.bookmarks.visibility" = "newtab";
     "browser.tabs.warnOnClose" = false;
     
-    "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":[],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":20,"newElementCount":0}'';
+    "browser.uiCustomization.state" = ''{"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":[],"nav-bar":["back-button","forward-button","stop-reload-button","urlbar-container","downloads-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action","_41bb7295-c2bd-4e13-885f-dc67cb983c17_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action","unified-extensions-button"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["personal-bookmarks"]},"seen":["developer-button","_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action","addon_darkreader_org-browser-action","adguardadblocker_adguard_com-browser-action","_react-devtools-browser-action","extension_redux_devtools-browser-action","_e6fc2bbd-183e-4518-9ea5-04a8a913ab00_-browser-action","_41bb7295-c2bd-4e13-885f-dc67cb983c17_-browser-action","_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action"],"dirtyAreaCache":["nav-bar","toolbar-menubar","TabsToolbar","PersonalToolbar"],"currentVersion":20,"newElementCount":0}'';
     "browser.tabs.inTitlebar" = 1;
 
     "browser.urlbar.suggest.searches" = true;
@@ -110,10 +123,12 @@ in {
         "{41bb7295-c2bd-4e13-885f-dc67cb983c17}" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/2black/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
         "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
           install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
           installation_mode = "force_installed";
+          default_area = "navbar";
         };
       };
     };
@@ -127,6 +142,42 @@ in {
           "browser.startup.homepage" = "about:blank";
         };
         search = baseSearch;
+        userChrome = ''
+          :root {
+            --tabpanel-background-color: transparent !important;
+            --toolbar-bgcolor: rgba(10, 10, 10, 0.6) !important;
+            --lwt-accent-color: transparent !important;
+            --lwt-toolbarbutton-icon-fill: #deeeed !important;
+            --tab-selected-bgcolor: rgba(60, 60, 60, 0.4) !important;
+          }
+
+          #main-window {
+            background: transparent !important;
+          }
+
+          #navigator-toolbox {
+            background: transparent !important;
+          }
+
+          toolbar,
+          #nav-bar {
+            background: transparent !important;
+          }
+
+          #urlbar-background {
+            background: rgba(30, 30, 30, 0.5) !important;
+          }
+
+          #sidebar-box,
+          #sidebar-main {
+            background: transparent !important;
+          }
+
+          #browser,
+          #tabbrowser-tabbox {
+            background: transparent !important;
+          }
+        '';
       };
 
       work = {
@@ -135,6 +186,42 @@ in {
         isDefault = false;
         settings = baseSettings;
         search = baseSearch;
+        userChrome = ''
+          :root {
+            --tabpanel-background-color: transparent !important;
+            --toolbar-bgcolor: rgba(10, 10, 10, 0.6) !important;
+            --lwt-accent-color: transparent !important;
+            --lwt-toolbarbutton-icon-fill: #deeeed !important;
+            --tab-selected-bgcolor: rgba(60, 60, 60, 0.4) !important;
+          }
+
+          #main-window {
+            background: transparent !important;
+          }
+
+          #navigator-toolbox {
+            background: transparent !important;
+          }
+
+          toolbar,
+          #nav-bar {
+            background: transparent !important;
+          }
+
+          #urlbar-background {
+            background: rgba(30, 30, 30, 0.5) !important;
+          }
+
+          #sidebar-box,
+          #sidebar-main {
+            background: transparent !important;
+          }
+
+          #browser,
+          #tabbrowser-tabbox {
+            background: transparent !important;
+          }
+        '';
       };
     };
   };
