@@ -19,10 +19,10 @@
     jellyfin = {
       enable = true;
       openFirewall = false;
-      apiKey = config.sops.secrets.jellyfin-api-key.path;
+      apiKey = { _secret = config.sops.secrets.jellyfin-api-key.path; };
 
       users.admin = {
-        password = config.sops.secrets.jellyfin-admin-password.path;
+        password = { _secret = config.sops.secrets.jellyfin-admin-password.path; };
         policy.isAdministrator = true;
       };
 
@@ -44,7 +44,7 @@
 
     seerr = {
       enable = true;
-      apiKey = config.sops.secrets.seerr-api-key.path;
+      apiKey = { _secret = config.sops.secrets.seerr-api-key.path; };
 
       jellyfin = {
         externalHostname = "https://watch.zxxki.com";
@@ -55,27 +55,27 @@
       enable = true;
       openFirewall = false;
       mediaDirs = [ "/srv/media/library/shows" ];
-      config.apiKey = config.sops.secrets.sonarr-api-key.path;
+      config.apiKey = { _secret = config.sops.secrets.sonarr-api-key.path; };
     };
 
     radarr = {
       enable = true;
       openFirewall = false;
       mediaDirs = [ "/srv/media/library/movies" ];
-      config.apiKey = config.sops.secrets.radarr-api-key.path;
+      config.apiKey = { _secret = config.sops.secrets.radarr-api-key.path; };
     };
 
     lidarr = {
       enable = true;
       openFirewall = false;
       mediaDirs = [ "/srv/media/library/music" ];
-      config.apiKey = config.sops.secrets.lidarr-api-key.path;
+      config.apiKey = { _secret = config.sops.secrets.lidarr-api-key.path; };
     };
 
     prowlarr = {
       enable = true;
       openFirewall = false;
-      config.apiKey = config.sops.secrets.prowlarr-api-key.path;
+      config.apiKey = { _secret = config.sops.secrets.prowlarr-api-key.path; };
     };
 
     flaresolverr.enable = true;
@@ -84,11 +84,12 @@
       enable = true;
       downloadsDir = "/srv/media/torrents";
       webuiPort = 8112;
+      password = { _secret = config.sops.secrets.qbittorrent-password.path; };
     };
 
     downloadarr = {
       qbittorrent = {
-        password = config.sops.secrets.qbittorrent-password.path;
+        password = { _secret = config.sops.secrets.qbittorrent-password.path; };
       };
     };
   };
