@@ -55,7 +55,7 @@ in
   };
 
   networking.extraHosts = ''
-    100.64.0.2 watch.zxxki.com read.zxxki.com r-media.zxxki.com r-books.zxxki.com dash.zxxki.com grafana.zxxki.com git.zxxki.com portainer.zxxki.com ha.zxxki.com rabbitmq.zxxki.com matrix.zxxki.com
+    100.64.0.2 watch.zxxki.com read.zxxki.com r-media.zxxki.com r-books.zxxki.com dash.zxxki.com grafana.zxxki.com git.zxxki.com portainer.zxxki.com ha.zxxki.com rabbitmq.zxxki.com matrix.zxxki.com sonarr.zxxki.com radarr.zxxki.com lidarr.zxxki.com prowlarr.zxxki.com readarr.zxxki.com bazarr.zxxki.com qbit.zxxki.com
   '';
 
   programs.fish.enable = true;
