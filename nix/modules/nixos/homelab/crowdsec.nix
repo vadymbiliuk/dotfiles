@@ -4,6 +4,21 @@
   services.crowdsec = {
     enable = true;
 
+    settings = {
+      general.api.server = {
+        enable = true;
+        listen_uri = "127.0.0.1:8180";
+      };
+      lapi.credentialsFile = "/var/lib/crowdsec/state/local_api_credentials.yaml";
+    };
+
+    hub.collections = [
+      "crowdsecurity/nginx"
+      "crowdsecurity/sshd"
+      "crowdsecurity/http-cve"
+      "crowdsecurity/linux"
+    ];
+
     localConfig.acquisitions = [
       {
         source = "journalctl";
@@ -20,23 +35,4 @@
   systemd.services.crowdsec.serviceConfig = {
     SupplementaryGroups = [ "systemd-journal" "nginx" ];
   };
-
-  systemd.services.crowdsec-setup = {
-    description = "CrowdSec initial collection setup";
-    wantedBy = [ "crowdsec.service" ];
-    before = [ "crowdsec.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    path = [ config.services.crowdsec.package ];
-    script = ''
-      cscli collections install crowdsecurity/nginx --error || true
-      cscli collections install crowdsecurity/sshd --error || true
-      cscli collections install crowdsecurity/http-cve --error || true
-      cscli collections install crowdsecurity/linux --error || true
-    '';
-  };
-
-  environment.systemPackages = [ config.services.crowdsec.package ];
 }

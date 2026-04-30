@@ -145,49 +145,29 @@
   users.users.readarr.extraGroups = [ "media" ];
   users.users.bazarr.extraGroups = [ "media" ];
 
-  services.nginx.virtualHosts = {
-    "sonarr.zxxki.com" = {
+  services.nginx.virtualHosts = let
+    mkArrVhost = port: {
       useACMEHost = "zxxki.com";
       forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:8989";
-      locations."/".proxyWebsockets = true;
+      extraConfig = ''
+        allow 127.0.0.0/8;
+        allow 192.168.0.0/16;
+        allow 100.64.0.0/10;
+        deny all;
+      '';
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString port}";
+        proxyWebsockets = true;
+      };
     };
-    "radarr.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:7878";
-      locations."/".proxyWebsockets = true;
-    };
-    "lidarr.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:8686";
-      locations."/".proxyWebsockets = true;
-    };
-    "prowlarr.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:9696";
-      locations."/".proxyWebsockets = true;
-    };
-    "readarr.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:8787";
-      locations."/".proxyWebsockets = true;
-    };
-    "bazarr.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:6767";
-      locations."/".proxyWebsockets = true;
-    };
-    "qbit.zxxki.com" = {
-      useACMEHost = "zxxki.com";
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:8112";
-      locations."/".proxyWebsockets = true;
-    };
+  in {
+    "sonarr.zxxki.com" = mkArrVhost 8989;
+    "radarr.zxxki.com" = mkArrVhost 7878;
+    "lidarr.zxxki.com" = mkArrVhost 8686;
+    "prowlarr.zxxki.com" = mkArrVhost 9696;
+    "readarr.zxxki.com" = mkArrVhost 8787;
+    "bazarr.zxxki.com" = mkArrVhost 6767;
+    "qbit.zxxki.com" = mkArrVhost 8112;
   };
 
   systemd.tmpfiles.rules = [

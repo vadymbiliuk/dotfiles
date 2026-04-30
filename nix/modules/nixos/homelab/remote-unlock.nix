@@ -22,7 +22,12 @@
     };
   };
 
-  boot.initrd.luks.devices."luks-986d6634-7f46-4236-88c6-8ba2fb0faec5".allowDiscards = true;
+  boot.initrd.systemd.enable = true;
+
+  boot.initrd.luks.devices."luks-986d6634-7f46-4236-88c6-8ba2fb0faec5" = {
+    allowDiscards = true;
+    crypttabExtraOpts = [ "tpm2-device=auto" ];
+  };
 
   virtualisation.vmVariant = {
     boot.initrd.network.ssh.enable = lib.mkForce false;
