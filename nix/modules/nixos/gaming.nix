@@ -43,6 +43,7 @@
     r2modman
     heroic
     bottles
+    ryubing
     steamtinkerlaunch
     prismlauncher
   ];
