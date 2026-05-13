@@ -21,7 +21,7 @@
   systemd.timers.media-services-backup = {
     wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnCalendar = "daily";
+      OnCalendar = "*-*-* 00/6:00:00";
       Persistent = true;
     };
   };

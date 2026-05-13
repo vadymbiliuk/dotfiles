@@ -33,13 +33,13 @@ let
     { name = "Home Assistant"; description = "Home automation"; icon = "home"; category = "Infrastructure"; port = 8123; subdomain = "ha"; vhost = true; }
     { name = "AdGuard Home"; description = "DNS ad blocking"; icon = "eye-off"; category = "Network"; port = 3000; subdomain = "adguard"; vhost = false; }
     { name = "Syncthing"; description = "File synchronization"; icon = "refresh-cw"; category = "Infrastructure"; port = 8384; subdomain = "syncthing"; vhost = false; }
-    { name = "qBittorrent"; description = "Torrent client"; icon = "download"; category = "Media"; port = 8112; subdomain = "qbit"; vhost = false; }
-    { name = "Sonarr"; description = "TV show management"; icon = "tv"; category = "Media"; port = 8989; subdomain = "sonarr"; vhost = false; }
-    { name = "Radarr"; description = "Movie management"; icon = "film"; category = "Media"; port = 7878; subdomain = "radarr"; vhost = false; }
-    { name = "Lidarr"; description = "Music management"; icon = "music"; category = "Media"; port = 8686; subdomain = "lidarr"; vhost = false; }
-    { name = "Readarr"; description = "Book management"; icon = "book-open"; category = "Media"; port = 8787; subdomain = "readarr"; vhost = false; }
-    { name = "Bazarr"; description = "Subtitle management"; icon = "subtitles"; category = "Media"; port = 6767; subdomain = "bazarr"; vhost = false; }
-    { name = "Prowlarr"; description = "Indexer management"; icon = "search"; category = "Media"; port = 9696; subdomain = "prowlarr"; vhost = false; }
+    { name = "qBittorrent"; description = "Torrent client"; icon = "download"; category = "Media"; port = 8112; subdomain = "qbit"; vhost = true; }
+    { name = "Sonarr"; description = "TV show management"; icon = "tv"; category = "Media"; port = 8989; subdomain = "sonarr"; vhost = true; }
+    { name = "Radarr"; description = "Movie management"; icon = "film"; category = "Media"; port = 7878; subdomain = "radarr"; vhost = true; }
+    { name = "Lidarr"; description = "Music management"; icon = "music"; category = "Media"; port = 8686; subdomain = "lidarr"; vhost = true; }
+    { name = "Readarr"; description = "Book management"; icon = "book-open"; category = "Media"; port = 8787; subdomain = "readarr"; vhost = true; }
+    { name = "Bazarr"; description = "Subtitle management"; icon = "subtitles"; category = "Media"; port = 6767; subdomain = "bazarr"; vhost = true; }
+    { name = "Prowlarr"; description = "Indexer management"; icon = "search"; category = "Media"; port = 9696; subdomain = "prowlarr"; vhost = true; }
     { name = "FlareSolverr"; description = "Cloudflare bypass"; icon = "cloud"; category = "Media"; port = 8191; subdomain = "flaresolverr"; vhost = false; }
     { name = "CrowdSec"; description = "Threat detection"; icon = "shield"; category = "Security"; port = 6060; subdomain = "crowdsec"; vhost = false; }
   ];

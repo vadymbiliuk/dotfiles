@@ -10,6 +10,12 @@
         listen_uri = "127.0.0.1:8180";
       };
       lapi.credentialsFile = "/var/lib/crowdsec/state/local_api_credentials.yaml";
+      prometheus = {
+        enabled = true;
+        level = "full";
+        listen_addr = "127.0.0.1";
+        listen_port = 6060;
+      };
     };
 
     hub.collections = [

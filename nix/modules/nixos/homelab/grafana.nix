@@ -456,6 +456,7 @@ in
                   title = "CrowdSec new alerts detected";
                   condition = "C";
                   for = "0s";
+                  noDataState = "OK";
                   data = [
                     {
                       refId = "A";
