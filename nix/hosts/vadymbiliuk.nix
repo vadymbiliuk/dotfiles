@@ -36,6 +36,28 @@ in {
     fi
   '';
 
+  services.syncthing = {
+    enable = true;
+    overrideDevices = true;
+    overrideFolders = true;
+    settings = {
+      devices = {
+        hashira = {
+          id = "ZUUCCX3-HHPMMZK-ZZQJFEX-PARRWS5-NYYAWJI-RFKL57Z-LXETQAE-JXCFAQF";
+        };
+      };
+      folders = {
+        "obsidian" = {
+          label = "Obsidian vault";
+          path = "/Users/vadymbiliuk/notes";
+          devices = [ "hashira" ];
+          rescanIntervalS = 3600;
+          fsWatcherEnabled = true;
+        };
+      };
+    };
+  };
+
   home-manager.users.vadymbiliuk = {
     imports = [
       ../modules/home/base.nix
