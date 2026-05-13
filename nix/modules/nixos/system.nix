@@ -17,6 +17,8 @@
 
   fonts = {
     packages = with pkgs; [
+      inter
+      noto-fonts
       noto-fonts-color-emoji
       noto-fonts-cjk-sans
     ];
@@ -24,15 +26,16 @@
     fontconfig = {
       antialias = true;
       hinting = {
-        enable = false;
+        enable = true;
+        style = "slight";
       };
       subpixel = {
-        rgba = "none";
+        rgba = "rgb";
         lcdfilter = "default";
       };
       defaultFonts = {
-        serif = [ "BerkeleyMonoMinazuki Nerd Font" ];
-        sansSerif = [ "BerkeleyMonoMinazuki Nerd Font" ];
+        serif = [ "Inter" "Noto Sans" "BerkeleyMonoMinazuki Nerd Font" ];
+        sansSerif = [ "Inter" "Noto Sans" "BerkeleyMonoMinazuki Nerd Font" ];
         monospace = [ "BerkeleyMonoMinazuki Nerd Font Mono" ];
       };
     };
