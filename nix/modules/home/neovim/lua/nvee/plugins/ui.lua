@@ -250,6 +250,8 @@ diff.setup {
 
 require("toggleterm").setup { size = 10, open_mapping = [[<c-\>]] }
 
+require("kitty-scrollback").setup()
+
 require("ibl").setup {
   whitespace = {
     remove_blankline_trail = false,
