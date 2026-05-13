@@ -16,8 +16,6 @@
     kernelParams = [
       "nvidia-drm.modeset=1"
       "nvidia_drm.fbdev=1"
-      "video=DP-1:2560x1440@500"
-      "video=DP-2:2560x1440@360,rotate=90"
       "loglevel=3"
     ];
     supportedFilesystems = [ "ntfs" ];
