@@ -19,6 +19,7 @@ in
     ./hardware-configuration.nix
     ../modules/nixos/lanzaboote.nix
     ../modules/nixos/vr.nix
+    ../modules/nixos/brave-policies.nix
     ../modules/profiles/workstation-linux.nix
     ../modules/profiles/gaming.nix
   ];
@@ -83,6 +84,7 @@ in
       ../modules/home/kitty.nix
       ../modules/home/wallpaper.nix
       ../modules/home/firefox.nix
+      ../modules/home/brave.nix
       ../modules/home/packages.nix
       ../modules/home/niri.nix
       ../modules/home/swaylock.nix
