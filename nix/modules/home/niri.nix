@@ -7,6 +7,9 @@
 
 let
   inherit (lib) getExe;
+  theme = import ../themes/monochrome.nix;
+  c = theme.colors;
+  l = theme.layout;
 
   grim = getExe pkgs.grim;
   slurp = getExe pkgs.slurp;
@@ -55,12 +58,12 @@ in
     }
 
     layout {
-        gaps 8
+        gaps ${toString l.gaps}
 
         focus-ring {
-            width 3
-            active-color "#2a2a2aa6"
-            inactive-color "#2a2a2a73"
+            width ${toString l.focusRingWidth}
+            active-color "${c.dark.outline}${l.focusRingAlphaActive}"
+            inactive-color "${c.dark.outline}${l.focusRingAlphaInactive}"
         }
 
         border {
@@ -73,13 +76,13 @@ in
     prefer-no-csd
 
     window-rule {
-        geometry-corner-radius 10
+        geometry-corner-radius ${toString l.cornerRadius}
         clip-to-geometry true
 
         background-effect {
             blur true
-            noise 0.05
-            saturation 1.5
+            noise ${toString l.blur.noise}
+            saturation ${toString l.blur.saturation}
         }
     }
 
@@ -178,7 +181,10 @@ in
     spawn-at-startup "nm-applet" "--indicator"
     spawn-at-startup "nordvpn" "connect" "Germany"
     spawn-at-startup "firefox"
-    spawn-at-startup "kitty"
+    spawn-at-startup "kitty" "-e" "zellij" "attach" "-c" "config"
+    spawn-at-startup "kitty" "-e" "zellij" "attach" "-c" "playground"
+    spawn-at-startup "kitty" "-e" "zellij" "attach" "-c" "hashira"
+    spawn-at-startup "kitty" "-e" "zellij" "attach" "-c" "sanctuary"
     spawn-at-startup "telegram-desktop"
     spawn-at-startup "sh" "-c" "sleep 1 && steam"
     spawn-at-startup "discord"

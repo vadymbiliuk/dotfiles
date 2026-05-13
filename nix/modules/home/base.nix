@@ -1,7 +1,11 @@
 { config, pkgs, lib, ... }:
 
+let
+  theme = import ../themes/monochrome.nix;
+  t = theme.colors.dark.terminal;
+in
 {
-  imports = [ ./bitwarden.nix ./ghostty-themes.nix ./fish.nix ./zsh.nix ];
+  imports = [ ./bitwarden.nix ./fish.nix ./zsh.nix ];
 
   home.enableNixpkgsReleaseCheck = false;
 
@@ -57,7 +61,7 @@
       fzf
       fd
       lazygit
-      tmux
+      zellij
       gnumake
       coreutils
       pokemonsay
@@ -83,22 +87,22 @@
       add_newline = false;
       palette = "monochrome";
       palettes.monochrome = {
-        black = "#1c1e23";
-        red = "#b0b0b0";
-        green = "#d6d6d6";
-        yellow = "#b0b0b0";
-        blue = "#888888";
-        purple = "#999999";
-        cyan = "#a2a2a2";
-        white = "#d6d6d6";
-        bright-black = "#555555";
-        bright-red = "#b5b5b5";
-        bright-green = "#deeeed";
-        bright-yellow = "#b5b5b5";
-        bright-blue = "#ababab";
-        bright-purple = "#b0b0b0";
-        bright-cyan = "#b5b5b5";
-        bright-white = "#deeeed";
+        black = t.normal.black;
+        red = t.normal.white;
+        green = t.bright.white;
+        yellow = t.normal.white;
+        blue = t.bright.red;
+        purple = t.bright.yellow;
+        cyan = t.bright.blue;
+        white = t.bright.white;
+        bright-black = t.normal.red;
+        bright-red = t.bright.cyan;
+        bright-green = t.foreground;
+        bright-yellow = t.bright.cyan;
+        bright-blue = t.bright.magenta;
+        bright-purple = t.normal.white;
+        bright-cyan = t.bright.cyan;
+        bright-white = t.foreground;
       };
       character = {
         success_symbol = "[->](bold white)";
@@ -107,56 +111,56 @@
     };
   };
 
-  programs.ghostty = {
+  programs.zellij = {
     enable = true;
-    package = if pkgs.stdenv.isDarwin then
-      (pkgs.runCommand "ghostty-dummy" { meta.mainProgram = "ghostty"; } ''
-        mkdir -p $out/bin
-        touch $out/bin/ghostty
-        chmod +x $out/bin/ghostty
-      '')
-    else
-      pkgs.ghostty;
-
+    enableFishIntegration = true;
+    attachExistingSession = true;
+    exitShellOnExit = true;
     settings = {
-      theme = "lucklaster";
-
-      font-family = "BerkeleyMonoMinazuki Nerd Font Mono";
-      font-size = if pkgs.stdenv.isDarwin then 22 else 18;
-      font-feature = [ "+liga" "+calt" "+dlig" ];
-
-      window-padding-x = 14;
-      window-padding-y = 14;
-      resize-overlay = "never";
-
-      cursor-style = "block";
-      cursor-style-blink = true;
-
-      bold-is-bright = true;
-      link-url = true;
-      mouse-hide-while-typing = true;
-      window-vsync = true;
-
-      window-decoration = true;
-      macos-titlebar-style = "tabs";
-
-      scrollback-limit = 4294967295;
-      shell-integration = "fish";
-      shell-integration-features = "cursor,sudo,title";
-
-      background-opacity = 0.8;
-      background-blur = 250;
-
-      macos-option-as-alt = !pkgs.stdenv.isDarwin;
-
-      keybind = let mod = if pkgs.stdenv.isDarwin then "cmd" else "alt";
-      in [
-        "shift+enter=text:\\\\n"
-        "${mod}+t=new_tab"
-        "shift+insert=paste_from_clipboard"
-        "control+insert=copy_to_clipboard"
-      ];
+      layout_dir = "${./zellij-layouts}";
+      default_layout = "claude";
+      default_mode = "locked";
+      mouse_mode = true;
+      pane_frames = false;
+      session_serialization = true;
+      serialization_interval = 1;
+      scroll_buffer_size = 50000;
     };
+    extraConfig = ''
+      themes {
+          monochrome {
+              fg "${t.foreground}"
+              bg "${t.background}"
+              black "${t.normal.black}"
+              red "${t.normal.red}"
+              green "${t.normal.green}"
+              yellow "${t.normal.yellow}"
+              blue "${t.normal.blue}"
+              magenta "${t.normal.magenta}"
+              cyan "${t.normal.cyan}"
+              white "${t.normal.white}"
+              orange "${t.bright.red}"
+          }
+      }
+      theme "monochrome"
+      keybinds {
+          locked {
+              bind "Alt 1" { GoToTab 1; }
+              bind "Alt 2" { GoToTab 2; }
+              bind "Alt 3" { GoToTab 3; }
+              bind "Alt 4" { GoToTab 4; }
+              bind "Alt 5" { GoToTab 5; }
+              bind "Alt 6" { GoToTab 6; }
+              bind "Alt 7" { GoToTab 7; }
+              bind "Alt 8" { GoToTab 8; }
+              bind "Alt 9" { GoToTab 9; }
+              bind "Alt n" { NewTab; }
+              bind "Alt h" { GoToPreviousTab; }
+              bind "Alt l" { GoToNextTab; }
+              bind "Alt c" { Run "claude" "--resume" { direction "Down"; }; }
+          }
+      }
+    '';
   };
 
 }

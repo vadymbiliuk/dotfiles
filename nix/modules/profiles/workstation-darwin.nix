@@ -241,7 +241,7 @@ in
       "bruno"
       "hstracker"
       "obsidian"
-      "ghostty"
+      "kitty"
       "teamspeak-client"
       "epic-games"
       "obs"
