@@ -1,4 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   unstable = import inputs.nixpkgs-unstable {
@@ -6,9 +12,20 @@ let
     config.allowUnfree = true;
   };
 
+  multiple-cursors-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "multiple-cursors-nvim";
+    version = "unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "brenton-leighton";
+      repo = "multiple-cursors.nvim";
+      rev = "main";
+      hash = "sha256-iLQT+M0wL/Bh0zzgLSozSRjsELzKochMlM6djUwg/og=";
+    };
+  };
+
   plugins = with unstable.vimPlugins; [
     claudecode-nvim
-    copilot-vim
+    # copilot-vim
     plenary-nvim
     nvim-web-devicons
 
@@ -31,7 +48,7 @@ let
     which-key-nvim
     oil-nvim
     harpoon2
-    vim-visual-multi
+    multiple-cursors-nvim
     inputs.fff-nvim.packages.${pkgs.stdenv.hostPlatform.system}.fff-nvim
 
     vim-sleuth
@@ -73,11 +90,11 @@ let
     markdown-preview-nvim
     persistence-nvim
     direnv-vim
+    codediff-nvim
+    kitty-scrollback-nvim
   ];
 
-  pluginRtp = lib.concatMapStringsSep "\n" (p:
-    ''vim.opt.runtimepath:prepend("${p}")''
-  ) plugins;
+  pluginRtp = lib.concatMapStringsSep "\n" (p: ''vim.opt.runtimepath:prepend("${p}")'') plugins;
 
   luaDir = ./lua/nvee;
 in

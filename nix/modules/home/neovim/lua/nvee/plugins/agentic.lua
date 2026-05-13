@@ -9,5 +9,5 @@ vim.keymap.set("n", "<leader>cb", "<cmd>ClaudeCodeAdd %<CR>", { desc = "Add buff
 vim.keymap.set("n", "<leader>ca", "<cmd>ClaudeCodeDiffAccept<CR>", { desc = "Accept Claude diff" })
 vim.keymap.set("n", "<leader>cd", "<cmd>ClaudeCodeDiffDeny<CR>", { desc = "Deny Claude diff" })
 
-vim.g.copilot_settings = { selectedCompletionModel = "gpt-41-copilot" }
-vim.g.copilot_integration_id = "vscode-chat"
+-- vim.g.copilot_settings = { selectedCompletionModel = "gpt-41-copilot" }
+-- vim.g.copilot_integration_id = "vscode-chat"

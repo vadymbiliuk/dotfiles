@@ -81,4 +81,5 @@ vim.keymap.set("n", "<leader>sS", function() Snacks.picker.lsp_workspace_symbols
 
 vim.keymap.set("n", "<leader>cR", function() Snacks.rename.rename_file() end, { desc = "Rename File" })
 vim.keymap.set({ "n", "v" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse" })
+vim.keymap.set("n", "<leader>gC", "<cmd>CodeDiff<cr>", { desc = "Git CodeDiff" })
 vim.keymap.set("n", "<leader>gg", function() Snacks.lazygit() end, { desc = "Lazygit" })
