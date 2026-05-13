@@ -1,5 +1,10 @@
 { pkgs, ... }:
 
+let
+  theme = import ../themes/monochrome.nix;
+  c = theme.colors.greeter;
+  l = theme.layout.greeter;
+in
 {
   services.greetd = {
     enable = true;
@@ -12,13 +17,13 @@
           "--remember-session"
           "--asterisks"
           "--asterisks-char" "•"
-          "--width" "60"
-          "--window-padding" "2"
-          "--container-padding" "2"
-          "--prompt-padding" "1"
+          "--width" (toString l.width)
+          "--window-padding" (toString l.windowPadding)
+          "--container-padding" (toString l.containerPadding)
+          "--prompt-padding" (toString l.promptPadding)
           "--greet-align" "center"
           "--greeting" "Welcome back."
-          "--theme" "border=#3a3a3a;text=#deeeed;prompt=#888888;time=#555555;action=#888888;button=#deeeed;container=#0a0a0a;input=#deeeed"
+          "--theme" "border=${c.border};text=${c.text};prompt=${c.prompt};time=${c.time};action=${c.action};button=${c.button};container=${c.container};input=${c.input}"
           "--cmd" "niri-session"
         ];
         user = "greeter";

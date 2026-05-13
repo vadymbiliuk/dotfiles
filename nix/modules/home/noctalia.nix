@@ -1,105 +1,53 @@
 { pkgs, lib, inputs, ... }:
 
 let
+  theme = import ../themes/monochrome.nix;
+  c = theme.colors;
   noctalia-plugins = inputs.noctalia-plugins;
 
   colorScheme = builtins.toJSON {
     dark = {
-      mPrimary = "#aaaaaa";
-      mOnPrimary = "#0a0a0a";
-      mSecondary = "#888888";
-      mOnSecondary = "#0a0a0a";
-      mTertiary = "#b0b0b0";
-      mOnTertiary = "#0a0a0a";
-      mError = "#555555";
-      mOnError = "#deeeed";
-      mSurface = "#0a0a0a";
-      mOnSurface = "#deeeed";
-      mSurfaceVariant = "#191919";
-      mOnSurfaceVariant = "#7a7a7a";
-      mOutline = "#2a2a2a";
-      mShadow = "#000000";
-      mHover = "#aaaaaa";
-      mOnHover = "#0a0a0a";
-      terminal = {
-        foreground = "#deeeed";
-        background = "#0a0a0a";
-        selectionFg = "#e0e0e0";
-        selectionBg = "#3a3f4b";
-        cursorText = "#0a0a0a";
-        cursor = "#d6d6d6";
-        normal = {
-          black = "#1c1e23";
-          red = "#555555";
-          green = "#5e5e5e";
-          yellow = "#666666";
-          blue = "#6e6e6e";
-          magenta = "#777777";
-          cyan = "#7f7f7f";
-          white = "#b0b0b0";
-        };
-        bright = {
-          black = "#2b2e34";
-          red = "#888888";
-          green = "#8f8f8f";
-          yellow = "#999999";
-          blue = "#a2a2a2";
-          magenta = "#ababab";
-          cyan = "#b5b5b5";
-          white = "#d6d6d6";
-        };
-      };
+      mPrimary = c.dark.primary;
+      mOnPrimary = c.dark.onPrimary;
+      mSecondary = c.dark.secondary;
+      mOnSecondary = c.dark.onSecondary;
+      mTertiary = c.dark.tertiary;
+      mOnTertiary = c.dark.onTertiary;
+      mError = c.dark.error;
+      mOnError = c.dark.onError;
+      mSurface = c.dark.surface;
+      mOnSurface = c.dark.onSurface;
+      mSurfaceVariant = c.dark.surfaceVariant;
+      mOnSurfaceVariant = c.dark.onSurfaceVariant;
+      mOutline = c.dark.outline;
+      mShadow = c.dark.shadow;
+      mHover = c.dark.hover;
+      mOnHover = c.dark.onHover;
+      terminal = c.dark.terminal;
     };
     light = {
-      mPrimary = "#555555";
-      mOnPrimary = "#f0f0f0";
-      mSecondary = "#777777";
-      mOnSecondary = "#f0f0f0";
-      mTertiary = "#444444";
-      mOnTertiary = "#f0f0f0";
-      mError = "#999999";
-      mOnError = "#f0f0f0";
-      mSurface = "#dddddd";
-      mOnSurface = "#191919";
-      mSurfaceVariant = "#e8e8e8";
-      mOnSurfaceVariant = "#555555";
-      mOutline = "#cccccc";
-      mShadow = "#fafafa";
-      mHover = "#555555";
-      mOnHover = "#f0f0f0";
-      terminal = {
-        foreground = "#191919";
-        background = "#dddddd";
-        selectionFg = "#e0e0e0";
-        selectionBg = "#555555";
-        cursorText = "#dddddd";
-        cursor = "#555555";
-        normal = {
-          black = "#e8e8e8";
-          red = "#999999";
-          green = "#8f8f8f";
-          yellow = "#888888";
-          blue = "#777777";
-          magenta = "#666666";
-          cyan = "#555555";
-          white = "#191919";
-        };
-        bright = {
-          black = "#cccccc";
-          red = "#aaaaaa";
-          green = "#a2a2a2";
-          yellow = "#999999";
-          blue = "#888888";
-          magenta = "#777777";
-          cyan = "#666666";
-          white = "#000000";
-        };
-      };
+      mPrimary = c.light.primary;
+      mOnPrimary = c.light.onPrimary;
+      mSecondary = c.light.secondary;
+      mOnSecondary = c.light.onSecondary;
+      mTertiary = c.light.tertiary;
+      mOnTertiary = c.light.onTertiary;
+      mError = c.light.error;
+      mOnError = c.light.onError;
+      mSurface = c.light.surface;
+      mOnSurface = c.light.onSurface;
+      mSurfaceVariant = c.light.surfaceVariant;
+      mOnSurfaceVariant = c.light.onSurfaceVariant;
+      mOutline = c.light.outline;
+      mShadow = c.light.shadow;
+      mHover = c.light.hover;
+      mOnHover = c.light.onHover;
+      terminal = c.light.terminal;
     };
   };
 
   privacyIndicatorSettings = builtins.toJSON {
-    activeIconColor = "#deeeed";
+    activeIconColor = c.dark.onSurface;
   };
 
   pluginsJson = pkgs.writeText "plugins.json" (builtins.toJSON {

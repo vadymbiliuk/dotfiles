@@ -7,6 +7,9 @@
 
 let
   inherit (lib) getExe;
+  theme = import ../themes/monochrome.nix;
+  c = theme.colors;
+  l = theme.layout;
 
   settings = {
     settingsVersion = 53;
@@ -19,13 +22,13 @@ let
       showCapsule = false;
       capsuleOpacity = 1;
       capsuleColorKey = "none";
-      backgroundOpacity = 0.93;
+      backgroundOpacity = l.bar.backgroundOpacity;
       useSeparateOpacity = false;
       floating = true;
-      marginVertical = 9;
-      marginHorizontal = 9;
-      frameThickness = 8;
-      frameRadius = 12;
+      marginVertical = l.bar.marginVertical;
+      marginHorizontal = l.bar.marginHorizontal;
+      frameThickness = l.bar.frameThickness;
+      frameRadius = l.bar.frameRadius;
       outerCorners = true;
       hideOnOverview = false;
       displayMode = "always_visible";
@@ -181,15 +184,15 @@ let
     };
     general = {
       avatarImage = "/home/zooki/.face";
-      dimmerOpacity = 0.15;
+      dimmerOpacity = l.noctalia.dimmerOpacity;
       showScreenCorners = false;
       forceBlackScreenCorners = false;
       scaleRatio = 1;
-      radiusRatio = 0.5;
-      iRadiusRatio = 0.5;
-      boxRadiusRatio = 1;
-      screenRadiusRatio = 1;
-      animationSpeed = 1;
+      radiusRatio = l.noctalia.radiusRatio;
+      iRadiusRatio = l.noctalia.iRadiusRatio;
+      boxRadiusRatio = l.noctalia.boxRadiusRatio;
+      screenRadiusRatio = l.noctalia.screenRadiusRatio;
+      animationSpeed = l.noctalia.animationSpeed;
       animationDisabled = false;
       compactLockScreen = false;
       lockScreenAnimations = false;
@@ -280,9 +283,9 @@ let
       viewMode = "single";
       setWallpaperOnAllMonitors = true;
       fillMode = "crop";
-      fillColor = "#000000";
+      fillColor = c.wallpaper.fill;
       useSolidColor = false;
-      solidColor = "#1a1a2e";
+      solidColor = c.wallpaper.solid;
       automationEnabled = false;
       wallpaperChangeMode = "random";
       randomIntervalSec = 300;

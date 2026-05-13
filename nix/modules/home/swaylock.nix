@@ -1,5 +1,10 @@
 { pkgs, ... }:
 
+let
+  theme = import ../themes/monochrome.nix;
+  c = theme.colors.lockscreen;
+  l = theme.layout.lockscreen;
+in
 {
   programs.swaylock = {
     enable = true;
@@ -8,20 +13,20 @@
       image = "~/.config/wallpapers/wallpaper.jpg";
       clock = true;
       indicator = true;
-      indicator-radius = 100;
-      indicator-thickness = 7;
-      effect-blur = "8x3";
-      effect-vignette = "0.5:0.5";
-      ring-color = "808080cc";
-      key-hl-color = "aaaaaaff";
-      line-color = "00000000";
-      inside-color = "40404080";
-      separator-color = "00000000";
-      text-color = "c8c8c8ff";
+      indicator-radius = l.indicatorRadius;
+      indicator-thickness = l.indicatorThickness;
+      effect-blur = l.effectBlur;
+      effect-vignette = l.effectVignette;
+      ring-color = c.ring;
+      key-hl-color = c.keyHighlight;
+      line-color = c.line;
+      inside-color = c.inside;
+      separator-color = c.separator;
+      text-color = c.text;
       font = "BerkeleyMonoMinazuki Nerd Font";
       timestr = "%H:%M";
       datestr = "%A, %B %d";
-      fade-in = 0.2;
+      fade-in = l.fadeIn;
       ignore-empty-password = true;
       show-keyboard-layout = true;
     };
